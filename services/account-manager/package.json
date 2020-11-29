@@ -1,0 +1,27 @@
+{
+  "name": "account-manager",
+  "version": "1.0.0",
+  "description": "This service allows you to manage your bank account",
+  "main": "index.js",
+  "scripts": {
+    "start": "sls offline",
+    "deploy": "serverless deploy -v",
+    "test": "IS_OFFLINE=true jest --detectOpenHandles --setupFiles --runInBand --coverage"
+  },
+  "keywords": [],
+  "author": "Amir Elemam",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^4.2.0",
+    "morgan": "^1.10.0",
+    "sanitize": "^2.1.0",
+    "serverless-http": "^2.6.0"
+  },
+  "devDependencies": {
+    "serverless-dotenv-plugin": "^3.1.0",
+    "serverless-offline": "^6.8.0",
+    "supertest": "^6.0.1"
+  }
+}

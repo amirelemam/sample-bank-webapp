@@ -1,0 +1,27 @@
+org: amirelemam
+app: serverless-bank-app
+service: account-manager
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: us-east-1
+  memorySize: 128
+
+functions:
+  backend:
+    handler: index.handler
+    events:
+      - http: ANY /
+      - http: 'ANY {proxy+}'
+
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin
+
+custom:
+  serverless-offline:
+    httpPort: 4000
+    environment:
+      IS_OFFLINE: true
