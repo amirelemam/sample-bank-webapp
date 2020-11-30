@@ -3,13 +3,9 @@
 const router = require('express').Router();
 
 const populateTables = require('./queries');
-const dropTables = require('../dropTables/controller');
-const createTables = require('../createTables/controller');
 
 router.post('/', async (req, res, next) => {
   try {
-    await dropTables();
-    await createTables();
     await populateTables.clients();
     await populateTables.accounts();
     await populateTables.balances();
