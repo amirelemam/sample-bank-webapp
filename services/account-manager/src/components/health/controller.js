@@ -1,3 +1,5 @@
+'use strict';
+
 const services = require('./services');
 
 const isAlive = () => {

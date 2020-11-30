@@ -1,4 +1,6 @@
-const packageJson = require('../../package.json');
+'use strict';
+
+const packageJson = require('../../../package.json');
 
 const isAlive = () => {
   return {

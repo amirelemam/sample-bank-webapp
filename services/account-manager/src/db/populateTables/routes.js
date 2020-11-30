@@ -1,0 +1,50 @@
+'use strict';
+
+const router = require('express').Router();
+
+const populateTables = require('./queries');
+const dropTables = require('../dropTables/controller');
+const createTables = require('../createTables/controller');
+
+router.post('/', async (req, res, next) => {
+  try {
+    await dropTables();
+    await createTables();
+    await populateTables.clients();
+    await populateTables.accounts();
+    await populateTables.balances();
+
+    return res.status(200).json('OK');
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.post('/clients', async (req, res, next) => {
+  try {
+    await populateTables.clients();
+    return res.status(200).json('OK');
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.post('/accounts', async (req, res, next) => {
+  try {
+    await populateTables.accounts();
+    return res.status(200).json('OK');
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.post('/balances', async (req, res, next) => {
+  try {
+    await populateTables.balances();
+    return res.status(200).json('OK');
+  } catch (err) {
+    return next(err);
+  }
+});
+
+module.exports = router;

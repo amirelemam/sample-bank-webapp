@@ -7,8 +7,9 @@ const cors = require('cors');
 const sanitize = require('sanitize');
 const morgan = require('morgan');
 
-const logger = require('../common/logger');
+const logger = require('../../common/logger');
 const routes = require('./routes');
+require('./db');
 
 const app = express();
 
