@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const sanitize = require('sanitize');
 const morgan = require('morgan');
+const Sentry = require('./common/sentry');
 
 const logger = require('../../common/logger');
 const routes = require('./routes');
@@ -32,7 +33,7 @@ app.use('/v1', routes);
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-  if (err) logger.error(err.stack);
+  if (err) Sentry.captureException(err.stack);
   res.status(err.status || 500).send({ error: err.message });
 });
 
