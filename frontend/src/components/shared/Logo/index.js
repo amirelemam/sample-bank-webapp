@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from '../../../assets/img/logo.png';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,7 +23,9 @@ const Logo = () => {
 
   return (
     <div className={classes.root}>
-      <img src={logo} alt="logo" className={classes.logo} />
+      <Link to="/">
+        <img src={logo} alt="logo" className={classes.logo} />
+      </Link>
       <br />
       <span className={classes.title}>Serverless Bank</span>
     </div>
