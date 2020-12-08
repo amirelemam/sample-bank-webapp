@@ -1,16 +1,26 @@
 import React from 'react';
 import Menu from './Menu';
-import logo from '../../assets/img/logo.png';
-import './Home.css';
+import Logo from '../shared/Logo';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    minHeight: '90vh',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: 'white',
+  },
+}));
 
 const Home = () => {
+  const classes = useStyles();
+
   return (
     <div>
-      <header className="App-header">
-        <img src={logo} alt="logo" style={{ width: '200px' }} />
-        <span style={{ paddingBottom: '30px', color: '#d4af37' }}>
-          Serverless Bank
-        </span>
+      <header className={classes.root}>
+        <Logo />
         <Menu />
         <a
           href="https://github.com/amirelemam/demo-bank-webapp"

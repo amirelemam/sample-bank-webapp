@@ -2,6 +2,7 @@ import React from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,37 +13,38 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '20px',
     justifyContent: 'center',
   },
+  link: {
+    color: '#ffffff',
+    textDecoration: 'none',
+    '&:hover': {
+      color: '#d4af37',
+      textDecoration: 'none',
+    },
+  },
 }));
 
-export default function MenuListComposition() {
+const Menu = () => {
   const classes = useStyles();
-
-  const handleMouseEnter = (e) => (e.target.style.color = '#d4af37');
-  const handleMouseLeave = (e) => (e.target.style.color = '#ffffff');
 
   return (
     <MenuList className={classes.root}>
-      <MenuItem
-        className={classes.option}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        ACCESS YOUR ACCOUNT
+      <MenuItem className={classes.option}>
+        <Link to="/access-your-account" className={classes.link}>
+          ACCESS YOUR ACCOUNT
+        </Link>
       </MenuItem>
-      <MenuItem
-        className={classes.option}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        PLANS & FEES
+      <MenuItem className={classes.option}>
+        <Link to="/plans-and-fees" className={classes.link}>
+          PLANS & FEES
+        </Link>
       </MenuItem>
-      <MenuItem
-        className={classes.option}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        FIND A BRANCH
+      <MenuItem className={classes.option}>
+        <Link to="/find-a-branch" className={classes.link}>
+          FIND A BRANCH
+        </Link>
       </MenuItem>
     </MenuList>
   );
-}
+};
+
+export default Menu;
