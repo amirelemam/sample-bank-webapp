@@ -2,26 +2,15 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Logo from '../shared/Logo';
+import { root, button } from '../shared/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    ...root,
     margin: 0,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   button: {
-    color: '#00030e',
-    borderColor: '#00030e',
-    backgroundColor: '#d4af37',
-    border: '1px solid',
-    '&:hover': {
-      color: '#00030e',
-      borderColor: '#00030e',
-      backgroundColor: '#b08f26',
-      boxShadow: 'none',
-    },
+    ...button,
   },
   text: {
     marginBottom: '40px',

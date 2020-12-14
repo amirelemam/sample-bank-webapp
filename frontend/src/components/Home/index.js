@@ -2,14 +2,12 @@ import React from 'react';
 import Menu from './Menu';
 import Logo from '../shared/Logo';
 import { makeStyles } from '@material-ui/core/styles';
+import { root } from '../shared/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    ...root,
     minHeight: '90vh',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
     color: 'white',
   },
 }));

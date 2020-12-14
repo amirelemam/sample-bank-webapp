@@ -9,30 +9,27 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Logo from '../shared/Logo';
 import { makeStyles } from '@material-ui/core/styles';
+import { button, root } from '../shared/styles';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
+    ...root,
+    color: 'white',
   },
   form: {
     width: '400px',
     color: '#ffffff',
   },
-  button: {
+  button: { ...button, width: '400px' },
+  linkButton: {
     color: '#00030e',
-    borderColor: '#00030e',
-    backgroundColor: '#d4af37',
-    border: '1px solid',
-    '&:hover': {
-      color: '#00030e',
-      borderColor: '#00030e',
-      backgroundColor: '#b08f26',
-      boxShadow: 'none',
-    },
-    width: '400px',
+    textDecoration: 'none',
+  },
+  link: {
+    color: '#fff',
+    textDecoration: 'none',
+    '&:hover': { color: '#d4af37', textDecoration: 'underline' },
   },
 }));
 
@@ -40,9 +37,9 @@ const Login = () => {
   const classes = useStyles();
 
   const [values, setValues] = React.useState({
+    branch: '',
+    account: '',
     password: '',
-    weight: '',
-    weightRange: '',
     showPassword: false,
   });
 
@@ -74,6 +71,8 @@ const Login = () => {
             shrink: true,
           }}
           placeholder="0001"
+          value={values.branch}
+          onChange={handleChange('branch')}
         />
         <br />
         <TextField
@@ -88,6 +87,8 @@ const Login = () => {
             shrink: true,
           }}
           placeholder="12345"
+          value={values.account}
+          onChange={handleChange('account')}
         />
       </FormControl>
       <br />
@@ -114,14 +115,23 @@ const Login = () => {
         />
       </FormControl>
       <br />
-      <Button
-        variant="outlined"
-        size="large"
-        fullWidth={true}
-        className={classes.button}
-      >
-        <center>Sign in</center>
-      </Button>
+      <Link to="/my-account" className={classes.linkButton}>
+        <Button
+          variant="outlined"
+          size="large"
+          fullWidth={true}
+          className={classes.button}
+        >
+          <center>
+            <b>Sign in</b>
+          </center>
+        </Button>
+      </Link>
+      <div style={{ paddingTop: '130px' }}>
+        <Link to="/" className={classes.link}>
+          Go to Menu
+        </Link>
+      </div>
     </div>
   );
 };
