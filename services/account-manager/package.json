@@ -20,7 +20,8 @@
     "morgan": "^1.10.0",
     "pg": "^8.5.1",
     "sanitize": "^2.1.0",
-    "serverless-http": "^2.6.0"
+    "serverless-http": "^2.6.0",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "serverless-dotenv-plugin": "^3.1.0",

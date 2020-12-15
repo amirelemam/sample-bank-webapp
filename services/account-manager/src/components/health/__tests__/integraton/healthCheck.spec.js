@@ -3,9 +3,9 @@
 const request = require('supertest');
 const app = require('../../../../app');
 
-describe('GET /health-check', () => {
+describe('GET /api/v1/health-check', () => {
   it('should return an object', async (done) => {
-    const response = await request(app).get('/v1/health-check');
+    const response = await request(app).get('/api/v1/health');
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual({
