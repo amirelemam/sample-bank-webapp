@@ -7,13 +7,13 @@ const healthCheck = require('./components/health/routes');
 const createTables = require('./db/createTables/routes');
 const dropTables = require('./db/dropTables/routes');
 const populateTables = require('./db/populateTables/routes');
-const balances = require('./components/balances/routes');
+const accounts = require('./components/accounts/routes');
 
 const router = express.Router();
 
 // Application
 router.use('/health', healthCheck);
-router.use('/balances', balances);
+router.use('/accounts', accounts);
 
 // DB
 if (process.env.IS_OFFLINE) {

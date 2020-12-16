@@ -30,9 +30,7 @@ const balances = () => {
   return knex
     .insert({
       id: 'f4c35ce9-8d1f-4224-908d-ab079ab06802',
-      reserved: 600,
-      unreserved: 500,
-      total: 1100,
+      balance: 1100,
       account_id: '4cd84b0d-4673-4261-bf43-50095919eeb0',
     })
     .into('balances')

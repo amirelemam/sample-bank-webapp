@@ -7,6 +7,7 @@ const cors = require('cors');
 const sanitize = require('sanitize');
 const morgan = require('morgan');
 const sentry = require('./common/sentry');
+const { NotFoundError } = require('./common/errors');
 
 const logger = require('./common/logger');
 const routes = require('./routes');
@@ -35,8 +36,13 @@ app.use((err, req, res, next) => {
   if (err) {
     logger.error(err.stack);
     sentry.captureException(err.stack);
+
+    if (!err.status) return res.status(500).json();
+    return res.status(err.status).send({ error: err.message });
+  } else {
+    const { status, message } = NotFoundError();
+    return res.status(status).send(message);
   }
-  res.status(err.status || 500).send({ error: err.message });
 });
 
 module.exports = app;

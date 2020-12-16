@@ -75,9 +75,7 @@ const balances = async () => {
       .defaultTo(knex.raw('uuid_generate_v4()'))
       .notNullable()
       .primary();
-    table.double('reserved').notNullable();
-    table.double('unreserved').notNullable();
-    table.double('total').notNullable();
+    table.double('balance').notNullable();
     table.uuid('account_id').notNullable();
     table.timestamp('created_at').defaultTo(knex.fn.now());
     table.timestamp('updated_at').defaultTo(knex.fn.now());
