@@ -119,30 +119,6 @@ const MyAccount = () => {
             <b>Available:</b>
             <h2>$ 1,000.00</h2>
           </div>
-          <br />
-          <div
-            style={{
-              border: '1px solid',
-              borderColor: '#999',
-              borderRadius: '10px',
-            }}
-          >
-            <br />
-            Reserved:
-            <h4>$ 500.00</h4>
-          </div>
-          <br />
-          <div
-            style={{
-              border: '1px solid',
-              borderColor: '#999',
-              borderRadius: '10px',
-            }}
-          >
-            <br />
-            Total:
-            <h4>$ 1,500.00</h4>
-          </div>
         </div>
         <br />
         <div
@@ -158,7 +134,7 @@ const MyAccount = () => {
             className={classes.button2}
           >
             <center>
-              <b>RESERVE</b>
+              <b>DEPOSIT</b>
             </center>
           </Button>
           <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -169,7 +145,7 @@ const MyAccount = () => {
             className={classes.button2}
           >
             <center>
-              <b>UNRESERVE</b>
+              <b>WITHDRAW</b>
             </center>
           </Button>
         </div>
