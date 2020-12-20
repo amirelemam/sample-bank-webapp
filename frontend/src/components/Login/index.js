@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Fade from '@material-ui/core/Fade';
+import Box from '@material-ui/core/Box';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Logo from '../shared/Logo';
@@ -34,17 +38,33 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     '&:hover': { color: '#d4af37', textDecoration: 'underline' },
   },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#000',
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    color: '#000',
+  },
 }));
 
 const Login = ({ history }) => {
   const classes = useStyles();
 
-  const [values, setValues] = React.useState({
+  const [values, setValues] = useState({
     branch: '',
     account: '',
     password: '',
     showPassword: false,
   });
+
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   async function handleClick() {
     try {
@@ -57,16 +77,20 @@ const Login = ({ history }) => {
         .getIdToken()
         .getJwtToken();
 
-      console.log('access token', accessToken);
-
       if (accessToken) {
         localStorage.setItem('accessToken', accessToken);
         return history.push('/my-account');
       }
     } catch (err) {
-      console.log('Err', err);
+      setErrorMsg('Login unsucessful.');
+      setError(true);
     }
   }
+
+  const handleCloseError = () => {
+    setError(false);
+    setErrorMsg('');
+  };
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -156,6 +180,34 @@ const Login = ({ history }) => {
           Go to Menu
         </Link>
       </div>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={error}
+        onClose={handleCloseError}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={error}>
+          <div className={classes.paper}>
+            <h2 id="transition-modal-title">Erro</h2>
+            <p id="transition-modal-description">{errorMsg}</p>
+            <Box display="flex" p={3} mx="auto" justifyContent="center">
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleCloseError}
+              >
+                OK
+              </Button>
+            </Box>
+          </div>
+        </Fade>
+      </Modal>
     </div>
   );
 };
