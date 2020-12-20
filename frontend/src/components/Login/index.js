@@ -10,7 +10,9 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Logo from '../shared/Logo';
 import { makeStyles } from '@material-ui/core/styles';
 import { button, root } from '../shared/styles';
-import { Link } from 'react-router-dom';
+import Amplify, { Auth } from 'aws-amplify';
+import aws_exports from '../../aws-exports';
+Amplify.configure(aws_exports);
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = () => {
+const Login = ({ history }) => {
   const classes = useStyles();
 
   const [values, setValues] = React.useState({
@@ -42,6 +44,28 @@ const Login = () => {
     password: '',
     showPassword: false,
   });
+
+  async function handleClick() {
+    try {
+      const branch = document.getElementById('branch').value;
+      const account = document.getElementById('account').value;
+      const password = document.getElementById('password').value;
+      const username = branch + '_' + account;
+      await Auth.signIn(username, password);
+      const accessToken = await (await Auth.currentSession())
+        .getIdToken()
+        .getJwtToken();
+
+      console.log('access token', accessToken);
+
+      if (accessToken) {
+        localStorage.setItem('accessToken', accessToken);
+        return history.push('/my-account');
+      }
+    } catch (err) {
+      console.log('Err', err);
+    }
+  }
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -115,18 +139,17 @@ const Login = () => {
         />
       </FormControl>
       <br />
-      <Link to="/my-account" className={classes.linkButton}>
-        <Button
-          variant="outlined"
-          size="large"
-          fullWidth={true}
-          className={classes.button}
-        >
-          <center>
-            <b>Sign in</b>
-          </center>
-        </Button>
-      </Link>
+      <Button
+        variant="outlined"
+        size="large"
+        fullWidth={true}
+        className={classes.button}
+        onClick={handleClick}
+      >
+        <center>
+          <b>Sign in</b>
+        </center>
+      </Button>
       <div style={{ paddingTop: '130px' }}>
         <Link to="/" className={classes.link}>
           Go to Menu
