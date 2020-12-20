@@ -10,6 +10,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Logo from '../shared/Logo';
 import { makeStyles } from '@material-ui/core/styles';
 import { button, root } from '../shared/styles';
+import { Link } from 'react-router-dom';
 import Amplify, { Auth } from 'aws-amplify';
 import aws_exports from '../../aws-exports';
 Amplify.configure(aws_exports);
