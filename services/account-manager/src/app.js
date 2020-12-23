@@ -40,7 +40,7 @@ app.use('/api/v1', routes);
 app.use((err, req, res, next) => {
   if (err) {
     logger.error(err.stack);
-    sentry.captureException(err.stack);
+    if (!process.env.IS_OFFLINE) sentry.captureException(err.stack);
 
     if (!err.status) return res.status(500).json();
     return res.status(err.status).send({ error: err.message });
