@@ -25,7 +25,12 @@ app.use(morgan('combined', { stream: logger.stream }));
 // eslint-disable-next-line no-unused-vars
 app.use((req, res, next) => {
   res.header('Access-Control-Expose-Headers', 'access-token');
-  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Origin', [
+    'amirelemam.com',
+    'www.amirelemam.com',
+    'https://amirelemam.com',
+    'https://www.amirelemam.com',
+  ]);
   return next();
 });
 
