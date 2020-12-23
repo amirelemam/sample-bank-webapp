@@ -3,11 +3,13 @@
 const router = require('express').Router();
 const validation = require('./validation');
 const { BadRequestError } = require('../../../../common/errors');
+const authentication = require('../../common/middlewares/authentication');
 
 const controller = require('./controller');
 
 router.get(
   '/branch/:branch/account/:account/balance',
+  authentication,
   async (req, res, next) => {
     try {
       const { branch, account } = req.params;
@@ -27,7 +29,7 @@ router.get(
   }
 );
 
-router.post('/deposit', async (req, res, next) => {
+router.post('/deposit', authentication, async (req, res, next) => {
   try {
     const { body } = req;
 
@@ -51,7 +53,7 @@ router.post('/deposit', async (req, res, next) => {
   }
 });
 
-router.post('/withdraw', async (req, res, next) => {
+router.post('/withdraw', authentication, async (req, res, next) => {
   try {
     const { body } = req;
 
