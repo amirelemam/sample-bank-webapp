@@ -6,7 +6,7 @@ const deposit = async (body) => {
     clientId: joi.string().uuid().required(),
     branch: joi.string().required(),
     account: joi.string().required(),
-    ammount: joi.number().required(),
+    amount: joi.number().required(),
   });
 
   try {
@@ -23,7 +23,7 @@ const withdraw = async (body) => {
     clientId: joi.string().uuid().required(),
     branch: joi.string().required(),
     account: joi.string().required(),
-    ammount: joi.number().required(),
+    amount: joi.number().required(),
   });
 
   try {

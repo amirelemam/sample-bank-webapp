@@ -35,13 +35,13 @@ router.post('/deposit', async (req, res, next) => {
 
     if (!isValid) throw BadRequestError();
 
-    const { clientId, ammount, account, branch } = body;
+    const { clientId, amount, account, branch } = body;
 
     const result = await controller.deposit({
       clientId,
       account,
       branch,
-      ammount,
+      amount,
     });
 
     if (result) return res.status(200).json(result);
@@ -59,13 +59,13 @@ router.post('/withdraw', async (req, res, next) => {
 
     if (!isValid) throw BadRequestError();
 
-    const { clientId, ammount, account, branch } = body;
+    const { clientId, amount, account, branch } = body;
 
     const result = await controller.withdraw({
       clientId,
       account,
       branch,
-      ammount,
+      amount,
     });
 
     if (result) return res.status(200).json(result);

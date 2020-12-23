@@ -2,12 +2,12 @@
 
 const services = require('./services');
 
-const deposit = ({ clientId, account, branch, ammount }) => {
-  return services.deposit({ clientId, account, branch, ammount });
+const deposit = ({ clientId, account, branch, amount }) => {
+  return services.deposit({ clientId, account, branch, amount });
 };
 
-const withdraw = ({ clientId, account, branch, ammount }) => {
-  return services.withdraw({ clientId, account, branch, ammount });
+const withdraw = ({ clientId, account, branch, amount }) => {
+  return services.withdraw({ clientId, account, branch, amount });
 };
 
 const getBalance = ({ account, branch, clientId }) => {

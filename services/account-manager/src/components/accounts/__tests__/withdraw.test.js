@@ -12,7 +12,7 @@ describe('POST /api/v1/accounts/withdraw', () => {
       clientId: '38c3de93-874d-444c-b83f-11e89cca252b',
       branch: '0001',
       account: '12345',
-      ammount: 100,
+      amount: 100,
     });
 
     expect(response.status).toBe(200);
@@ -28,13 +28,13 @@ describe('POST /api/v1/accounts/withdraw', () => {
     await request(app).post('/api/v1/drop-tables');
     await request(app).post('/api/v1/create-tables');
     await request(app).post('/api/v1/populate-tables/clients');
-    await request(app).post('/api/v1/populate-tables/ammounts');
+    await request(app).post('/api/v1/populate-tables/amounts');
 
     const response = await request(app).post('/api/v1/accounts/withdraw').send({
       clientId: '38c3de93-874d-444c-b83f-11e89cca252b',
       branch: '0001',
       account: '12345',
-      ammount: 100,
+      amount: 100,
     });
 
     expect(response.status).toBe(404);
@@ -49,7 +49,7 @@ describe('POST /api/v1/accounts/withdraw', () => {
       clientId: '28c3de93-874d-444c-b83f-11e89cca252b',
       branch: '0001',
       account: '12345',
-      ammount: 100,
+      amount: 100,
     });
 
     expect(response.status).toBe(404);
@@ -64,7 +64,7 @@ describe('POST /api/v1/accounts/withdraw', () => {
       clientId: '38c3de93-874d-444c-b83f-11e89cca252b',
       branch: '0001',
       account: '12345',
-      ammount: 0,
+      amount: 0,
     });
 
     expect(response.status).toBe(422);
@@ -80,7 +80,7 @@ describe('POST /api/v1/accounts/withdraw', () => {
       clientId: '38c3de93-874d-444c-b83f-11e89cca252b',
       branch: '0001',
       account: '12345',
-      ammount: -100,
+      amount: -100,
     });
 
     expect(response.status).toBe(422);
@@ -96,7 +96,7 @@ describe('POST /api/v1/accounts/withdraw', () => {
       clientId: '38c3de93-874d-444c-b83f-11e89cca252b',
       branch: '0001',
       account: '12345',
-      ammount: 2000,
+      amount: 2000,
     });
 
     expect(response.status).toBe(422);
@@ -121,7 +121,7 @@ describe('POST /api/v1/accounts/withdraw', () => {
       clientId: '38c3de93-874d-444c-b83f-11e89cca252b',
       branch: '0001',
       account: '12345',
-      ammount: 100,
+      amount: 100,
     });
 
     expect(response.status).toBe(500);
@@ -140,7 +140,7 @@ describe('POST /api/v1/accounts/withdraw', () => {
       clientId: '38c3de93-874d-444c-b83f-11e89cca252b',
       branch: '0001',
       account: '12345',
-      ammount: 100,
+      amount: 100,
     });
 
     mock.mockRestore();
@@ -160,7 +160,7 @@ describe('POST /api/v1/accounts/withdraw', () => {
       clientId: '38c3de93-874d-444c-b83f-11e89cca252b',
       branch: '0001',
       account: '12345',
-      ammount: 100,
+      amount: 100,
     });
 
     mock.mockRestore();
