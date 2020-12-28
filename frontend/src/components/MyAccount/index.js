@@ -8,10 +8,10 @@ import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import { button, root } from '../shared/styles';
 import logo from '../../assets/img/logo.png';
+import { isAuthenticated } from '../shared/auth';
 import Amplify, { Auth } from 'aws-amplify';
 import aws_exports from '../../aws-exports';
-import { isAuthenticated } from '../shared/auth';
-
+import axios from 'axios';
 Amplify.configure(aws_exports);
 
 function TabPanel(props) {
@@ -53,8 +53,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MyAccount = ({ history }) => {
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [balance, setBalance] = React.useState('$0.00');
 
   useEffect(() => {
     (async () => {
@@ -62,9 +64,33 @@ const MyAccount = ({ history }) => {
 
       if (!hasAuthenticated) {
         return history.push('/access-your-account');
+      } else {
+        const user = (await Auth.currentSession()).getIdToken();
+
+        if (user) {
+          const { payload } = user;
+
+          const branch = payload['custom:branch'];
+          const account = payload['custom:account'];
+
+          const accessToken = user.getJwtToken();
+
+          const response = await axios.get(
+            `${BACKEND_URL}/accounts/branch/${branch}/account/${account}/balance`,
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          );
+
+          if (response.data && response.data.balance) {
+            setBalance(response.data.balance);
+          } else return history.push('/access-your-account');
+        } else return history.push('/access-your-account');
       }
     })();
-  });
+  }, [BACKEND_URL, history]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -74,6 +100,10 @@ const MyAccount = ({ history }) => {
     await Auth.signOut();
     return history.push('/');
   };
+
+  const handleWithdraw = async () => {};
+
+  const handleDeposit = async () => {};
 
   return (
     <div className={classes.root}>
@@ -131,7 +161,7 @@ const MyAccount = ({ history }) => {
           >
             <br />
             <b>Available:</b>
-            <h2>$ 1,000.00</h2>
+            <h2>{balance}</h2>
           </div>
         </div>
         <br />
@@ -146,6 +176,7 @@ const MyAccount = ({ history }) => {
             size="medium"
             fullWidth={true}
             className={classes.button2}
+            onClick={handleDeposit}
           >
             <center>
               <b>DEPOSIT</b>
@@ -157,6 +188,7 @@ const MyAccount = ({ history }) => {
             size="medium"
             fullWidth={true}
             className={classes.button2}
+            onClick={handleWithdraw}
           >
             <center>
               <b>WITHDRAW</b>

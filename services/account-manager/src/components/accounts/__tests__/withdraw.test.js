@@ -9,7 +9,6 @@ describe('POST /api/v1/accounts/withdraw', () => {
     await request(app).post('/api/v1/populate-tables');
 
     const response = await request(app).post('/api/v1/accounts/withdraw').send({
-      clientId: '38c3de93-874d-444c-b83f-11e89cca252b',
       branch: '0001',
       account: '12345',
       amount: 100,
@@ -19,7 +18,7 @@ describe('POST /api/v1/accounts/withdraw', () => {
     expect(response.body).toEqual({
       branch: '0001',
       account: '12345',
-      balance: '1000.00',
+      balance: '$1,000.00',
     });
     done();
   });
@@ -31,7 +30,6 @@ describe('POST /api/v1/accounts/withdraw', () => {
     await request(app).post('/api/v1/populate-tables/amounts');
 
     const response = await request(app).post('/api/v1/accounts/withdraw').send({
-      clientId: '38c3de93-874d-444c-b83f-11e89cca252b',
       branch: '0001',
       account: '12345',
       amount: 100,
@@ -46,9 +44,8 @@ describe('POST /api/v1/accounts/withdraw', () => {
     await request(app).post('/api/v1/populate-tables');
 
     const response = await request(app).post('/api/v1/accounts/withdraw').send({
-      clientId: '28c3de93-874d-444c-b83f-11e89cca252b',
       branch: '0001',
-      account: '12345',
+      account: '54321',
       amount: 100,
     });
 
@@ -61,7 +58,6 @@ describe('POST /api/v1/accounts/withdraw', () => {
     await request(app).post('/api/v1/populate-tables');
 
     const response = await request(app).post('/api/v1/accounts/withdraw').send({
-      clientId: '38c3de93-874d-444c-b83f-11e89cca252b',
       branch: '0001',
       account: '12345',
       amount: 0,
@@ -77,7 +73,6 @@ describe('POST /api/v1/accounts/withdraw', () => {
     await request(app).post('/api/v1/populate-tables');
 
     const response = await request(app).post('/api/v1/accounts/withdraw').send({
-      clientId: '38c3de93-874d-444c-b83f-11e89cca252b',
       branch: '0001',
       account: '12345',
       amount: -100,
@@ -93,7 +88,6 @@ describe('POST /api/v1/accounts/withdraw', () => {
     await request(app).post('/api/v1/populate-tables');
 
     const response = await request(app).post('/api/v1/accounts/withdraw').send({
-      clientId: '38c3de93-874d-444c-b83f-11e89cca252b',
       branch: '0001',
       account: '12345',
       amount: 2000,
@@ -118,7 +112,6 @@ describe('POST /api/v1/accounts/withdraw', () => {
   it('should throw InternalServerError if an unknown error occurs', async (done) => {
     await request(app).post('/api/v1/drop-tables');
     const response = await request(app).post('/api/v1/accounts/withdraw').send({
-      clientId: '38c3de93-874d-444c-b83f-11e89cca252b',
       branch: '0001',
       account: '12345',
       amount: 100,
@@ -137,7 +130,6 @@ describe('POST /api/v1/accounts/withdraw', () => {
     await request(app).post('/api/v1/populate-tables');
 
     const response = await request(app).post('/api/v1/accounts/withdraw').send({
-      clientId: '38c3de93-874d-444c-b83f-11e89cca252b',
       branch: '0001',
       account: '12345',
       amount: 100,
@@ -157,7 +149,6 @@ describe('POST /api/v1/accounts/withdraw', () => {
     await request(app).post('/api/v1/populate-tables');
 
     const response = await request(app).post('/api/v1/accounts/withdraw').send({
-      clientId: '38c3de93-874d-444c-b83f-11e89cca252b',
       branch: '0001',
       account: '12345',
       amount: 100,
