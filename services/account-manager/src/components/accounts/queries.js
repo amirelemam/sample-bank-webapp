@@ -3,13 +3,12 @@
 const knex = require('../../db');
 const { InternalServerError } = require('../../common/errors');
 
-const getAccount = ({ clientId, account, branch }) => {
+const getAccount = ({ account, branch }) => {
   return knex
     .select(['branch', 'account_number', 'client_id', 'id'])
     .from('accounts')
     .where('account_number', account)
     .andWhere('branch', branch)
-    .andWhere('client_id', clientId)
     .andWhere('deleted_at', null)
     .first();
 };

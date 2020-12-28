@@ -9,15 +9,14 @@ const { NotFoundError } = require('../../../../common/errors');
  * @param {Object} obj Deconstructed object
  * @param {string} obj.account Account number
  * @param {string} obj.branch Branch
- * @param {string} obj.clientId Client Id
  * @returns {Object} { accountId: "ID" }
  * @author Amir Elemam
  */
-const getAccountId = async ({ account, branch, clientId }) => {
-  const clientAccount = await queries.getAccount({ account, branch, clientId });
+const getAccountId = async ({ account, branch }) => {
+  const clientAccount = await queries.getAccount({ account, branch });
 
   if (!clientAccount) {
-    throw NotFoundError('Account not found or does not belong to this client');
+    throw NotFoundError('Account not found');
   }
 
   return { accountId: clientAccount.id };
@@ -28,17 +27,16 @@ const getAccountId = async ({ account, branch, clientId }) => {
  * @param {Object} obj Deconstructed object
  * @param {string} obj.account Account number
  * @param {string} obj.branch Branch
- * @param {string} obj.clientId Client Id
  * @param {boolean} obj.formatted Indicates balance formatted as price
  * @returns {Object} {
- *                     balance: "1000.00",
+ *                     balance: "$1,000.00",
  *                     branch: "0001",
  *                     account: "12345"
  *                   }
  * @author Amir Elemam
  */
-const getBalance = async ({ account, branch, clientId, formatted = false }) => {
-  const { accountId } = await getAccountId({ account, branch, clientId });
+const getBalance = async ({ account, branch, formatted = false }) => {
+  const { accountId } = await getAccountId({ account, branch });
 
   const accountBalance = await queries.getBalance(accountId);
   if (!accountBalance) {
@@ -49,7 +47,10 @@ const getBalance = async ({ account, branch, clientId, formatted = false }) => {
 
   if (formatted) {
     return {
-      balance: balance.toFixed(2),
+      balance: new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      }).format(balance),
       branch,
       account,
     };
@@ -67,23 +68,22 @@ const getBalance = async ({ account, branch, clientId, formatted = false }) => {
  * @param {Object} obj Deconstructed object
  * @param {string} obj.account Account number
  * @param {string} obj.branch Branch
- * @param {string} obj.clientId Client Id
  * @param {boolean} obj.amount Amount to be deposited
  * @returns {null|Object} {
- *                         balance: "1000.00",
+ *                         balance: "$1,000.00",
  *                         branch: "0001",
  *                         account: "12345"
  *                        }
  * @author Amir Elemam
  */
-const deposit = async ({ clientId, account, branch, amount }) => {
+const deposit = async ({ account, branch, amount }) => {
   if (amount <= 0) {
     throw UnprocessableEntityError('Amount must be a positive number.');
   }
 
-  const { accountId } = await getAccountId({ account, branch, clientId });
+  const { accountId } = await getAccountId({ account, branch });
 
-  const { balance } = await getBalance({ account, branch, clientId });
+  const { balance } = await getBalance({ account, branch });
 
   const newBalance = balance + amount;
 
@@ -94,7 +94,10 @@ const deposit = async ({ clientId, account, branch, amount }) => {
 
   if (recordUpdated) {
     return {
-      balance: recordUpdated.balance.toFixed(2),
+      balance: new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      }).format(recordUpdated.balance),
       branch,
       account,
     };
@@ -108,23 +111,22 @@ const deposit = async ({ clientId, account, branch, amount }) => {
  * @param {Object} obj Deconstructed object
  * @param {string} obj.account Account number
  * @param {string} obj.branch Branch
- * @param {string} obj.clientId Client Id
  * @param {boolean} obj.amount Amount to be withdrew
  * @returns {null|Object} {
- *                          balance: "1000.00",
+ *                          balance: "$1,000.00",
  *                          branch: "0001",
  *                          account: "12345"
  *                        }
  * @author Amir Elemam
  */
-const withdraw = async ({ clientId, account, branch, amount }) => {
+const withdraw = async ({ account, branch, amount }) => {
   if (amount <= 0) {
     throw UnprocessableEntityError('Amount must be a positive number.');
   }
 
-  const { accountId } = await getAccountId({ account, branch, clientId });
+  const { accountId } = await getAccountId({ account, branch });
 
-  const { balance } = await getBalance({ account, branch, clientId });
+  const { balance } = await getBalance({ account, branch });
 
   const newBalance = balance - amount;
 
@@ -139,7 +141,10 @@ const withdraw = async ({ clientId, account, branch, amount }) => {
 
   if (recordUpdated) {
     return {
-      balance: recordUpdated.balance.toFixed(2),
+      balance: new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      }).format(recordUpdated.balance),
       branch,
       account,
     };

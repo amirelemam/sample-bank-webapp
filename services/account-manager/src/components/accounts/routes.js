@@ -14,13 +14,7 @@ router.get(
     try {
       const { branch, account } = req.params;
 
-      const isValid = await validation.getBalance(req);
-
-      if (!isValid) throw BadRequestError();
-
-      const clientId = req.get('clientId');
-
-      const result = await controller.getBalance({ clientId, account, branch });
+      const result = await controller.getBalance({ account, branch });
 
       return res.status(200).json(result);
     } catch (err) {
@@ -37,10 +31,9 @@ router.post('/deposit', authentication, async (req, res, next) => {
 
     if (!isValid) throw BadRequestError();
 
-    const { clientId, amount, account, branch } = body;
+    const { amount, account, branch } = body;
 
     const result = await controller.deposit({
-      clientId,
       account,
       branch,
       amount,
@@ -61,10 +54,9 @@ router.post('/withdraw', authentication, async (req, res, next) => {
 
     if (!isValid) throw BadRequestError();
 
-    const { clientId, amount, account, branch } = body;
+    const { amount, account, branch } = body;
 
     const result = await controller.withdraw({
-      clientId,
       account,
       branch,
       amount,

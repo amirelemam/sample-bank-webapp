@@ -3,7 +3,6 @@ const logger = require('../../common/logger');
 
 const deposit = async (body) => {
   const schema = joi.object().keys({
-    clientId: joi.string().uuid().required(),
     branch: joi.string().required(),
     account: joi.string().required(),
     amount: joi.number().required(),
@@ -20,7 +19,6 @@ const deposit = async (body) => {
 
 const withdraw = async (body) => {
   const schema = joi.object().keys({
-    clientId: joi.string().uuid().required(),
     branch: joi.string().required(),
     account: joi.string().required(),
     amount: joi.number().required(),
@@ -35,22 +33,7 @@ const withdraw = async (body) => {
   }
 };
 
-const getBalance = async (req) => {
-  const schema = joi.string().uuid().required();
-
-  const clientId = req.get('clientId');
-
-  try {
-    await schema.validateAsync(clientId);
-    return true;
-  } catch (error) {
-    logger.error(error);
-    return false;
-  }
-};
-
 module.exports = {
   deposit,
   withdraw,
-  getBalance,
 };
