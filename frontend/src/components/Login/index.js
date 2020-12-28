@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -17,6 +17,8 @@ import { button, root } from '../shared/styles';
 import { Link } from 'react-router-dom';
 import Amplify, { Auth } from 'aws-amplify';
 import aws_exports from '../../aws-exports';
+import { isAuthenticated } from '../shared/auth';
+
 Amplify.configure(aws_exports);
 
 const useStyles = makeStyles((theme) => ({
@@ -66,6 +68,16 @@ const Login = ({ history }) => {
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
+  useEffect(() => {
+    (async () => {
+      const hasAuthenticated = await isAuthenticated();
+
+      if (hasAuthenticated) {
+        return history.push('/my-account');
+      }
+    })();
+  });
+
   async function handleClick() {
     try {
       const branch = document.getElementById('branch').value;
@@ -78,9 +90,8 @@ const Login = ({ history }) => {
         .getJwtToken();
 
       if (accessToken) {
-        localStorage.setItem('accessToken', accessToken);
         return history.push('/my-account');
-      }
+      } else throw new Error();
     } catch (err) {
       setErrorMsg('Login unsucessful.');
       setError(true);
@@ -194,7 +205,7 @@ const Login = ({ history }) => {
       >
         <Fade in={error}>
           <div className={classes.paper}>
-            <h2 id="transition-modal-title">Erro</h2>
+            <h2 id="transition-modal-title">Error</h2>
             <p id="transition-modal-description">{errorMsg}</p>
             <Box display="flex" p={3} mx="auto" justifyContent="center">
               <Button

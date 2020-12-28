@@ -1,15 +1,18 @@
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { button, root } from '../shared/styles';
 import logo from '../../assets/img/logo.png';
-import { Link } from 'react-router-dom';
+import Amplify, { Auth } from 'aws-amplify';
+import aws_exports from '../../aws-exports';
+import { isAuthenticated } from '../shared/auth';
+
+Amplify.configure(aws_exports);
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -22,11 +25,7 @@ function TabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box p={3}>{children}</Box>}
     </div>
   );
 }
@@ -53,12 +52,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MyAccount = () => {
+const MyAccount = ({ history }) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
+  useEffect(() => {
+    (async () => {
+      const hasAuthenticated = await isAuthenticated();
+
+      if (!hasAuthenticated) {
+        return history.push('/access-your-account');
+      }
+    })();
+  });
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const handleSignOut = async () => {
+    await Auth.signOut();
+    return history.push('/');
   };
 
   return (
@@ -78,9 +92,9 @@ const MyAccount = () => {
             paddingRight: '20px',
           }}
         >
-          <Link to="/" className={classes.link}>
+          <span className={classes.link} onClick={handleSignOut}>
             <ExitToAppIcon />
-          </Link>
+          </span>
         </div>
       </div>
       <AppBar

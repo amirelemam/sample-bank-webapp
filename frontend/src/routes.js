@@ -5,6 +5,7 @@ import Home from './components/Home';
 import Login from './components/Login';
 import MyAccount from './components/MyAccount';
 import NotFound from './components/NotFound';
+import { ProtectedRoute } from './components/shared/ProtectedRoute';
 
 const Routes = () => {
   return (
@@ -12,7 +13,12 @@ const Routes = () => {
       <Switch>
         <Route path="/" component={Home} sensitive exact />
         <Route path="/access-your-account" component={Login} sensitive exact />
-        <Route path="/my-account" component={MyAccount} sensitive exact />
+        <ProtectedRoute
+          path="/my-account"
+          component={MyAccount}
+          sensitive
+          exact
+        />
         <Route path="*" component={NotFound} />
       </Switch>
     </BrowserRouter>
