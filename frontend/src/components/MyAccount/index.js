@@ -6,6 +6,13 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
+import Fade from '@material-ui/core/Fade';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Input from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormControl from '@material-ui/core/FormControl';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import { button, root } from '../shared/styles';
 import logo from '../../assets/img/logo.png';
 import { isAuthenticated } from '../shared/auth';
@@ -45,10 +52,29 @@ const useStyles = makeStyles((theme) => ({
   },
   button: { ...button, width: '150px' },
   button2: { ...button, width: '120px' },
+  button3: { border: '1px solid', width: '120px', marginRight: '30px' },
   link: {
     color: '#fff',
     textDecoration: 'none',
     '&:hover': { color: '#d4af37' },
+  },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#00030e',
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    color: '#00030e',
+  },
+  form: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 }));
 
@@ -56,38 +82,46 @@ const MyAccount = ({ history }) => {
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [amount, setAmount] = React.useState(0.0);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [modalTitle, setModalTitle] = React.useState('');
+  const [modalMsg, setModalMsg] = React.useState('');
   const [balance, setBalance] = React.useState('$0.00');
 
   useEffect(() => {
     (async () => {
-      const hasAuthenticated = await isAuthenticated();
+      try {
+        const hasAuthenticated = await isAuthenticated();
 
-      if (!hasAuthenticated) {
-        return history.push('/access-your-account');
-      } else {
-        const user = (await Auth.currentSession()).getIdToken();
+        if (!hasAuthenticated) {
+          return history.push('/access-your-account');
+        } else {
+          const user = (await Auth.currentSession()).getIdToken();
 
-        if (user) {
-          const { payload } = user;
+          if (user) {
+            const { payload } = user;
 
-          const branch = payload['custom:branch'];
-          const account = payload['custom:account'];
+            const branch = payload['custom:branch'];
+            const account = payload['custom:account'];
 
-          const accessToken = user.getJwtToken();
+            const accessToken = user.getJwtToken();
 
-          const response = await axios.get(
-            `${BACKEND_URL}/accounts/branch/${branch}/account/${account}/balance`,
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-              },
-            }
-          );
+            const response = await axios.get(
+              `${BACKEND_URL}/accounts/branch/${branch}/account/${account}/balance`,
+              {
+                headers: {
+                  Authorization: `Bearer ${accessToken}`,
+                },
+              }
+            );
 
-          if (response.data && response.data.balance) {
-            setBalance(response.data.balance);
+            if (response.data && response.data.balance) {
+              setBalance(response.data.balance);
+            } else return history.push('/access-your-account');
           } else return history.push('/access-your-account');
-        } else return history.push('/access-your-account');
+        }
+      } catch (err) {
+        return history.push('/access-your-account');
       }
     })();
   }, [BACKEND_URL, history]);
@@ -96,14 +130,32 @@ const MyAccount = ({ history }) => {
     setValue(newValue);
   };
 
+  const handleChangeModal = (event) => {
+    setAmount(event.target.value);
+  };
+
+  const handleCloseError = () => {
+    setIsOpen(false);
+    setModalTitle('');
+    setModalMsg('');
+  };
+
   const handleSignOut = async () => {
     await Auth.signOut();
     return history.push('/');
   };
 
-  const handleWithdraw = async () => {};
+  const handleWithdraw = async () => {
+    setIsOpen(true);
+    setModalTitle('Withdraw');
+    setModalMsg('Define an amount to withdraw:');
+  };
 
-  const handleDeposit = async () => {};
+  const handleDeposit = async () => {
+    setIsOpen(true);
+    setModalTitle('Deposit');
+    setModalMsg('Define an amount to deposit:');
+  };
 
   return (
     <div className={classes.root}>
@@ -214,6 +266,57 @@ const MyAccount = ({ history }) => {
           </center>
         </div>
       </TabPanel>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={isOpen}
+        onClose={handleCloseError}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={isOpen}>
+          <div className={classes.paper}>
+            <h2 id="transition-modal-title">{modalTitle}</h2>
+            <p id="transition-modal-description">{modalMsg}</p>
+            <Box display="flex" p={3} mx="auto" justifyContent="center">
+              <FormControl className={classes.form}>
+                <Input
+                  id="input-with-icon-adornment"
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <AttachMoneyIcon />
+                    </InputAdornment>
+                  }
+                  value={amount}
+                  onChange={handleChangeModal}
+                />
+                <br />
+                <div>
+                  <Button
+                    variant="contained"
+                    className={classes.button3}
+                    onClick={handleCloseError}
+                  >
+                    Cancel
+                  </Button>
+
+                  <Button
+                    variant="contained"
+                    className={classes.button2}
+                    onClick={handleCloseError}
+                  >
+                    OK
+                  </Button>
+                </div>
+              </FormControl>
+            </Box>
+          </div>
+        </Fade>
+      </Modal>
     </div>
   );
 };
