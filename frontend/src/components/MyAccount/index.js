@@ -83,6 +83,7 @@ const MyAccount = ({ history }) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [amount, setAmount] = React.useState(0.0);
+  const [operation, setOperation] = React.useState('');
   const [isOpen, setIsOpen] = React.useState(false);
   const [modalTitle, setModalTitle] = React.useState('');
   const [modalMsg, setModalMsg] = React.useState('');
@@ -115,9 +116,9 @@ const MyAccount = ({ history }) => {
               }
             );
 
-            if (response.data && response.data.balance) {
+            if (response && response.data && response.data.balance) {
               setBalance(response.data.balance);
-            } else return history.push('/access-your-account');
+            } else return history.push('/');
           } else return history.push('/access-your-account');
         }
       } catch (err) {
@@ -135,6 +136,7 @@ const MyAccount = ({ history }) => {
   };
 
   const handleCloseError = () => {
+    setAmount(0.0);
     setIsOpen(false);
     setModalTitle('');
     setModalMsg('');
@@ -145,16 +147,65 @@ const MyAccount = ({ history }) => {
     return history.push('/');
   };
 
-  const handleWithdraw = async () => {
-    setIsOpen(true);
-    setModalTitle('Withdraw');
-    setModalMsg('Define an amount to withdraw:');
+  const handleDepositOrWithdraw = async () => {
+    try {
+      const amount = Number(document.getElementById('amount').value);
+
+      let url = '';
+
+      if (operation === 'Deposit') {
+        url = `${BACKEND_URL}/accounts/deposit`;
+      } else {
+        url = `${BACKEND_URL}/accounts/withdraw`;
+      }
+
+      const user = (await Auth.currentSession()).getIdToken();
+
+      if (user) {
+        const { payload } = user;
+
+        const branch = payload['custom:branch'];
+        const account = payload['custom:account'];
+
+        const accessToken = user.getJwtToken();
+
+        const response = await axios.post(
+          url,
+          {
+            branch,
+            account,
+            amount,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
+        if (response && response.data && response.data.balance) {
+          setBalance(response.data.balance);
+        }
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setAmount(0.0);
+      setIsOpen(false);
+      setModalTitle('');
+      setModalMsg('');
+    }
   };
 
-  const handleDeposit = async () => {
+  const handleOpen = (e) => {
+    const name = e.currentTarget.id;
+    const operation = name.charAt(0).toUpperCase() + name.slice(1);
+
+    setOperation(operation);
+
     setIsOpen(true);
-    setModalTitle('Deposit');
-    setModalMsg('Define an amount to deposit:');
+    setModalTitle(`${operation}`);
+    setModalMsg(`Define an amount to ${name}:`);
   };
 
   return (
@@ -224,11 +275,12 @@ const MyAccount = ({ history }) => {
           }}
         >
           <Button
+            id="deposit"
             variant="outlined"
             size="medium"
             fullWidth={true}
             className={classes.button2}
-            onClick={handleDeposit}
+            onClick={handleOpen}
           >
             <center>
               <b>DEPOSIT</b>
@@ -236,11 +288,12 @@ const MyAccount = ({ history }) => {
           </Button>
           <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
           <Button
+            id="withdraw"
             variant="outlined"
             size="medium"
             fullWidth={true}
             className={classes.button2}
-            onClick={handleWithdraw}
+            onClick={handleOpen}
           >
             <center>
               <b>WITHDRAW</b>
@@ -285,7 +338,7 @@ const MyAccount = ({ history }) => {
             <Box display="flex" p={3} mx="auto" justifyContent="center">
               <FormControl className={classes.form}>
                 <Input
-                  id="input-with-icon-adornment"
+                  id="amount"
                   startAdornment={
                     <InputAdornment position="start">
                       <AttachMoneyIcon />
@@ -307,7 +360,7 @@ const MyAccount = ({ history }) => {
                   <Button
                     variant="contained"
                     className={classes.button2}
-                    onClick={handleCloseError}
+                    onClick={handleDepositOrWithdraw}
                   >
                     OK
                   </Button>
