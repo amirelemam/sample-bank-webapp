@@ -67,6 +67,7 @@ const Login = ({ history }) => {
 
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [errorTitle, setErrorTitle] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -74,9 +75,13 @@ const Login = ({ history }) => {
 
       if (hasAuthenticated) {
         return history.push('/my-account');
+      } else {
+        setError(true);
+        setErrorTitle('Instructions');
+        setErrorMsg(`Branch: 0001 Account number: 12345 Password: Qwerty@123`);
       }
     })();
-  });
+  }, [history]);
 
   async function handleClick() {
     try {
@@ -93,13 +98,15 @@ const Login = ({ history }) => {
         return history.push('/my-account');
       } else throw new Error();
     } catch (err) {
-      setErrorMsg('Login unsucessful.');
+      setErrorTitle('Error');
+      setErrorMsg('Login unsuccessful.');
       setError(true);
     }
   }
 
   const handleCloseError = () => {
     setError(false);
+    setErrorTitle('Error');
     setErrorMsg('');
   };
 
@@ -192,8 +199,6 @@ const Login = ({ history }) => {
         </Link>
       </div>
       <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
         className={classes.modal}
         open={error}
         onClose={handleCloseError}
@@ -205,8 +210,9 @@ const Login = ({ history }) => {
       >
         <Fade in={error}>
           <div className={classes.paper}>
-            <h2 id="transition-modal-title">Error</h2>
-            <p id="transition-modal-description">{errorMsg}</p>
+            <h2>{errorTitle}</h2>
+            <p>{errorMsg}</p>
+
             <Box display="flex" p={3} mx="auto" justifyContent="center">
               <Button
                 variant="contained"
