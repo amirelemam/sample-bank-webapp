@@ -1,5 +1,5 @@
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -10,14 +10,16 @@ import Fade from '@material-ui/core/Fade';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import FormControl from '@material-ui/core/FormControl';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import { button, root } from '../shared/styles';
 import logo from '../../assets/img/logo.png';
 import { isAuthenticated } from '../shared/auth';
 import Amplify, { Auth } from 'aws-amplify';
 import aws_exports from '../../aws-exports';
+import { SAVINGS, CHECKING } from '../../common/enums/accountTypes';
 import axios from 'axios';
 Amplify.configure(aws_exports);
 
@@ -72,22 +74,23 @@ const useStyles = makeStyles((theme) => ({
     color: '#00030e',
   },
   form: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: '20px',
   },
 }));
 
 const MyAccount = ({ history }) => {
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-  const [amount, setAmount] = React.useState(0.0);
-  const [operation, setOperation] = React.useState('');
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [modalTitle, setModalTitle] = React.useState('');
-  const [modalMsg, setModalMsg] = React.useState('');
-  const [balance, setBalance] = React.useState('$0.00');
+  const [value, setValue] = useState(0);
+  const [amount, setAmount] = useState(0.0);
+  const [origin, setOrigin] = useState('CHECKING');
+  const [destiny, setDestiny] = useState('SAVINGS');
+  const [isOpen, setIsOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalMsg, setModalMsg] = useState('');
+  const [balanceChecking, setBalanceChecking] = useState('$0.00');
+  const [balanceSavings, setBalanceSavings] = useState('$0.00');
+  const [selection, setSelection] = useState('checking-to-savings');
 
   useEffect(() => {
     (async () => {
@@ -107,8 +110,8 @@ const MyAccount = ({ history }) => {
 
             const accessToken = user.getJwtToken();
 
-            const response = await axios.get(
-              `${BACKEND_URL}/accounts/branch/${branch}/account/${account}/balance`,
+            const responseChecking = await axios.get(
+              `${BACKEND_URL}/accounts/branch/${branch}/account/${account}/type/${CHECKING}/balance`,
               {
                 headers: {
                   Authorization: `Bearer ${accessToken}`,
@@ -116,9 +119,29 @@ const MyAccount = ({ history }) => {
               }
             );
 
-            if (response && response.data && response.data.balance) {
-              setBalance(response.data.balance);
-            } else return history.push('/');
+            const responseSavings = await axios.get(
+              `${BACKEND_URL}/accounts/branch/${branch}/account/${account}/type/${SAVINGS}/balance`,
+              {
+                headers: {
+                  Authorization: `Bearer ${accessToken}`,
+                },
+              }
+            );
+
+            if (
+              responseChecking &&
+              responseChecking.data &&
+              responseChecking.data.balance
+            ) {
+              setBalanceChecking(responseChecking.data.balance);
+            }
+            if (
+              responseSavings &&
+              responseSavings.data &&
+              responseSavings.data.balance
+            ) {
+              setBalanceSavings(responseSavings.data.balance);
+            }
           } else return history.push('/access-your-account');
         }
       } catch (err) {
@@ -147,17 +170,11 @@ const MyAccount = ({ history }) => {
     return history.push('/');
   };
 
-  const handleDepositOrWithdraw = async () => {
+  const handleTransfer = async () => {
     try {
-      const amount = Number(document.getElementById('amount').value);
+      if (Number(amount) <= 0) return;
 
-      let url = '';
-
-      if (operation === 'Deposit') {
-        url = `${BACKEND_URL}/accounts/deposit`;
-      } else {
-        url = `${BACKEND_URL}/accounts/withdraw`;
-      }
+      const url = `${BACKEND_URL}/accounts/transfer`;
 
       const user = (await Auth.currentSession()).getIdToken();
 
@@ -172,9 +189,17 @@ const MyAccount = ({ history }) => {
         const response = await axios.post(
           url,
           {
-            branch,
-            account,
-            amount,
+            origin: {
+              branch,
+              account,
+              type: origin,
+            },
+            destiny: {
+              branch,
+              account,
+              type: destiny,
+            },
+            amount: Number(amount),
           },
           {
             headers: {
@@ -183,8 +208,23 @@ const MyAccount = ({ history }) => {
           }
         );
 
-        if (response && response.data && response.data.balance) {
-          setBalance(response.data.balance);
+        if (
+          response &&
+          response.data &&
+          response.data.origin &&
+          response.data.destiny
+        ) {
+          if (response.data.destiny.type === SAVINGS) {
+            setBalanceSavings(response.data.destiny.balance);
+          } else if (response.data.origin.type === SAVINGS) {
+            setBalanceSavings(response.data.origin.balance);
+          }
+
+          if (response.data.destiny.type === CHECKING) {
+            setBalanceChecking(response.data.destiny.balance);
+          } else if (response.data.origin.type === CHECKING) {
+            setBalanceChecking(response.data.origin.balance);
+          }
         }
       }
     } catch (err) {
@@ -198,14 +238,26 @@ const MyAccount = ({ history }) => {
   };
 
   const handleOpen = (e) => {
-    const name = e.currentTarget.id;
-    const operation = name.charAt(0).toUpperCase() + name.slice(1);
-
-    setOperation(operation);
-
     setIsOpen(true);
-    setModalTitle(`${operation}`);
-    setModalMsg(`Define an amount to ${name}:`);
+    setModalTitle('Transfer');
+    setModalMsg(``);
+  };
+
+  const handleChangeSelect = (event) => {
+    setSelection(event.target.value);
+
+    switch (event.target.value) {
+      case 'checking-to-savings':
+        setOrigin(CHECKING);
+        setDestiny(SAVINGS);
+        break;
+      case 'savings-to-checking':
+        setOrigin(SAVINGS);
+        setDestiny(CHECKING);
+        break;
+      default:
+        break;
+    }
   };
 
   return (
@@ -263,8 +315,26 @@ const MyAccount = ({ history }) => {
             }}
           >
             <br />
-            <b>Available:</b>
-            <h2>{balance}</h2>
+            <b>Checking Account:</b>
+            <h2>{balanceChecking}</h2>
+          </div>
+        </div>
+        <div
+          style={{
+            width: '300px',
+            textAlign: 'center',
+          }}
+        >
+          <div
+            style={{
+              border: '1px solid',
+              borderColor: '#999',
+              borderRadius: '10px',
+            }}
+          >
+            <br />
+            <b>Savings Account:</b>
+            <h2>{balanceSavings}</h2>
           </div>
         </div>
         <br />
@@ -275,7 +345,7 @@ const MyAccount = ({ history }) => {
           }}
         >
           <Button
-            id="deposit"
+            id="transfer"
             variant="outlined"
             size="medium"
             fullWidth={true}
@@ -283,20 +353,7 @@ const MyAccount = ({ history }) => {
             onClick={handleOpen}
           >
             <center>
-              <b>DEPOSIT</b>
-            </center>
-          </Button>
-          <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <Button
-            id="withdraw"
-            variant="outlined"
-            size="medium"
-            fullWidth={true}
-            className={classes.button2}
-            onClick={handleOpen}
-          >
-            <center>
-              <b>WITHDRAW</b>
+              <b>TRANSFER</b>
             </center>
           </Button>
         </div>
@@ -333,12 +390,34 @@ const MyAccount = ({ history }) => {
       >
         <Fade in={isOpen}>
           <div className={classes.paper}>
-            <h2 id="transition-modal-title">{modalTitle}</h2>
-            <p id="transition-modal-description">{modalMsg}</p>
-            <Box display="flex" p={3} mx="auto" justifyContent="center">
-              <FormControl className={classes.form}>
+            <h2>{modalTitle}</h2>
+            <p>{modalMsg}</p>
+            <div mx="auto" className={classes.form}>
+              <InputLabel htmlFor="origin-destiny-required">
+                Origin / Destiny:
+              </InputLabel>
+              <Select
+                native
+                onChange={handleChangeSelect}
+                value={selection}
+                inputProps={{
+                  id: 'origin-destiny-required',
+                }}
+              >
+                <option value="checking-to-savings">Checking to Savings</option>
+                <option value="savings-to-checking">Savings to Checking</option>
+                <option disabled={true} value="cheking-to-external">
+                  Checking to Someone Else
+                </option>
+                <option disabled={true} value="savings-to-external">
+                  Savings to Someone Else
+                </option>
+              </Select>
+              <div mx="auto" className={classes.form}>
+                <InputLabel htmlFor="amount-required">Amount:</InputLabel>
                 <Input
                   id="amount"
+                  label="Amount"
                   startAdornment={
                     <InputAdornment position="start">
                       <AttachMoneyIcon />
@@ -346,27 +425,29 @@ const MyAccount = ({ history }) => {
                   }
                   value={amount}
                   onChange={handleChangeModal}
+                  inputProps={{
+                    id: 'amount-required',
+                  }}
                 />
-                <br />
-                <div>
-                  <Button
-                    variant="contained"
-                    className={classes.button3}
-                    onClick={handleCloseError}
-                  >
-                    Cancel
-                  </Button>
+              </div>
+              <div mx="auto" className={classes.form}>
+                <Button
+                  variant="contained"
+                  className={classes.button3}
+                  onClick={handleCloseError}
+                >
+                  Cancel
+                </Button>
 
-                  <Button
-                    variant="contained"
-                    className={classes.button2}
-                    onClick={handleDepositOrWithdraw}
-                  >
-                    OK
-                  </Button>
-                </div>
-              </FormControl>
-            </Box>
+                <Button
+                  variant="contained"
+                  className={classes.button2}
+                  onClick={handleTransfer}
+                >
+                  OK
+                </Button>
+              </div>
+            </div>
           </div>
         </Fade>
       </Modal>

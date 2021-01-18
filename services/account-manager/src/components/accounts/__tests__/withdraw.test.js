@@ -1,6 +1,7 @@
 const request = require('supertest');
 
 const app = require('../../../app');
+const { CHECKING } = require('../../../common/enums/accountTypes');
 
 describe('POST /api/v1/accounts/withdraw', () => {
   it('should return OK if amount is withdrew successfully', async (done) => {
@@ -11,6 +12,7 @@ describe('POST /api/v1/accounts/withdraw', () => {
     const response = await request(app).post('/api/v1/accounts/withdraw').send({
       branch: '0001',
       account: '12345',
+      type: CHECKING,
       amount: 100,
     });
 
@@ -19,6 +21,7 @@ describe('POST /api/v1/accounts/withdraw', () => {
       branch: '0001',
       account: '12345',
       balance: '$1,000.00',
+      type: CHECKING,
     });
     done();
   });
@@ -32,6 +35,7 @@ describe('POST /api/v1/accounts/withdraw', () => {
     const response = await request(app).post('/api/v1/accounts/withdraw').send({
       branch: '0001',
       account: '12345',
+      type: CHECKING,
       amount: 100,
     });
 
@@ -46,6 +50,7 @@ describe('POST /api/v1/accounts/withdraw', () => {
     const response = await request(app).post('/api/v1/accounts/withdraw').send({
       branch: '0001',
       account: '54321',
+      type: CHECKING,
       amount: 100,
     });
 
@@ -60,6 +65,7 @@ describe('POST /api/v1/accounts/withdraw', () => {
     const response = await request(app).post('/api/v1/accounts/withdraw').send({
       branch: '0001',
       account: '12345',
+      type: CHECKING,
       amount: 0,
     });
 
@@ -75,6 +81,7 @@ describe('POST /api/v1/accounts/withdraw', () => {
     const response = await request(app).post('/api/v1/accounts/withdraw').send({
       branch: '0001',
       account: '12345',
+      type: CHECKING,
       amount: -100,
     });
 
@@ -90,6 +97,7 @@ describe('POST /api/v1/accounts/withdraw', () => {
     const response = await request(app).post('/api/v1/accounts/withdraw').send({
       branch: '0001',
       account: '12345',
+      type: CHECKING,
       amount: 2000,
     });
 
@@ -114,6 +122,7 @@ describe('POST /api/v1/accounts/withdraw', () => {
     const response = await request(app).post('/api/v1/accounts/withdraw').send({
       branch: '0001',
       account: '12345',
+      type: CHECKING,
       amount: 100,
     });
 
@@ -132,6 +141,7 @@ describe('POST /api/v1/accounts/withdraw', () => {
     const response = await request(app).post('/api/v1/accounts/withdraw').send({
       branch: '0001',
       account: '12345',
+      type: CHECKING,
       amount: 100,
     });
 
@@ -151,6 +161,7 @@ describe('POST /api/v1/accounts/withdraw', () => {
     const response = await request(app).post('/api/v1/accounts/withdraw').send({
       branch: '0001',
       account: '12345',
+      type: CHECKING,
       amount: 100,
     });
 

@@ -8,13 +8,13 @@ const authentication = require('../../common/middlewares/authentication');
 const controller = require('./controller');
 
 router.get(
-  '/branch/:branch/account/:account/balance',
+  '/branch/:branch/account/:account/type/:type/balance',
   authentication,
   async (req, res, next) => {
     try {
-      const { branch, account } = req.params;
+      const { branch, account, type } = req.params;
 
-      const result = await controller.getBalance({ account, branch });
+      const result = await controller.getBalance({ account, branch, type });
 
       return res.status(200).json(result);
     } catch (err) {
@@ -31,11 +31,12 @@ router.post('/deposit', authentication, async (req, res, next) => {
 
     if (!isValid) throw BadRequestError();
 
-    const { amount, account, branch } = body;
+    const { amount, account, branch, type } = body;
 
     const result = await controller.deposit({
       account,
       branch,
+      type,
       amount,
     });
 
@@ -54,12 +55,36 @@ router.post('/withdraw', authentication, async (req, res, next) => {
 
     if (!isValid) throw BadRequestError();
 
-    const { amount, account, branch } = body;
+    const { amount, account, branch, type } = body;
 
     const result = await controller.withdraw({
       account,
       branch,
+      type,
       amount,
+    });
+
+    if (result) return res.status(200).json(result);
+    return res.status(500).json();
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.post('/transfer', authentication, async (req, res, next) => {
+  try {
+    const { body } = req;
+
+    const isValid = await validation.transfer(body);
+
+    if (!isValid) throw BadRequestError();
+
+    const { amount, origin, destiny } = body;
+
+    const result = await controller.transfer({
+      amount,
+      origin,
+      destiny,
     });
 
     if (result) return res.status(200).json(result);

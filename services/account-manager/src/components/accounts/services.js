@@ -1,8 +1,12 @@
 'use strict';
 
-const queries = require('./queries');
-const { UnprocessableEntityError } = require('../../common/errors');
+const {
+  UnprocessableEntityError,
+  InternalServerError,
+} = require('../../common/errors');
 const { NotFoundError } = require('../../../../common/errors');
+const accountTypes = require('../../common/enums/accountTypes');
+const queries = require('./queries');
 
 /**
  * @description Returns an object with the id for that account
@@ -12,8 +16,8 @@ const { NotFoundError } = require('../../../../common/errors');
  * @returns {Object} { accountId: "ID" }
  * @author Amir Elemam
  */
-const getAccountId = async ({ account, branch }) => {
-  const clientAccount = await queries.getAccount({ account, branch });
+const getAccountId = async ({ account, branch, type }) => {
+  const clientAccount = await queries.getAccount({ account, branch, type });
 
   if (!clientAccount) {
     throw NotFoundError('Account not found');
@@ -35,8 +39,8 @@ const getAccountId = async ({ account, branch }) => {
  *                   }
  * @author Amir Elemam
  */
-const getBalance = async ({ account, branch, formatted = false }) => {
-  const { accountId } = await getAccountId({ account, branch });
+const getBalance = async ({ account, branch, type, formatted = false }) => {
+  const { accountId } = await getAccountId({ account, branch, type });
 
   const accountBalance = await queries.getBalance(accountId);
   if (!accountBalance) {
@@ -53,6 +57,7 @@ const getBalance = async ({ account, branch, formatted = false }) => {
       }).format(balance),
       branch,
       account,
+      type,
     };
   }
 
@@ -60,6 +65,7 @@ const getBalance = async ({ account, branch, formatted = false }) => {
     balance,
     branch,
     account,
+    type,
   };
 };
 
@@ -76,14 +82,14 @@ const getBalance = async ({ account, branch, formatted = false }) => {
  *                        }
  * @author Amir Elemam
  */
-const deposit = async ({ account, branch, amount }) => {
+const deposit = async ({ account, branch, type, amount }) => {
   if (amount <= 0) {
     throw UnprocessableEntityError('Amount must be a positive number.');
   }
 
-  const { accountId } = await getAccountId({ account, branch });
+  const { accountId } = await getAccountId({ account, branch, type });
 
-  const { balance } = await getBalance({ account, branch });
+  const { balance } = await getBalance({ account, branch, type });
 
   const newBalance = balance + amount;
 
@@ -100,6 +106,7 @@ const deposit = async ({ account, branch, amount }) => {
       }).format(recordUpdated.balance),
       branch,
       account,
+      type,
     };
   } else {
     return null;
@@ -119,14 +126,14 @@ const deposit = async ({ account, branch, amount }) => {
  *                        }
  * @author Amir Elemam
  */
-const withdraw = async ({ account, branch, amount }) => {
+const withdraw = async ({ account, branch, type, amount }) => {
   if (amount <= 0) {
     throw UnprocessableEntityError('Amount must be a positive number.');
   }
 
-  const { accountId } = await getAccountId({ account, branch });
+  const { accountId } = await getAccountId({ account, branch, type });
 
-  const { balance } = await getBalance({ account, branch });
+  const { balance } = await getBalance({ account, branch, type });
 
   const newBalance = balance - amount;
 
@@ -147,14 +154,37 @@ const withdraw = async ({ account, branch, amount }) => {
       }).format(recordUpdated.balance),
       branch,
       account,
+      type,
     };
   } else {
     return null;
   }
 };
 
+const transfer = async ({ amount, origin, destiny }) => {
+  if (!accountTypes[destiny.type] || !accountTypes[origin.type]) {
+    throw UnprocessableEntityError('Destiny/origin type not found');
+  }
+
+  if (amount <= 0) {
+    throw UnprocessableEntityError('Amount must be a positive number.');
+  }
+
+  const withdrawal = await withdraw({ ...origin, amount });
+  if (!withdrawal) throw InternalServerError('Cannot withdraw from account');
+
+  const deposited = await deposit({ ...destiny, amount });
+  if (!deposited) throw InternalServerError('Cannot deposit to account');
+
+  return {
+    origin: withdrawal,
+    destiny: deposited,
+  };
+};
+
 module.exports = {
   getBalance,
   deposit,
   withdraw,
+  transfer,
 };

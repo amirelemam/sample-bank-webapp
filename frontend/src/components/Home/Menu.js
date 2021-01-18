@@ -34,6 +34,11 @@ const Menu = () => {
         </Link>
       </MenuItem>
       <MenuItem className={classes.option}>
+        <Link to="/investments" className={classes.link}>
+          INVESTMENTS
+        </Link>
+      </MenuItem>
+      <MenuItem className={classes.option}>
         <Link to="/plans-and-fees" className={classes.link}>
           PLANS & FEES
         </Link>

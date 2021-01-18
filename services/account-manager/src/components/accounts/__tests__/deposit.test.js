@@ -1,6 +1,7 @@
 const request = require('supertest');
 
 const app = require('../../../app');
+const { CHECKING } = require('../../../common/enums/accountTypes');
 
 describe('POST /api/v1/accounts/deposit', () => {
   it('should return OK if amount is deposited successfully', async (done) => {
@@ -11,6 +12,7 @@ describe('POST /api/v1/accounts/deposit', () => {
     const response = await request(app).post('/api/v1/accounts/deposit').send({
       branch: '0001',
       account: '12345',
+      type: CHECKING,
       amount: 100,
     });
 
@@ -18,6 +20,7 @@ describe('POST /api/v1/accounts/deposit', () => {
     expect(response.body).toEqual({
       branch: '0001',
       account: '12345',
+      type: CHECKING,
       balance: '$1,200.00',
     });
     done();
@@ -32,6 +35,7 @@ describe('POST /api/v1/accounts/deposit', () => {
     const response = await request(app).post('/api/v1/accounts/deposit').send({
       branch: '0001',
       account: '12345',
+      type: CHECKING,
       amount: 100,
     });
 
@@ -46,6 +50,7 @@ describe('POST /api/v1/accounts/deposit', () => {
     const response = await request(app).post('/api/v1/accounts/deposit').send({
       branch: '0001',
       account: '54321',
+      type: CHECKING,
       amount: 100,
     });
 
@@ -60,6 +65,7 @@ describe('POST /api/v1/accounts/deposit', () => {
     const response = await request(app).post('/api/v1/accounts/deposit').send({
       branch: '0001',
       account: '12345',
+      type: CHECKING,
       amount: 0,
     });
 
@@ -75,6 +81,7 @@ describe('POST /api/v1/accounts/deposit', () => {
     const response = await request(app).post('/api/v1/accounts/deposit').send({
       branch: '0001',
       account: '12345',
+      type: CHECKING,
       amount: -100,
     });
 
@@ -99,6 +106,7 @@ describe('POST /api/v1/accounts/deposit', () => {
     const response = await request(app).post('/api/v1/accounts/deposit').send({
       branch: '0001',
       account: '12345',
+      type: CHECKING,
       amount: 100,
     });
 
@@ -117,6 +125,7 @@ describe('POST /api/v1/accounts/deposit', () => {
     const response = await request(app).post('/api/v1/accounts/deposit').send({
       branch: '0001',
       account: '12345',
+      type: CHECKING,
       amount: 100,
     });
 
@@ -136,6 +145,7 @@ describe('POST /api/v1/accounts/deposit', () => {
     const response = await request(app).post('/api/v1/accounts/deposit').send({
       branch: '0001',
       account: '12345',
+      type: CHECKING,
       amount: 100,
     });
 

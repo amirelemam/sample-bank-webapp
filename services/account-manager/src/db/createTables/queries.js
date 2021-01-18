@@ -2,6 +2,8 @@
 
 const knex = require('../index');
 
+const { CHECKING, SAVINGS } = require('../../common/enums/accountTypes');
+
 const loadDependencies = () => {
   knex.raw(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp";`);
 };
@@ -52,6 +54,7 @@ const accounts = async () => {
       .primary();
     table.string('branch').notNullable();
     table.string('account_number').notNullable();
+    table.enu('type', [SAVINGS, CHECKING]).defaultTo('checking');
     table.uuid('client_id').notNullable();
     table.timestamp('created_at').defaultTo(knex.fn.now());
     table.timestamp('updated_at').defaultTo(knex.fn.now());

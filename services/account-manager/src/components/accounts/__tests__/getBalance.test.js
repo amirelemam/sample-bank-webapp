@@ -1,6 +1,7 @@
 const request = require('supertest');
 
 const app = require('../../../app');
+const { CHECKING, SAVINGS } = require('../../../common/enums/accountTypes');
 
 describe('GET /api/v1/accounts/branch/:branch/account/:account/balance', () => {
   it('should return OK if amount is got balance successfully', async (done) => {
@@ -10,9 +11,10 @@ describe('GET /api/v1/accounts/branch/:branch/account/:account/balance', () => {
 
     const branch = '0001';
     const account = '12345';
+    const type = CHECKING;
 
     const response = await request(app).get(
-      `/api/v1/accounts/branch/${branch}/account/${account}/balance`
+      `/api/v1/accounts/branch/${branch}/account/${account}/type/${type}/balance`
     );
 
     expect(response.status).toBe(200);
@@ -20,6 +22,7 @@ describe('GET /api/v1/accounts/branch/:branch/account/:account/balance', () => {
       branch: '0001',
       account: '12345',
       balance: '$1,100.00',
+      type: CHECKING,
     });
     done();
   });
@@ -29,9 +32,10 @@ describe('GET /api/v1/accounts/branch/:branch/account/:account/balance', () => {
 
     const branch = '0001';
     const account = '12345';
+    const type = SAVINGS;
 
     const response = await request(app).get(
-      `/api/v1/accounts/branch/${branch}/account/${account}/balance`
+      `/api/v1/accounts/branch/${branch}/account/${account}/type/${type}/balance`
     );
 
     expect(response.status).toBe(500);
