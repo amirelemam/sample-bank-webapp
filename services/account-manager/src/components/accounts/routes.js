@@ -87,8 +87,7 @@ router.post('/transfer', authentication, async (req, res, next) => {
       destiny,
     });
 
-    if (result) return res.status(200).json(result);
-    return res.status(500).json();
+    return res.status(200).json(result);
   } catch (err) {
     return next(err);
   }

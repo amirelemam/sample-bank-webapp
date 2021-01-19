@@ -5,7 +5,6 @@ const {
   InternalServerError,
 } = require('../../common/errors');
 const { NotFoundError } = require('../../../../common/errors');
-const accountTypes = require('../../common/enums/accountTypes');
 const queries = require('./queries');
 
 /**
@@ -162,10 +161,6 @@ const withdraw = async ({ account, branch, type, amount }) => {
 };
 
 const transfer = async ({ amount, origin, destiny }) => {
-  if (!accountTypes[destiny.type] || !accountTypes[origin.type]) {
-    throw UnprocessableEntityError('Destiny/origin type not found');
-  }
-
   if (amount <= 0) {
     throw UnprocessableEntityError('Amount must be a positive number.');
   }
