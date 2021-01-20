@@ -4,7 +4,7 @@ const {
   UnprocessableEntityError,
   InternalServerError,
 } = require('../../common/errors');
-const { NotFoundError } = require('../../../../common/errors');
+const { NotFoundError } = require('../../common/errors');
 const queries = require('./queries');
 
 /**

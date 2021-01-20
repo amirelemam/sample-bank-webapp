@@ -2,7 +2,7 @@
 
 const router = require('express').Router();
 const validation = require('./validation');
-const { BadRequestError } = require('../../../../common/errors');
+const { BadRequestError } = require('../../common/errors');
 const authentication = require('../../common/middlewares/authentication');
 
 const controller = require('./controller');

@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express');
-const { NotFoundError } = require('../../common/errors');
+const { NotFoundError } = require('./common/errors');
 
 const healthCheck = require('./components/health/routes');
 const createTables = require('./db/createTables/routes');

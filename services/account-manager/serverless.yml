@@ -19,7 +19,7 @@ functions:
 plugins:
   - serverless-offline
   - serverless-dotenv-plugin
-
+  - serverless-vpc-discovery
 custom:
   serverless-offline:
     httpPort: 4000
