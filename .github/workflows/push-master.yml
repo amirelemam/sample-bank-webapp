@@ -19,11 +19,11 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
+      - name: Install NPM dependencies
+        run: cd services/account-manager && npm install
       - name: Serverless Authentication
         run: npx serverless config credentials --provider aws --key ${{secrets.AWS_ACCESS_KEY_ID}} --secret ${{secrets.AWS_SECRET_ACCESS_KEY}}
         working-directory: './services/account-manager'
-      - name: Install NPM dependencies
-        run: cd services/account-manager && npm install
       - name: Deploy to AWS
         run: npx serverless deploy -v -s dev
         working-directory: './services/account-manager'
