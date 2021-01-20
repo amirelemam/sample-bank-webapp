@@ -9,3 +9,6 @@ jspm_packages
 # Misc
 .DS_Store
 .eslintcache
+
+.env
+.env.development
