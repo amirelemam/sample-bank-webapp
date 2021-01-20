@@ -26,7 +26,10 @@ app.use(morgan('combined', { stream: logger.stream }));
 if (!process.env.IS_OFFLINE) {
   app.use((req, res, next) => {
     res.header('Access-Control-Expose-Headers', 'access-token');
-    res.header('Access-Control-Allow-Origin', 'https://amirelemam.com');
+    res.header(
+      'Access-Control-Allow-Origin',
+      'https://amirelemam.com.s3-website-us-east-1.amazonaws.com'
+    );
     return next();
   });
 }
