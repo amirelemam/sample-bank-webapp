@@ -2,9 +2,6 @@
 node_modules
 jspm_packages
 
-# Serverless directories
-.serverless
-
 # Misc
 .DS_Store
 coverage

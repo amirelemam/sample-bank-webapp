@@ -42,7 +42,7 @@ const isValidUser = (user) => {
 
 const authentication = async (req, res, next) => {
   try {
-    if (process.env.NODE_ENV === 'test' || process.env.IS_OFFLINE) {
+    if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'local') {
       return next();
     }
 
