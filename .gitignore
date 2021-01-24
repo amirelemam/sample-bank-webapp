@@ -1,8 +1,1 @@
-# package directories
-node_modules
-jspm_packages
-
-# Misc
 .DS_Store
-coverage
-frontend/.eslintcache
