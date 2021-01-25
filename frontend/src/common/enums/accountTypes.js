@@ -1,1 +1,1 @@
-module.exports = { SAVINGS: 'SAVINGS', CHECKING: 'CHECKING' };
+module.exports = Object.freeze({ SAVINGS: 'SAVINGS', CHECKING: 'CHECKING' });
