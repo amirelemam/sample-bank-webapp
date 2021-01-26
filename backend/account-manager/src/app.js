@@ -23,7 +23,7 @@ app.use(sanitize.middleware);
 app.use(morgan('combined', { stream: logger.stream }));
 
 // eslint-disable-next-line no-unused-vars
-if (process.env.NODE_ENV !== 'local') {
+if (process.env.NODE_ENV !== 'dev') {
   app.use((req, res, next) => {
     res.header('Access-Control-Expose-Headers', 'access-token');
     res.header(
@@ -40,7 +40,7 @@ app.use('/api/v1', routes);
 app.use((err, req, res, next) => {
   if (err) {
     logger.error(err.stack);
-    if (process.env.NODE_ENV !== 'local') sentry.captureException(err.stack);
+    if (process.env.NODE_ENV !== 'dev') sentry.captureException(err.stack);
 
     if (!err.status) return res.status(500).json();
     return res.status(err.status).send({ error: err.message });

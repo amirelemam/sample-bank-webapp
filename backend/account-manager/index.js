@@ -1,5 +1,6 @@
 'use strict';
 
+require('dotenv-safe').config();
 const logger = require('./src/common/logger');
 const app = require('./src/app');
 

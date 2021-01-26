@@ -8,4 +8,4 @@ coverage
 .eslintcache
 
 .env
-.env.development
+.env.prod
