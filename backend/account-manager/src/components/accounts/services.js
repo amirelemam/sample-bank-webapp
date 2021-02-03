@@ -5,7 +5,7 @@ const {
   InternalServerError,
 } = require('../../common/errors');
 const { NotFoundError } = require('../../common/errors');
-const queries = require('./queries');
+const queries = require('./repository');
 
 /**
  * @description Returns an object with the id for that account

@@ -130,8 +130,8 @@ describe('POST /api/v1/accounts/withdraw', () => {
     done();
   });
   it('should return InternalServerError if account balance not found', async (done) => {
-    const queries = require('../../accounts/queries');
-    const mock = jest.spyOn(queries, 'getBalance');
+    const repository = require('../../accounts/repository');
+    const mock = jest.spyOn(repository, 'getBalance');
     mock.mockResolvedValueOnce(null);
 
     await request(app).post('/api/v1/drop-tables');
@@ -150,8 +150,8 @@ describe('POST /api/v1/accounts/withdraw', () => {
     done();
   });
   it('should return InternalServerError if no account was updated', async (done) => {
-    const queries = require('../../accounts/queries');
-    const mock = jest.spyOn(queries, 'update');
+    const repository = require('../../accounts/repository');
+    const mock = jest.spyOn(repository, 'update');
     mock.mockResolvedValueOnce([null]);
 
     await request(app).post('/api/v1/drop-tables');

@@ -6,6 +6,7 @@ const router = express.Router();
 
 const createTables = require('./controller');
 
+// eslint-disable-next-line no-unused-vars
 router.post('/', async (req, res, next) => {
   try {
     await createTables();

@@ -1,3 +1,5 @@
+'use strict';
+
 const joi = require('@hapi/joi');
 const logger = require('../../common/logger');
 const { SAVINGS, CHECKING } = require('../../common/enums/accountTypes');
