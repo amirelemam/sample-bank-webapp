@@ -57,6 +57,21 @@ describe('POST /api/v1/accounts/withdraw', () => {
     expect(response.status).toBe(404);
     done();
   });
+  it('should throw UnprocessableEntityError if amount is over 10 thousand', async (done) => {
+    await request(app).post('/api/v1/drop-tables');
+    await request(app).post('/api/v1/create-tables');
+    await request(app).post('/api/v1/populate-tables');
+
+    const response = await request(app).post('/api/v1/accounts/withdraw').send({
+      branch: '0001',
+      account: '12345',
+      type: CHECKING,
+      amount: 20000,
+    });
+
+    expect(response.status).toBe(422);
+    done();
+  });
   it('should throw UnprocessableEntityError if amount is zero', async (done) => {
     await request(app).post('/api/v1/drop-tables');
     await request(app).post('/api/v1/create-tables');

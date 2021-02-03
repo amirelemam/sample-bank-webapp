@@ -57,6 +57,21 @@ describe('POST /api/v1/accounts/deposit', () => {
     expect(response.status).toBe(404);
     done();
   });
+  it('should throw UnprocessableEntityError if new balance is over 1 million', async (done) => {
+    await request(app).post('/api/v1/drop-tables');
+    await request(app).post('/api/v1/create-tables');
+    await request(app).post('/api/v1/populate-tables');
+
+    const response = await request(app).post('/api/v1/accounts/deposit').send({
+      branch: '0001',
+      account: '24680',
+      type: CHECKING,
+      amount: 9000,
+    });
+
+    expect(response.status).toBe(422);
+    done();
+  });
   it('should throw UnprocessableEntityError if amount is zero', async (done) => {
     await request(app).post('/api/v1/drop-tables');
     await request(app).post('/api/v1/create-tables');
@@ -67,6 +82,21 @@ describe('POST /api/v1/accounts/deposit', () => {
       account: '12345',
       type: CHECKING,
       amount: 0,
+    });
+
+    expect(response.status).toBe(422);
+    done();
+  });
+  it('should throw UnprocessableEntityError if amount is over 10 thousand', async (done) => {
+    await request(app).post('/api/v1/drop-tables');
+    await request(app).post('/api/v1/create-tables');
+    await request(app).post('/api/v1/populate-tables');
+
+    const response = await request(app).post('/api/v1/accounts/deposit').send({
+      branch: '0001',
+      account: '12345',
+      type: CHECKING,
+      amount: 20000,
     });
 
     expect(response.status).toBe(422);

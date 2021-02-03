@@ -7,6 +7,9 @@ const {
 const { NotFoundError } = require('../../common/errors');
 const queries = require('./repository');
 
+const ONE_MILLION = 1000000;
+const TEN_THOUSAND = 10000;
+
 /**
  * @description Returns an object with the id for that account
  * @param {Object} obj Deconstructed object
@@ -85,12 +88,19 @@ const deposit = async ({ account, branch, type, amount }) => {
   if (amount <= 0) {
     throw UnprocessableEntityError('Amount must be a positive number.');
   }
+  if (amount > TEN_THOUSAND) {
+    throw UnprocessableEntityError('Amount must be less than 10,000.00.');
+  }
 
   const { accountId } = await getAccountId({ account, branch, type });
 
   const { balance } = await getBalance({ account, branch, type });
 
   const newBalance = balance + amount;
+
+  if (newBalance > ONE_MILLION) {
+    throw UnprocessableEntityError('New balance cannot be over 1,000,000.00.');
+  }
 
   const [recordUpdated] = await queries.update(
     { balance: newBalance },
@@ -129,6 +139,9 @@ const withdraw = async ({ account, branch, type, amount }) => {
   if (amount <= 0) {
     throw UnprocessableEntityError('Amount must be a positive number.');
   }
+  if (amount > TEN_THOUSAND) {
+    throw UnprocessableEntityError('Amount must be less than 10,000.00.');
+  }
 
   const { accountId } = await getAccountId({ account, branch, type });
 
@@ -163,6 +176,9 @@ const withdraw = async ({ account, branch, type, amount }) => {
 const transfer = async ({ amount, origin, destiny }) => {
   if (amount <= 0) {
     throw UnprocessableEntityError('Amount must be a positive number.');
+  }
+  if (amount > TEN_THOUSAND) {
+    throw UnprocessableEntityError('Amount must be less than 10,000.00.');
   }
 
   const withdrawal = await withdraw({ ...origin, amount });
