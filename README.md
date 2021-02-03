@@ -18,7 +18,7 @@ This application is structured as a monorepo, which means that all services (bac
 
 ## Run
 
-You can run all services with docker-compose
+You can run all services with docker-compose  
 `$ docker-compose up --build`
 
 ## Backend
@@ -29,7 +29,7 @@ Manage your account: get the balance, deposit, withdraw and transfer money.
 
 **Documentation**
 
-You can access the OpenAPI (former Swagger) documentation on `/api/v1/docs`
+You can access the OpenAPI (former Swagger) documentation on `/api/v1/docs`  
 E.g. if you're running with http://lcoalhost:
 
 **Features**
@@ -42,31 +42,31 @@ E.g. if you're running with http://lcoalhost:
 **Run**
 
 - Local
-  Go to the service folder
-  `$ cd backend/account-manager`
-  If not installed, install nodemon as a global dependency
-  `$ npm i -g nodemon`
-  Install dependencies
-  `$ npm i`
-  Run tests
-  `$ npm test`
-  Start service
+  Go to the service folder  
+  `$ cd backend/account-manager`  
+  If not installed, install nodemon as a global dependency  
+  `$ npm i -g nodemon`  
+  Install dependencies  
+  `$ npm i`  
+  Run tests  
+  `$ npm test`  
+  Start service  
   `$ npm run start-local`
 
-- Production
-  Go to the service folder
-  `$ cd backend/account-manager`
-  Install dependencies
-  `$ npm i --only=prod`
-  Run tests
-  `$ npm test`
-  Start service
+- Production  
+  Go to the service folder  
+  `$ cd backend/account-manager`  
+  Install dependencies  
+  `$ npm i --only=prod`  
+  Run tests  
+  `$ npm test`  
+  Start service  
   `$ npm run start`
 
-- Docker
-  Add permission to execute the script
-  `$ chmod +x startAccountManagerWithDocker.sh`
-  Run the script
+- Docker  
+  Add permission to execute the script  
+  `$ chmod +x startAccountManagerWithDocker.sh`  
+  Run the script  
   `$ ./startAccountManagerWithDocker`
 
 #### Account Type Simulator
