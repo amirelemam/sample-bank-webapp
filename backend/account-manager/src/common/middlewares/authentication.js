@@ -6,6 +6,7 @@ const {
   UnauthenticatedError,
   InternalServerError,
 } = require('../errors');
+const { isDev, isTest } = require('../utils');
 const logger = require('../logger');
 
 const getJwk = async () => {
@@ -42,9 +43,7 @@ const isValidUser = (user) => {
 
 const authentication = async (req, res, next) => {
   try {
-    if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'dev') {
-      return next();
-    }
+    if (isTest() || isDev()) return next();
 
     const accessToken = req.headers.authorization.split(' ')[1];
 

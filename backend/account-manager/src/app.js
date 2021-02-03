@@ -6,11 +6,15 @@ const helmet = require('helmet');
 const cors = require('cors');
 const sanitize = require('sanitize');
 const morgan = require('morgan');
-const sentry = require('./common/sentry');
-const { NotFoundError } = require('./common/errors');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
 
+const swaggerDefinition = require('./docs/swaggerDefinition');
+const sentry = require('./common/sentry');
 const logger = require('./common/logger');
 const routes = require('./routes');
+const { NotFoundError } = require('./common/errors');
+const { isDev, isTest } = require('./common/utils');
 require('./db');
 
 const app = express();
@@ -20,10 +24,10 @@ app.use(bodyParser.json());
 app.use(helmet());
 app.use(cors());
 app.use(sanitize.middleware);
-app.use(morgan('combined', { stream: logger.stream }));
+app.use(morgan('dev'));
 
-// eslint-disable-next-line no-unused-vars
-if (process.env.NODE_ENV !== 'dev') {
+if (!isDev()) {
+  // eslint-disable-next-line no-unused-vars
   app.use((req, res, next) => {
     res.header('Access-Control-Expose-Headers', 'access-token');
     res.header(
@@ -34,13 +38,20 @@ if (process.env.NODE_ENV !== 'dev') {
   });
 }
 
+const options = {
+  swaggerDefinition,
+  apis: ['./components/**/routes.js'],
+};
+const swaggerSpec = swaggerJsdoc(options);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 app.use('/api/v1', routes);
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   if (err) {
     logger.error(err.stack);
-    if (process.env.NODE_ENV !== 'dev') sentry.captureException(err.stack);
+    if (!isDev() && !isTest()) sentry.captureException(err.stack);
 
     if (!err.status) return res.status(500).json();
     return res.status(err.status).send({ error: err.message });

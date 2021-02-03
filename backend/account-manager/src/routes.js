@@ -8,6 +8,7 @@ const createTables = require('./db/createTables/routes');
 const dropTables = require('./db/dropTables/routes');
 const populateTables = require('./db/populateTables/routes');
 const accounts = require('./components/accounts/routes');
+const { isDev, isTest } = require('./common/utils');
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ router.use('/health', healthCheck);
 router.use('/accounts', accounts);
 
 // DB
-if (process.env.NODE_ENV === 'dev' || process.env.NODE_ENV === 'test') {
+if (isDev() || isTest()) {
   router.use('/create-tables', createTables);
   router.use('/drop-tables', dropTables);
   router.use('/populate-tables', populateTables);
