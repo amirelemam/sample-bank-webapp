@@ -1,4 +1,4 @@
-## Serverless Bank WebApp
+## Sample Bank
 
 ### Motivation
 
@@ -18,7 +18,8 @@ Features:
 
 - Deposit money
 - Withdraw money
-- Get balance
+- Transfer money between accounts
+- Get balance for Savings and Checking accounts
 
 **Account Type Simulator**
 Features:
@@ -45,19 +46,16 @@ You can access the OpenAPI (former Swagger) documentation [here]()
 - Sentry account
 - ElephantJS or local posgresql
 
-### Run locally
+### Run
 
-#### Serverless Framework
+#### Docker
 
-`$ git clone https://github.com/amirelemam/`
-`$ cd serverless-bank-app`
-`$ npm install`
-`$ sls offline`
+`$ ./startAccountManagerDockerContainer`
 
-#### Dcoker
+- docker build . -t account-manager
+- docker run -p 4000:4000 -d account-manager
 
-`$ ./startDocker`
 
 ### License
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+These files are licensed under the [MIT License](LICENSE)

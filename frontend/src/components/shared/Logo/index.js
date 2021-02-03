@@ -27,7 +27,7 @@ const Logo = () => {
         <img src={logo} alt="logo" className={classes.logo} />
       </Link>
       <br />
-      <span className={classes.title}>Serverless Bank</span>
+      <span className={classes.title}>Sample Bank</span>
     </div>
   );
 };

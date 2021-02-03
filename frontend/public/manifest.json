@@ -1,6 +1,6 @@
 {
-  "short_name": "Serverless Bank",
-  "name": "Serverless Bank",
+  "short_name": "Sample Bank",
+  "name": "Sample Bank",
   "icons": [
     {
       "src": "favicon.ico",
