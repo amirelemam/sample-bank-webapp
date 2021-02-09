@@ -1,6 +1,5 @@
 import request from 'supertest';
 import app from '../../../app';
-import { isTest } from '../../../common/utils';
 
 describe('GET /branches', () => {
   it('should get Branch New York', async (done) => {

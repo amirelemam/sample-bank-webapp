@@ -32,4 +32,7 @@ class App {
   }
 }
 
-export default new App().express;
+export default new App().express.listen(
+  process.env.PORT || 4010,
+  () => `Server running at ${process.env.PORT || 4010}`
+);

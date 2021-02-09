@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "types": ["jest", "node"],
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "strict": true
+    "strict": true,
+    "outDir": "dist"
   },
   "include": ["**/*.test.ts", "__tests__"]
 }
