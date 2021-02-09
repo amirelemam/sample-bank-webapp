@@ -17,7 +17,7 @@ const customLevels = {
 
 winston.addColors(customLevels.colors);
 
-const logger = winston.createLogger({
+module.exports = winston.createLogger({
   transports: [
     new winston.transports.Console({
       format: winston.format.combine(
@@ -29,14 +29,7 @@ const logger = winston.createLogger({
           (info) => `${info.timestamp} ${info.level}: ${info.message}`
         )
       ),
-      level: 'error',
+      level: 'info',
     }),
   ],
 });
-
-module.exports = logger;
-module.exports.stream = {
-  write: function (message, encoding) {
-    logger.info(message);
-  },
-};

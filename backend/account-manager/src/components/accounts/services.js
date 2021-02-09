@@ -5,7 +5,7 @@ const {
   InternalServerError,
 } = require('../../common/errors');
 const { NotFoundError } = require('../../common/errors');
-const queries = require('./repository');
+const repository = require('./repository');
 
 const ONE_MILLION = 1000000;
 const TEN_THOUSAND = 10000;
@@ -19,7 +19,7 @@ const TEN_THOUSAND = 10000;
  * @author Amir Elemam
  */
 const getAccountId = async ({ account, branch, type }) => {
-  const clientAccount = await queries.getAccount({ account, branch, type });
+  const clientAccount = await repository.getAccount({ account, branch, type });
 
   if (!clientAccount) {
     throw NotFoundError('Account not found');
@@ -44,7 +44,7 @@ const getAccountId = async ({ account, branch, type }) => {
 const getBalance = async ({ account, branch, type, formatted = false }) => {
   const { accountId } = await getAccountId({ account, branch, type });
 
-  const accountBalance = await queries.getBalance(accountId);
+  const accountBalance = await repository.getBalance(accountId);
   if (!accountBalance) {
     throw NotFoundError('Cannot find balance for account.');
   }
@@ -102,7 +102,7 @@ const deposit = async ({ account, branch, type, amount }) => {
     throw UnprocessableEntityError('New balance cannot be over 1,000,000.00.');
   }
 
-  const [recordUpdated] = await queries.update(
+  const [recordUpdated] = await repository.update(
     { balance: newBalance },
     accountId
   );
@@ -153,7 +153,7 @@ const withdraw = async ({ account, branch, type, amount }) => {
     throw UnprocessableEntityError('Amount cannot be greater than balance.');
   }
 
-  const [recordUpdated] = await queries.update(
+  const [recordUpdated] = await repository.update(
     { balance: newBalance },
     accountId
   );

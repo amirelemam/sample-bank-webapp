@@ -1,4 +1,5 @@
 import winston from 'winston';
+import { TransformableInfo } from 'logform';
 
 const customLevels = {
   levels: {
@@ -17,7 +18,7 @@ const customLevels = {
 
 winston.addColors(customLevels.colors);
 
-const logger = winston.createLogger({
+export default winston.createLogger({
   transports: [
     new winston.transports.Console({
       format: winston.format.combine(
@@ -26,18 +27,11 @@ const logger = winston.createLogger({
           format: 'YYYY-MM-DDHH:mm:ss',
         }),
         winston.format.printf(
-          (info) => `${info.timestamp} ${info.level}: ${info.message}`
+          (info: TransformableInfo) =>
+            `${info.timestamp} ${info.level}: ${info.message}`
         )
       ),
-      level: 'error',
+      level: 'info',
     }),
   ],
 });
-
-export const stream = {
-  write: function (message: string, encoding: string) {
-    logger.info(message);
-  },
-};
-
-export default logger;
