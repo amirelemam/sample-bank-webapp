@@ -1,7 +1,7 @@
 #!/bin/sh
 
-IMAGE_NAME="branch-finder"
-CONTAINER_NAME="branch-finder"
+IMAGE_NAME="branch_finder"
+CONTAINER_NAME="branch_finder"
 
 docker stop ${CONTAINER_NAME}
 docker rm ${CONTAINER_NAME}

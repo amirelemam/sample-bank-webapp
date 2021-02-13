@@ -2,9 +2,7 @@
 
 const router = require('express').Router();
 const validation = require('./validation');
-const { BadRequestError } = require('../../common/errors');
 const authentication = require('../../common/middlewares/authentication');
-
 const controller = require('./controller');
 
 /**
@@ -105,29 +103,28 @@ router.get(
  *       200:
  *         description: account information
  */
-router.post('/deposit', authentication, async (req, res, next) => {
-  try {
-    const { body } = req;
+router.post(
+  '/deposit',
+  authentication,
+  validation.deposit,
+  async (req, res, next) => {
+    try {
+      const { amount, account, branch, type } = req.body;
 
-    const isValid = await validation.deposit(body);
+      const result = await controller.deposit({
+        account,
+        branch,
+        type,
+        amount,
+      });
 
-    if (!isValid) throw BadRequestError();
-
-    const { amount, account, branch, type } = body;
-
-    const result = await controller.deposit({
-      account,
-      branch,
-      type,
-      amount,
-    });
-
-    if (result) return res.status(200).json(result);
-    return res.status(500).json();
-  } catch (err) {
-    return next(err);
+      if (result) return res.status(200).json(result);
+      return res.status(500).json();
+    } catch (err) {
+      return next(err);
+    }
   }
-});
+);
 
 /**
  * @swagger
@@ -159,29 +156,28 @@ router.post('/deposit', authentication, async (req, res, next) => {
  *       200:
  *         description: account information
  */
-router.post('/withdraw', authentication, async (req, res, next) => {
-  try {
-    const { body } = req;
+router.post(
+  '/withdraw',
+  authentication,
+  validation.withdraw,
+  async (req, res, next) => {
+    try {
+      const { amount, account, branch, type } = req.body;
 
-    const isValid = await validation.withdraw(body);
+      const result = await controller.withdraw({
+        account,
+        branch,
+        type,
+        amount,
+      });
 
-    if (!isValid) throw BadRequestError();
-
-    const { amount, account, branch, type } = body;
-
-    const result = await controller.withdraw({
-      account,
-      branch,
-      type,
-      amount,
-    });
-
-    if (result) return res.status(200).json(result);
-    return res.status(500).json();
-  } catch (err) {
-    return next(err);
+      if (result) return res.status(200).json(result);
+      return res.status(500).json();
+    } catch (err) {
+      return next(err);
+    }
   }
-});
+);
 
 /**
  * @swagger
@@ -228,26 +224,25 @@ router.post('/withdraw', authentication, async (req, res, next) => {
  *       200:
  *         description: account information
  */
-router.post('/transfer', authentication, async (req, res, next) => {
-  try {
-    const { body } = req;
+router.post(
+  '/transfer',
+  authentication,
+  validation.transfer,
+  async (req, res, next) => {
+    try {
+      const { amount, origin, destiny } = req.body;
 
-    const isValid = await validation.transfer(body);
+      const result = await controller.transfer({
+        amount,
+        origin,
+        destiny,
+      });
 
-    if (!isValid) throw BadRequestError();
-
-    const { amount, origin, destiny } = body;
-
-    const result = await controller.transfer({
-      amount,
-      origin,
-      destiny,
-    });
-
-    return res.status(200).json(result);
-  } catch (err) {
-    return next(err);
+      return res.status(200).json(result);
+    } catch (err) {
+      return next(err);
+    }
   }
-});
+);
 
 module.exports = router;

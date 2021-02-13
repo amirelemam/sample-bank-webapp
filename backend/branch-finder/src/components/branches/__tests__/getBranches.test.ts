@@ -38,7 +38,7 @@ describe('GET /branches', () => {
       {
         location: { type: 'Point', coordinates: [-46.62529, -23.533773] },
         name: 'Branch São Paulo',
-        address: 'Does Not Matter, 123',
+        address: 'Av. do Estado, 123',
         city: 'São Paulo',
         state: 'SP',
         zipCode: '01000000',
@@ -47,7 +47,7 @@ describe('GET /branches', () => {
       {
         location: { type: 'Point', coordinates: [-43.196388, -22.908333] },
         name: 'Branch Rio de Janeiro',
-        address: 'Really, 345',
+        address: 'Av. Brasil, 345',
         city: 'Rio de Janeiro',
         state: 'RJ',
         zipCode: '05400100',
@@ -56,7 +56,7 @@ describe('GET /branches', () => {
       {
         location: { type: 'Point', coordinates: [-73.935242, 40.73061] },
         name: 'Branch New York',
-        address: 'Good Luck, 567',
+        address: '23nd Street, 567',
         city: 'New York',
         state: 'NY',
         zipCode: '10001',
@@ -65,7 +65,7 @@ describe('GET /branches', () => {
       {
         location: { type: 'Point', coordinates: [-122.446747, 37.733795] },
         name: 'Branch San Francisco',
-        address: 'Enjoy, 789',
+        address: 'Elizabeth Street, 789',
         city: 'San Francisco',
         state: 'CA',
         zipCode: '94110',

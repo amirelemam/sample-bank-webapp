@@ -22,7 +22,7 @@ const getJwk = async () => {
 
     return keys;
   } catch (error) {
-    logger.debug(error);
+    logger.error(error);
     return null;
   }
 };

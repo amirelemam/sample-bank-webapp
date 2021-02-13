@@ -1,0 +1,61 @@
+version: '3'
+
+networks:
+  sample_bank:
+
+services:
+  account-manager:
+    container_name: account_manager
+    build:
+      context: ./backend/account-manager
+    command: npm start
+    ports:
+      - 4000:4000
+    environment:
+      - NODE_ENV=dev
+      - PORT=4000
+    networks:
+      - sample_bank
+    depends_on:
+      - postgres
+
+  branch-finder:
+    container_name: branch_finder
+    build:
+      context: ./backend/branch-finder
+    command: npm start
+    ports:
+      - 4010:4010
+    environment:
+      - NODE_ENV=dev
+      - DB_CONN_STR=mongodb://mongodb:27017/samplebank
+      - PORT=4010
+    networks:
+      - sample_bank
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - '27017:27017'
+    networks:
+      - sample_bank
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: db
+    networks:
+      - sample_bank
+    volumes:
+      - database-data:/var/lib/postgresql/data/
+
+volumes:
+  database-data:

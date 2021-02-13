@@ -1,10 +1,10 @@
 'use strict';
 
-const joi = require('@hapi/joi');
+const joi = require('joi');
 const logger = require('../../common/logger');
 const { SAVINGS, CHECKING } = require('../../common/enums/accountTypes');
 
-const deposit = async (body) => {
+const deposit = async ({ body }, res, next) => {
   const schema = joi.object().keys({
     branch: joi.string().required(),
     account: joi.string().required(),
@@ -14,14 +14,14 @@ const deposit = async (body) => {
 
   try {
     await schema.validateAsync(body);
-    return true;
+    return next();
   } catch (error) {
     logger.error(error);
-    return false;
+    return res.status(400).send();
   }
 };
 
-const withdraw = async (body) => {
+const withdraw = async ({ body }, res, next) => {
   const schema = joi.object().keys({
     branch: joi.string().required(),
     account: joi.string().required(),
@@ -31,14 +31,14 @@ const withdraw = async (body) => {
 
   try {
     await schema.validateAsync(body);
-    return true;
+    return next();
   } catch (error) {
     logger.error(error);
-    return false;
+    return res.status(400).send();
   }
 };
 
-const transfer = async (body) => {
+const transfer = async ({ body }, res, next) => {
   const schema = joi.object().keys({
     origin: joi.object().keys({
       branch: joi.string().required(),
@@ -55,10 +55,10 @@ const transfer = async (body) => {
 
   try {
     await schema.validateAsync(body);
-    return true;
+    return next();
   } catch (error) {
     logger.error(error);
-    return false;
+    return res.status(400).send();
   }
 };
 

@@ -21,7 +21,10 @@ class App {
   }
 
   private database(): void {
-    mongoose.connect(`mongodb://localhost:27017/tsexample`, {
+    const connStr: string =
+      process.env.DB_CONN_STR || 'mongodb://localhost:27017/samplebank';
+
+    mongoose.connect(connStr, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
@@ -32,7 +35,9 @@ class App {
   }
 }
 
+const PORT = process.env.PORT || 4010;
+
 export default new App().express.listen(
-  process.env.PORT || 4010,
-  () => `Server running at ${process.env.PORT || 4010}`
+  PORT,
+  () => `Server running at ${PORT}`
 );

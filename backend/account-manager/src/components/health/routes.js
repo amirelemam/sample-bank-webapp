@@ -1,7 +1,6 @@
 'use strict';
 
 const router = require('express').Router();
-const logger = require('../../common/logger');
 
 const controller = require('./controller');
 

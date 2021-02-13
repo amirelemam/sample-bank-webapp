@@ -8,3 +8,13 @@ export const branches = async (): Promise<Array<Object>> => {
 
   return docs;
 };
+
+export const checkIfCollectionIsEmptyAndPopulate = async (): Promise<void> => {
+  const docCount = await Branch.collection.conn.db
+    .collection(Branch.collection.name)
+    .countDocuments();
+
+  if (docCount === 0) {
+    await branches();
+  }
+};

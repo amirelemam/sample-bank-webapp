@@ -1,7 +1,7 @@
 #!/bin/sh
 
-IMAGE_NAME="account-manager"
-CONTAINER_NAME="account-manager"
+IMAGE_NAME="account_manager"
+CONTAINER_NAME="account_manager"
 
 docker stop ${CONTAINER_NAME}
 docker rm ${CONTAINER_NAME}
