@@ -1,7 +1,7 @@
 const request = require('supertest');
 
-const app = require('../../../app');
-const { CHECKING, SAVINGS } = require('../../../common/enums/accountTypes');
+const app = require('../../../../app');
+const { CHECKING, SAVINGS } = require('../../../../common/enums/accountTypes');
 
 describe('GET /api/v1/accounts/branch/:branch/account/:account/balance', () => {
   it('should return OK if amount is got balance successfully', async (done) => {

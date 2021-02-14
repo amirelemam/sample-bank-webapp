@@ -50,8 +50,10 @@ app.use('/api/v1', routes);
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   if (err) {
-    logger.error(err.stack);
-    if (!isDev() && !isTest()) sentry.captureException(err.stack);
+    if (!isDev() && !isTest()) {
+      logger.error(err.stack);
+      sentry.captureException(err.stack);
+    }
 
     if (!err.status) return res.status(500).json();
     return res.status(err.status).send({ error: err.message });

@@ -42,7 +42,11 @@ const getAccountId = async ({ account, branch, type }) => {
  * @author Amir Elemam
  */
 const getBalance = async ({ account, branch, type, formatted = false }) => {
-  const { accountId } = await getAccountId({ account, branch, type });
+  const { accountId } = await module.exports.getAccountId({
+    account,
+    branch,
+    type,
+  });
 
   const accountBalance = await repository.getBalance(accountId);
   if (!accountBalance) {
@@ -92,9 +96,17 @@ const deposit = async ({ account, branch, type, amount }) => {
     throw UnprocessableEntityError('Amount must be less than 10,000.00.');
   }
 
-  const { accountId } = await getAccountId({ account, branch, type });
+  const { accountId } = await module.exports.getAccountId({
+    account,
+    branch,
+    type,
+  });
 
-  const { balance } = await getBalance({ account, branch, type });
+  const { balance } = await module.exports.getBalance({
+    account,
+    branch,
+    type,
+  });
 
   const newBalance = balance + amount;
 
@@ -143,9 +155,17 @@ const withdraw = async ({ account, branch, type, amount }) => {
     throw UnprocessableEntityError('Amount must be less than 10,000.00.');
   }
 
-  const { accountId } = await getAccountId({ account, branch, type });
+  const { accountId } = await module.exports.getAccountId({
+    account,
+    branch,
+    type,
+  });
 
-  const { balance } = await getBalance({ account, branch, type });
+  const { balance } = await module.exports.getBalance({
+    account,
+    branch,
+    type,
+  });
 
   const newBalance = balance - amount;
 
@@ -181,10 +201,10 @@ const transfer = async ({ amount, origin, destiny }) => {
     throw UnprocessableEntityError('Amount must be less than 10,000.00.');
   }
 
-  const withdrawal = await withdraw({ ...origin, amount });
+  const withdrawal = await module.exports.withdraw({ ...origin, amount });
   if (!withdrawal) throw InternalServerError('Cannot withdraw from account');
 
-  const deposited = await deposit({ ...destiny, amount });
+  const deposited = await module.exports.deposit({ ...destiny, amount });
   if (!deposited) throw InternalServerError('Cannot deposit to account');
 
   return {
@@ -198,4 +218,5 @@ module.exports = {
   deposit,
   withdraw,
   transfer,
+  getAccountId,
 };

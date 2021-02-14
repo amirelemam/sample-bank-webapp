@@ -8,5 +8,4 @@ module.exports = async () => {
   await createTables.clients();
   await createTables.accounts();
   await createTables.balances();
-  await populateTables.all();
 };

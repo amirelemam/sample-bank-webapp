@@ -1,7 +1,7 @@
 const request = require('supertest');
 
-const app = require('../../../app');
-const { CHECKING, SAVINGS } = require('../../../common/enums/accountTypes');
+const app = require('../../../../app');
+const { CHECKING, SAVINGS } = require('../../../../common/enums/accountTypes');
 
 describe('POST /api/v1/accounts/transfer', () => {
   it('should return OK if amount is transfered successfully', async (done) => {
@@ -252,7 +252,7 @@ describe('POST /api/v1/accounts/transfer', () => {
   });
 
   it('should return InternalServerError if account balance not found', async (done) => {
-    const repository = require('../../accounts/repository');
+    const repository = require('../../repository');
     const mock = jest.spyOn(repository, 'getBalance');
     mock.mockResolvedValueOnce(null);
 
@@ -282,7 +282,7 @@ describe('POST /api/v1/accounts/transfer', () => {
   });
 
   it('should return InternalServerError if no account is found', async (done) => {
-    const repository = require('../../accounts/repository');
+    const repository = require('../../repository');
     const mock = jest.spyOn(repository, 'update');
     mock.mockResolvedValueOnce([null]);
 
@@ -311,7 +311,7 @@ describe('POST /api/v1/accounts/transfer', () => {
     done();
   });
   it('should return InternalServerError if cannot deposit', async (done) => {
-    const repository = require('../../accounts/repository');
+    const repository = require('../../repository');
     const mock = jest.spyOn(repository, 'update');
     mock
       .mockResolvedValueOnce([{ balance: 100 }])
@@ -342,7 +342,7 @@ describe('POST /api/v1/accounts/transfer', () => {
     done();
   });
   it('should return InternalServerError if cannot withdraw', async (done) => {
-    const repository = require('../../accounts/repository');
+    const repository = require('../../repository');
     const mock = jest.spyOn(repository, 'update');
     mock.mockResolvedValueOnce([null]);
 
