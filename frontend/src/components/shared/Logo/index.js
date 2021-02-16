@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: '10px',
   },
   logo: {
-    width: '200px',
+    width: '150px',
   },
   title: {
     color: '#d4af37',
