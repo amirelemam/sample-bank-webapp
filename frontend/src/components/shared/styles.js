@@ -15,5 +15,14 @@ export const root = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  justifyContent: 'center',
+  minHeight: 'calc(100vh - 90px)',
+  justifyContent: 'flex-start',
+  bottom: 0,
+  padding: '15px',
+};
+
+export const link = {
+  color: '#fff',
+  textDecoration: 'none',
+  '&:hover': { color: '#d4af37', textDecoration: 'underline' },
 };

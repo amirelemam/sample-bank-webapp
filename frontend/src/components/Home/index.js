@@ -7,7 +7,6 @@ import { root } from '../shared/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     ...root,
-    minHeight: '90vh',
     color: 'white',
   },
 }));
@@ -20,12 +19,6 @@ const Home = () => {
       <header className={classes.root}>
         <Logo />
         <Menu />
-        <a
-          href="https://github.com/amirelemam/demo-bank-webapp"
-          className="source-code"
-        >
-          Source code
-        </a>
       </header>
     </div>
   );

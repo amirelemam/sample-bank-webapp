@@ -5,11 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    minHeight: '350px',
-  },
   option: {
-    minHeight: '50px',
+    minHeight: '40px',
     fontSize: '20px',
     justifyContent: 'center',
   },
@@ -34,8 +31,8 @@ const Menu = () => {
         </Link>
       </MenuItem>
       <MenuItem className={classes.option}>
-        <Link to="/investments" className={classes.link}>
-          INVESTMENTS
+        <Link to="/find-a-branch" className={classes.link}>
+          FIND A BRANCH
         </Link>
       </MenuItem>
       <MenuItem className={classes.option}>
@@ -44,8 +41,8 @@ const Menu = () => {
         </Link>
       </MenuItem>
       <MenuItem className={classes.option}>
-        <Link to="/find-a-branch" className={classes.link}>
-          FIND A BRANCH
+        <Link to="/bill-payment" className={classes.link}>
+          PAY A BILL
         </Link>
       </MenuItem>
     </MenuList>

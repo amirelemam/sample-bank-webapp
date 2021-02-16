@@ -5,10 +5,9 @@ import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingTop: '100px',
     margin: 0,
     textAlign: 'center',
-    paddingBottom: '40px',
+    paddingBottom: '10px',
   },
   logo: {
     width: '200px',

@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     ...button,
   },
   text: {
-    marginBottom: '40px',
+    marginBottom: '20px',
   },
 }));
 

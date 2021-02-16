@@ -13,8 +13,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Logo from '../shared/Logo';
 import { makeStyles } from '@material-ui/core/styles';
-import { button, root } from '../shared/styles';
-import { Link } from 'react-router-dom';
+import { button, root, link } from '../shared/styles';
 import Amplify, { Auth } from 'aws-amplify';
 import aws_exports from '../../aws-exports';
 import { isAuthenticated } from '../shared/auth';
@@ -27,19 +26,15 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
   },
   form: {
-    width: '400px',
+    width: '300px',
     color: '#ffffff',
   },
-  button: { ...button, width: '400px' },
+  button: { ...button, width: '150px' },
   linkButton: {
     color: '#00030e',
     textDecoration: 'none',
   },
-  link: {
-    color: '#fff',
-    textDecoration: 'none',
-    '&:hover': { color: '#d4af37', textDecoration: 'underline' },
-  },
+  link,
   modal: {
     display: 'flex',
     alignItems: 'center',
@@ -193,11 +188,6 @@ const Login = ({ history }) => {
           <b>Sign in</b>
         </center>
       </Button>
-      <div style={{ paddingTop: '130px' }}>
-        <Link to="/" className={classes.link}>
-          Go to Menu
-        </Link>
-      </div>
       <Modal
         className={classes.modal}
         open={error}
