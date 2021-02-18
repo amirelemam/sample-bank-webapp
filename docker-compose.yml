@@ -4,7 +4,7 @@ networks:
   sample_bank:
 
 services:
-  account-manager:
+  account_manager:
     container_name: account_manager
     build:
       context: ./backend/account-manager
@@ -14,12 +14,15 @@ services:
     environment:
       - NODE_ENV=dev
       - PORT=4000
+      - DB_HOST=http://localhost:5432
+      - DB_USER=user
+      - DB_PASSWORD=pass
     networks:
       - sample_bank
     depends_on:
       - postgres
 
-  branch-finder:
+  branch_finder:
     container_name: branch_finder
     build:
       context: ./backend/branch-finder
@@ -34,6 +37,19 @@ services:
       - sample_bank
     depends_on:
       - mongodb
+
+  frontend:
+    container_name: frontend
+    build: ./frontend
+    command: npm start
+    ports:
+      - 3000:3000
+    environment:
+      - REACT_APP_ACCOUNT_MANAGER_API=http://account_manager
+    networks:
+      - sample_bank
+    depends_on:
+      - account_manager
 
   mongodb:
     image: mongo
@@ -51,7 +67,7 @@ services:
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: pass
-      POSTGRES_DB: db
+      POSTGRES_DB: postgres
     networks:
       - sample_bank
     volumes:

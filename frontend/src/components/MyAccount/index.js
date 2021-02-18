@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MyAccount = ({ history }) => {
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+  const ACCOUNT_MANAGER_API = process.env.REACT_APP_ACCOUNT_MANAGER_API;
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [amount, setAmount] = useState(0.0);
@@ -111,7 +111,7 @@ const MyAccount = ({ history }) => {
             const accessToken = user.getJwtToken();
 
             const responseChecking = await axios.get(
-              `${BACKEND_URL}/accounts/branch/${branch}/account/${account}/type/${CHECKING}/balance`,
+              `${ACCOUNT_MANAGER_API}/accounts/branch/${branch}/account/${account}/type/${CHECKING}/balance`,
               {
                 headers: {
                   Authorization: `Bearer ${accessToken}`,
@@ -120,7 +120,7 @@ const MyAccount = ({ history }) => {
             );
 
             const responseSavings = await axios.get(
-              `${BACKEND_URL}/accounts/branch/${branch}/account/${account}/type/${SAVINGS}/balance`,
+              `${ACCOUNT_MANAGER_API}/accounts/branch/${branch}/account/${account}/type/${SAVINGS}/balance`,
               {
                 headers: {
                   Authorization: `Bearer ${accessToken}`,
@@ -148,7 +148,7 @@ const MyAccount = ({ history }) => {
         return history.push('/access-your-account');
       }
     })();
-  }, [BACKEND_URL, history]);
+  }, [ACCOUNT_MANAGER_API, history]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -174,7 +174,7 @@ const MyAccount = ({ history }) => {
     try {
       if (Number(amount) <= 0) return;
 
-      const url = `${BACKEND_URL}/accounts/transfer`;
+      const url = `${ACCOUNT_MANAGER_API}/accounts/transfer`;
 
       const user = (await Auth.currentSession()).getIdToken();
 
