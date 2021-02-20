@@ -14,9 +14,7 @@ services:
     environment:
       - NODE_ENV=dev
       - PORT=4000
-      - DB_HOST=http://localhost:5432
-      - DB_USER=user
-      - DB_PASSWORD=pass
+      - DB_CONN_STR=postgres://user:pass@postgres:5432/db
     networks:
       - sample_bank
     depends_on:
@@ -67,11 +65,11 @@ services:
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: pass
-      POSTGRES_DB: postgres
+      POSTGRES_DB: db
     networks:
       - sample_bank
     volumes:
-      - database-data:/var/lib/postgresql/data/
+      - ./dbdata:/var/lib/postgresql/data
 
 volumes:
-  database-data:
+  dbdata:
