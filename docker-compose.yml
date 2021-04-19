@@ -4,58 +4,58 @@ networks:
   sample_bank:
 
 services:
-  account_manager:
-    container_name: account_manager
-    build:
-      context: ./backend/account-manager
-    command: npm start
-    ports:
-      - 4000:4000
-    environment:
-      - NODE_ENV=dev
-      - PORT=4000
-      - DB_CONN_STR=postgres://user:pass@postgres:5432/db
-    networks:
-      - sample_bank
-    depends_on:
-      - postgres
+  # account_manager:
+  #   container_name: account_manager
+  #   build:
+  #     context: ./backend/account-manager
+  #   command: npm start
+  #   ports:
+  #     - 4000:4000
+  #   environment:
+  #     - NODE_ENV=dev
+  #     - PORT=4000
+  #     - DB_CONN_STR=postgres://user:pass@postgres:5432/db
+  #   networks:
+  #     - sample_bank
+  #   depends_on:
+  #     - postgres
 
-  branch_finder:
-    container_name: branch_finder
-    build:
-      context: ./backend/branch-finder
-    command: npm start
-    ports:
-      - 4010:4010
-    environment:
-      - NODE_ENV=dev
-      - DB_CONN_STR=mongodb://mongodb:27017/samplebank
-      - PORT=4010
-    networks:
-      - sample_bank
-    depends_on:
-      - mongodb
+  # branch_finder:
+  #   container_name: branch_finder
+  #   build:
+  #     context: ./backend/branch-finder
+  #   command: npm start
+  #   ports:
+  #     - 4010:4010
+  #   environment:
+  #     - NODE_ENV=dev
+  #     - DB_CONN_STR=mongodb://mongodb:27017/samplebank
+  #     - PORT=4010
+  #   networks:
+  #     - sample_bank
+  #   depends_on:
+  #     - mongodb
 
-  frontend:
-    container_name: frontend
-    build: ./frontend
-    command: npm start
-    ports:
-      - 3000:3000
-    environment:
-      - REACT_APP_ACCOUNT_MANAGER_API=http://account_manager
-    networks:
-      - sample_bank
-    depends_on:
-      - account_manager
+  # frontend:
+  #   container_name: frontend
+  #   build: ./frontend
+  #   command: npm start
+  #   ports:
+  #     - 3000:3000
+  #   environment:
+  #     - REACT_APP_ACCOUNT_MANAGER_API=http://account_manager
+  #   networks:
+  #     - sample_bank
+  #   depends_on:
+  #     - account_manager
 
-  mongodb:
-    image: mongo
-    container_name: mongodb
-    ports:
-      - '27017:27017'
-    networks:
-      - sample_bank
+  # mongodb:
+  #   image: mongo
+  #   container_name: mongodb
+  #   ports:
+  #     - '27017:27017'
+  #   networks:
+  #     - sample_bank
 
   postgres:
     image: postgres

@@ -1,5 +1,3 @@
-'use strict';
-
 const express = require('express');
 const { NotFoundError } = require('./common/errors');
 

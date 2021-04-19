@@ -1,5 +1,3 @@
-'use strict';
-
 const logger = require('../common/logger');
 
 let connection;
@@ -17,14 +15,11 @@ if (process.env.DB_CONN_STR) {
 
 const knex = require('knex')({
   client: 'pg',
-  version: '7.2',
+  version: '8.5',
   connection,
   pool: {
     min: 2,
     max: 10,
-    afterCreate: () => {
-      logger.info('Successfully connected to DB.');
-    },
   },
 });
 

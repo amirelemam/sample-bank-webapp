@@ -1,5 +1,3 @@
-'use strict';
-
 const knex = require('../../db');
 
 const getAccount = ({ account, branch, type }) => {

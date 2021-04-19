@@ -1,5 +1,3 @@
-'use strict';
-
 const createTables = require('./queries');
 const populateTables = require('../populateTables/controller');
 

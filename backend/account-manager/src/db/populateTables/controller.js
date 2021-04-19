@@ -1,5 +1,3 @@
-'use strict';
-
 const populateTables = require('./queries');
 
 const all = async () => {

@@ -1,5 +1,3 @@
-'use strict';
-
 const services = require('./services');
 
 const transfer = ({ amount, origin, destiny }) => {

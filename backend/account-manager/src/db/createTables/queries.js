@@ -1,5 +1,3 @@
-'use strict';
-
 const knex = require('../index');
 
 const { CHECKING, SAVINGS } = require('../../common/enums/accountTypes');

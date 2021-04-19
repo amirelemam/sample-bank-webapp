@@ -1,5 +1,3 @@
-'use strict';
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
@@ -10,7 +8,6 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 
 const swaggerDefinition = require('./docs/swaggerDefinition');
-const sentry = require('./common/sentry');
 const logger = require('./common/logger');
 const routes = require('./routes');
 const { NotFoundError } = require('./common/errors');
@@ -52,7 +49,6 @@ app.use((err, req, res, next) => {
   if (err) {
     if (!isDev() && !isTest()) {
       logger.error(err.stack);
-      sentry.captureException(err.stack);
     }
 
     if (!err.status) return res.status(500).json();

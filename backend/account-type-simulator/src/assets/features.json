@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Wire Transfer",
+    "free": 1,
+    "pro": 5,
+    "extra": "$5/each"
+  },
+  {
+    "name": "Credit Card Fee",
+    "free": 50,
+    "pro": null,
+    "extra": "-"
+  },
+  {
+    "name": "ATM Withdrawal (our network)",
+    "free": 1,
+    "pro": 3,
+    "extra": "$2/each"
+  },
+  {
+    "name": "ATM Withdrawal (other banks)",
+    "free": 0,
+    "pro": 1,
+    "extra": "$3/each"
+  }
+]

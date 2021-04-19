@@ -1,5 +1,3 @@
-'use strict';
-
 const dropTables = require('./queries');
 
 module.exports = async () => {

@@ -1,5 +1,3 @@
-'use strict';
-
 const joi = require('joi');
 const logger = require('../../common/logger');
 const { SAVINGS, CHECKING } = require('../../common/enums/accountTypes');

@@ -1,5 +1,3 @@
-'use strict';
-
 const logger = require('./common/logger');
 const app = require('./app');
 
