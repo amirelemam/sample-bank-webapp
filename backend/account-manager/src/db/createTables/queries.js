@@ -3,7 +3,7 @@ const knex = require('../index');
 const { CHECKING, SAVINGS } = require('../../common/enums/accountTypes');
 
 const loadDependencies = () => {
-  knex.raw(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp";`);
+  knex.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
 };
 
 const createTimestamp = async (table) => {

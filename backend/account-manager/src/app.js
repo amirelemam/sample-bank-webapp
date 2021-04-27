@@ -29,7 +29,7 @@ if (!isDev()) {
     res.header('Access-Control-Expose-Headers', 'access-token');
     res.header(
       'Access-Control-Allow-Origin',
-      'https://amirelemam.com.s3-website-us-east-1.amazonaws.com'
+      'https://amirelemam.com.s3-website-us-east-1.amazonaws.com',
     );
     return next();
   });
@@ -53,10 +53,9 @@ app.use((err, req, res, next) => {
 
     if (!err.status) return res.status(500).json();
     return res.status(err.status).send({ error: err.message });
-  } else {
-    const { status, message } = NotFoundError();
-    return res.status(status).send(message);
   }
+  const { status, message } = NotFoundError();
+  return res.status(status).send(message);
 });
 
 module.exports = app;

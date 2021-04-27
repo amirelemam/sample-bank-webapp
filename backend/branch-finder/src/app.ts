@@ -21,8 +21,7 @@ class App {
   }
 
   private database(): void {
-    const connStr: string =
-      process.env.DB_CONN_STR || 'mongodb://localhost:27017/samplebank';
+    const connStr: string = process.env.DB_CONN_STR || 'mongodb://localhost:27017/samplebank';
 
     mongoose.connect(connStr, {
       useNewUrlParser: true,
@@ -39,5 +38,5 @@ const PORT = process.env.PORT || 4010;
 
 export default new App().express.listen(
   PORT,
-  () => `Server running at ${PORT}`
+  () => `Server running at ${PORT}`,
 );

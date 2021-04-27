@@ -1,5 +1,4 @@
 const express = require('express');
-const { NotFoundError } = require('./common/errors');
 
 const healthCheck = require('./components/health/routes');
 const createTables = require('./db/createTables/routes');
@@ -10,21 +9,18 @@ const { isDev, isTest } = require('./common/utils');
 
 const router = express.Router();
 
-// Application
 router.use('/health', healthCheck);
 router.use('/plans', plans);
 
-// DB
+/* istanbul ignore next */
 if (isDev() || isTest()) {
+  // DB
   router.use('/create-tables', createTables);
   router.use('/drop-tables', dropTables);
   router.use('/populate-tables', populateTables);
 }
 
 // eslint-disable-next-line no-unused-vars
-router.use('*', (req, res, next) => {
-  if (req.url === '/') return next();
-  next(NotFoundError());
-});
+router.use('*', (req, res, next) => next());
 
 module.exports = router;

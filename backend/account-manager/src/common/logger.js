@@ -2,22 +2,28 @@ const winston = require('winston');
 
 const customLevels = {
   levels: {
-    info: 0,
+    error: 0,
     warn: 1,
-    debug: 2,
-    error: 3,
+    info: 2,
+    http: 3,
+    verbose: 4,
+    debug: 5,
+    silly: 6,
   },
   colors: {
-    info: 'green',
-    warn: 'yellow',
-    debug: 'blue',
     error: 'red',
+    warn: 'yellow',
+    info: 'green',
+    http: 'blue',
+    verbose: 'white',
+    debug: 'white',
+    silly: 'white',
   },
 };
 
 winston.addColors(customLevels.colors);
 
-module.exports = winston.createLogger({
+const logger = winston.createLogger({
   transports: [
     new winston.transports.Console({
       format: winston.format.combine(
@@ -26,10 +32,12 @@ module.exports = winston.createLogger({
           format: 'YYYY-MM-DDHH:mm:ss',
         }),
         winston.format.printf(
-          (info) => `${info.timestamp} ${info.level}: ${info.message}`
-        )
+          (info) => `${info.timestamp} ${info.level}: ${info.message}`,
+        ),
       ),
-      level: 'info',
+      level: process.env.LOGGING_LEVEL || 'info',
     }),
   ],
 });
+
+module.exports = logger;

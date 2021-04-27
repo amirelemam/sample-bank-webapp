@@ -17,7 +17,7 @@ const getJwk = async () => {
     const {
       data: { keys },
     } = await axios.get(
-      `https://cognito-idp.${awsRegion}.amazonaws.com/${userPoolId}/.well-known/jwks.json`
+      `https://cognito-idp.${awsRegion}.amazonaws.com/${userPoolId}/.well-known/jwks.json`,
     );
 
     return keys;
@@ -32,8 +32,7 @@ const isValidUser = (user) => {
   const awsRegion = process.env.AWS_REGION;
   const awsUserAud = process.env.AWS_USER_AUD;
 
-  const isValidIss =
-    user.iss === `https://cognito-idp.${awsRegion}.amazonaws.com/${userPoolId}`;
+  const isValidIss = user.iss === `https://cognito-idp.${awsRegion}.amazonaws.com/${userPoolId}`;
 
   const isValidTokenUse = user.token_use === 'id';
   const isValidClientId = user.aud === awsUserAud;
@@ -59,19 +58,19 @@ const authentication = async (req, res, next) => {
       accessToken,
       pem,
       { algorithms: ['RS256'] },
-      function (err, decodedToken) {
+      (err, decodedToken) => {
         if (err) return null;
-        else return decodedToken;
-      }
+        return decodedToken;
+      },
     );
 
     if (!isValidUser(user)) throw UnauthenticatedError();
 
     req.user = user;
-    next();
+    return next();
   } catch (error) {
     logger.error(error);
-    next(UnauthorizedError());
+    return next(UnauthorizedError());
   }
 };
 

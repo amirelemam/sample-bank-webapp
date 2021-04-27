@@ -3,16 +3,22 @@ import { TransformableInfo } from 'logform';
 
 const customLevels = {
   levels: {
-    info: 0,
+    error: 0,
     warn: 1,
-    debug: 2,
-    error: 3,
+    info: 2,
+    http: 3,
+    verbose: 4,
+    debug: 5,
+    silly: 6,
   },
   colors: {
-    info: 'green',
-    warn: 'yellow',
-    debug: 'blue',
     error: 'red',
+    warn: 'yellow',
+    info: 'green',
+    http: 'blue',
+    verbose: 'white',
+    debug: 'white',
+    silly: 'white',
   },
 };
 

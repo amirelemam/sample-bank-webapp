@@ -32,8 +32,8 @@ const logger = winston.createLogger({
           format: 'YYYY-MM-DDHH:mm:ss',
         }),
         winston.format.printf(
-          (info) => `${info.timestamp} ${info.level}: ${info.message}`
-        )
+          (info) => `${info.timestamp} ${info.level}: ${info.message}`,
+        ),
       ),
       level: process.env.LOGGING_LEVEL || 'info',
     }),
@@ -41,8 +41,3 @@ const logger = winston.createLogger({
 });
 
 module.exports = logger;
-module.exports.stream = {
-  write: function (message, encoding) {
-    logger.http(message);
-  },
-};

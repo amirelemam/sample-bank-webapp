@@ -5,9 +5,7 @@ const getAll = async () => {
   return Object.keys(result).map((item) => result[item]);
 };
 
-const selectBestPlan = (features) => {
-  return services.selectBestPlan(features);
-};
+const selectBestPlan = (features) => services.selectBestPlan(features);
 
 module.exports = {
   getAll,

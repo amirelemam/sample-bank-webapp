@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const controller = require('./controller');
-const validation = require("./validation")
+const validation = require('./validation');
 
 router.get('/', async (req, res, next) => {
   try {

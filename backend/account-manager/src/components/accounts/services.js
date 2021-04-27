@@ -39,7 +39,9 @@ const getAccountId = async ({ account, branch, type }) => {
  *                   }
  * @author Amir Elemam
  */
-const getBalance = async ({ account, branch, type, formatted = false }) => {
+const getBalance = async ({
+  account, branch, type, formatted = false,
+}) => {
   const { accountId } = await module.exports.getAccountId({
     account,
     branch,
@@ -86,7 +88,9 @@ const getBalance = async ({ account, branch, type, formatted = false }) => {
  *                        }
  * @author Amir Elemam
  */
-const deposit = async ({ account, branch, type, amount }) => {
+const deposit = async ({
+  account, branch, type, amount,
+}) => {
   if (amount <= 0) {
     throw UnprocessableEntityError('Amount must be a positive number.');
   }
@@ -114,7 +118,7 @@ const deposit = async ({ account, branch, type, amount }) => {
 
   const [recordUpdated] = await repository.update(
     { balance: newBalance },
-    accountId
+    accountId,
   );
 
   if (recordUpdated) {
@@ -127,9 +131,8 @@ const deposit = async ({ account, branch, type, amount }) => {
       account,
       type,
     };
-  } else {
-    return null;
   }
+  return null;
 };
 
 /**
@@ -145,7 +148,9 @@ const deposit = async ({ account, branch, type, amount }) => {
  *                        }
  * @author Amir Elemam
  */
-const withdraw = async ({ account, branch, type, amount }) => {
+const withdraw = async ({
+  account, branch, type, amount,
+}) => {
   if (amount <= 0) {
     throw UnprocessableEntityError('Amount must be a positive number.');
   }
@@ -173,7 +178,7 @@ const withdraw = async ({ account, branch, type, amount }) => {
 
   const [recordUpdated] = await repository.update(
     { balance: newBalance },
-    accountId
+    accountId,
   );
 
   if (recordUpdated) {
@@ -186,9 +191,8 @@ const withdraw = async ({ account, branch, type, amount }) => {
       account,
       type,
     };
-  } else {
-    return null;
   }
+  return null;
 };
 
 const transfer = async ({ amount, origin, destiny }) => {

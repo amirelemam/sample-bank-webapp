@@ -14,7 +14,7 @@ describe('GET /api/v1/accounts/branch/:branch/account/:account/balance', () => {
     const type = CHECKING;
 
     const response = await request(app).get(
-      `/api/v1/accounts/branch/${branch}/account/${account}/type/${type}/balance`
+      `/api/v1/accounts/branch/${branch}/account/${account}/type/${type}/balance`,
     );
 
     expect(response.status).toBe(200);
@@ -35,7 +35,7 @@ describe('GET /api/v1/accounts/branch/:branch/account/:account/balance', () => {
     const type = SAVINGS;
 
     const response = await request(app).get(
-      `/api/v1/accounts/branch/${branch}/account/${account}/type/${type}/balance`
+      `/api/v1/accounts/branch/${branch}/account/${account}/type/${type}/balance`,
     );
 
     expect(response.status).toBe(500);

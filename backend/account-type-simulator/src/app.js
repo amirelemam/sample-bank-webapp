@@ -6,6 +6,7 @@ const sanitize = require('sanitize');
 const morgan = require('morgan');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
+const { v4: uuidv4 } = require('uuid');
 
 const swaggerDefinition = require('./docs/swaggerDefinition');
 const logger = require('./common/logger');
@@ -21,15 +22,35 @@ app.use(bodyParser.json());
 app.use(helmet());
 app.use(cors());
 app.use(sanitize.middleware);
-app.use(morgan('combined', { stream: logger.stream }));
+app.use((req, res, next) => {
+  req.id = uuidv4();
+  next();
+});
+app.use(
+  morgan((tokens, req, res) => {
+    logger.http(
+      [
+        req.id,
+        tokens.method(req, res),
+        tokens.url(req, res),
+        tokens.status(req, res),
+        tokens.res(req, res, 'content-length'),
+        '-',
+        tokens['response-time'](req, res),
+        'ms',
+      ].join(' '),
+    );
+  }),
+);
 
+/* istanbul ignore next */
 if (!isDev() && !isTest()) {
   // eslint-disable-next-line no-unused-vars
   app.use((req, res, next) => {
     res.header('Access-Control-Expose-Headers', 'access-token');
     res.header(
       'Access-Control-Allow-Origin',
-      'https://amirelemam.com.s3-website-us-east-1.amazonaws.com'
+      'https://amirelemam.com.s3-website-us-east-1.amazonaws.com',
     );
     return next();
   });
@@ -40,22 +61,20 @@ const options = {
   apis: ['./components/**/routes.js'],
 };
 const swaggerSpec = swaggerJsdoc(options);
-app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('/api/v1', routes);
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   if (err) {
-    logger.http(`${err.status} ${err.message}`);
     logger.error(err.stack);
 
     if (!err.status) return res.status(500).json();
     return res.status(err.status).send({ error: err.message });
-  } else {
-    const { status, message } = NotFoundError();
-    return res.status(status).send(message);
   }
+  const { status, message } = NotFoundError();
+  return res.status(status).send(message);
 });
 
 module.exports = app;

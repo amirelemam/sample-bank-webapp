@@ -1,5 +1,4 @@
 const express = require('express');
-const { NotFoundError } = require('./common/errors');
 
 const healthCheck = require('./components/health/routes');
 const createTables = require('./db/createTables/routes');
@@ -22,9 +21,6 @@ if (isDev() || isTest()) {
 }
 
 // eslint-disable-next-line no-unused-vars
-router.use('*', (req, res, next) => {
-  if (req.url === '/') return next();
-  next(NotFoundError());
-});
+router.use('*', (req, res, next) => next());
 
 module.exports = router;

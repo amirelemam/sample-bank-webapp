@@ -68,7 +68,7 @@ router.get(
     } catch (err) {
       return next(err);
     }
-  }
+  },
 );
 
 /**
@@ -134,7 +134,7 @@ router.post(
     } catch (err) {
       return next(err);
     }
-  }
+  },
 );
 
 module.exports = router;

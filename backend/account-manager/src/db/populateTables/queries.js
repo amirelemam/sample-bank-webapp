@@ -1,17 +1,15 @@
 const knex = require('../index');
 const { CHECKING, SAVINGS } = require('../../common/enums/accountTypes');
 
-const clients = () => {
-  return knex
-    .insert({
-      id: '38c3de93-874d-444c-b83f-11e89cca252b',
-      name: 'John',
-      surname: 'Doe',
-      tax_id: '078-05-1120',
-    })
-    .into('clients')
-    .returning('*');
-};
+const clients = () => knex
+  .insert({
+    id: '38c3de93-874d-444c-b83f-11e89cca252b',
+    name: 'John',
+    surname: 'Doe',
+    tax_id: '078-05-1120',
+  })
+  .into('clients')
+  .returning('*');
 
 const accounts = () => {
   const rows = [

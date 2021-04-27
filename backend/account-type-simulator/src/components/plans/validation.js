@@ -6,7 +6,7 @@ const bestPlan = async ({ body }, res, next) => {
     joi.object().keys({
       id: joi.string().uuid().required(),
       quantity: joi.number().required(),
-    })
+    }),
   );
 
   try {
