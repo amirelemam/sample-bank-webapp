@@ -4,25 +4,35 @@
 
 This application is structured as a monorepo, which means that all services (backend and frontend) sit under the same Github repository.
 
+<!-- image of arquitecture -->
+
 **Services**
 - Account Manager: Transfer and get balance of Savings and Checking accounts
 - Account Type Simulator: Check the cheapest account type based on your needs
 - Branch Finder: Find the nearest branch to your location
 - Frontend: application interface
 
--- image of arquitecture --  
+### Live Demo
 
-**AWS Services**  
-- AWS Lambda
-- AWS S3
-- AWS API Gateway
-- PostgreSQL
+Branch: 0001   
+Account number: 12345   
+Password: Qwerty@123  
+
+[Live demo](http://amirelemam.com.s3-website-us-east-1.amazonaws.com/)
 
 ### Requirements
 
 - Node.js 12 or later
 - AWS account and awscli. To install awscli [click here](https://aws.amazon.com/cli)
 - Docker (optional)
+
+<!--
+**AWS Services**  
+- AWS Lambda
+- AWS S3
+- AWS API Gateway
+- PostgreSQL
+-->
 
 ### Run
 
@@ -182,6 +192,12 @@ OpenAPI (former Swagger) `/api/docs`
   `$ npm test`  
   Start service  
   `$ npm run start:local`
+
+<!-- 
+### CI/CD
+
+### Deploy
+-->
 
 ### License
 

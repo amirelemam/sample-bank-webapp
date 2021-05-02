@@ -7,9 +7,7 @@
     "prestart": "npm run build && node dist/db/populate/services.js checkIfCollectionIsEmptyAndPopulate",
     "start": "node dist/app",
     "start:local": "NODE_ENV=dev nodemon src/index.ts",
-    "test": "NODE_ENV=test jest --detectOpenHandles --runInBand --coverage",
-    "test:unit": "NODE_ENV=test jest src/components/**/__tests__/unit/**/*.test.js --detectOpenHandles --runInBand --coverage",
-    "test:integration": "NODE_ENV=test jest src/components/**/__tests__/integration/*.test.js --detectOpenHandles --runInBand --coverage"
+    "test": "NODE_ENV=test jest --detectOpenHandles --runInBand --coverage"
   },
   "keywords": [],
   "author": "Amir Elemam",
