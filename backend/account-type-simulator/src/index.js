@@ -1,7 +1,7 @@
 const logger = require('./common/logger');
 const app = require('./app');
 
-const PORT = process.env.PORT || 4020;
-app.listen(PORT, () => logger.info(`Server running at ${PORT}`));
+app.listen(app.get('port'),
+  () => logger.info(`Server running at ${app.get('port')}`));
 
 module.exports = app;

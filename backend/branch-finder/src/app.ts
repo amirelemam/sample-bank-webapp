@@ -1,35 +1,39 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
+import bodyParser from 'body-parser'
+import helmet from 'helmet'
+import morgan from 'morgan'
 
+import logger from './common/logger'
 import routes from './routes';
 import swaggerDocument from './docs/swagger';
+import { NotFoundError, HttpException } from './common/errors'
 import './db';
 
-class App {
-  public express: express.Application;
+const app = express();
 
-  public constructor() {
-    this.express = express();
+app.set('port', process.env.PORT || 4010)
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(helmet());
+app.use(cors());
+app.use(morgan('dev'));
 
-    this.middlewares();
-    this.routes();
+app.use('/api/docs/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api/v1/', routes);
+
+/* istanbul ignore next */
+// eslint-disable-next-line no-unused-vars
+app.use((err: HttpException, req: Request, res: Response, next: NextFunction) => {
+  if (err) {
+    logger.error(err.stack);
+
+    if (!err.status) return res.status(500).json();
+    return res.status(err.status).send({ error: err.message });
   }
+  const { status, message } = NotFoundError();
+  return res.status(status).send(message);
+});
 
-  private middlewares(): void {
-    this.express.use(express.json());
-    this.express.use(cors());
-  }
-
-  private routes(): void {
-    this.express.use('/api/docs/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-    this.express.use('/api/v1/', routes);
-  }
-}
-
-const PORT = process.env.PORT || 4010;
-
-export default new App().express.listen(
-  PORT,
-  () => `Server running at ${PORT}`,
-);
+export default app

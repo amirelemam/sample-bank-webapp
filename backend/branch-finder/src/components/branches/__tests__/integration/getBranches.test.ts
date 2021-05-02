@@ -1,20 +1,20 @@
 import request from 'supertest';
-import app from '../../../app';
+import app from '../../../../app';
 
 describe('GET /branches', () => {
   it('should get Branch New York', async (done) => {
-    await request(app).post('/db/drop');
+    await request(app).post('/api/v1//db/drop');
 
-    const response = await request(app).get('/branches?lat=30&lon=10');
+    const response = await request(app).get('/api/v1/branches?lat=30&lon=10');
 
     expect(response.status).toBe(404);
     done();
   });
   it('should get Branch New York', async (done) => {
-    await request(app).post('/db/drop');
-    await request(app).post('/db/populate');
+    await request(app).post('/api/v1//db/drop');
+    await request(app).post('/api/v1//db/populate');
 
-    const response = await request(app).get('/branches?lat=30&lon=10');
+    const response = await request(app).get('/api/v1/branches?lat=30&lon=10');
 
     expect(response.body).toEqual({
       location: { type: 'Point', coordinates: [-73.935242, 40.73061] },
@@ -29,10 +29,10 @@ describe('GET /branches', () => {
     done();
   });
   it('should get all branches', async (done) => {
-    await request(app).post('/db/drop');
-    await request(app).post('/db/populate');
+    await request(app).post('/api/v1//db/drop');
+    await request(app).post('/api/v1//db/populate');
 
-    const response = await request(app).get('/branches');
+    const response = await request(app).get('/api/v1/branches');
 
     expect(response.body).toEqual([
       {
@@ -75,12 +75,11 @@ describe('GET /branches', () => {
     expect(response.status).toBe(200);
     done();
   });
-  it('should return error if collection not found', async (done) => {
-    await request(app).post('/db/drop');
+  it('should return OK if collection is dropped successfully', async (done) => {
+    await request(app).post('/api/v1/db/drop');
 
-    const response = await request(app).get('/branches');
+    const response = await request(app).get('/api/v1/branches');
 
-    expect(response.body).toEqual([]);
     expect(response.status).toBe(200);
     done();
   });

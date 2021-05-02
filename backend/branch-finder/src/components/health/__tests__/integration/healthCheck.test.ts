@@ -1,7 +1,7 @@
-const request = require('supertest');
-const app = require('../../../../app');
+import request from 'supertest';
+import app from '../../../../app';
 
-describe('GET /api/v1/health-check', () => {
+describe('GET /api/v1/health', () => {
   it('should return an object', async (done) => {
     const response = await request(app).get('/api/v1/health');
 
