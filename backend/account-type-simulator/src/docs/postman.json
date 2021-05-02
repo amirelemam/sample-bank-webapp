@@ -1,165 +1,142 @@
 {
-  "info": {
-    "_postman_id": "57074333-6acd-48bc-9fcb-9c70111cd59f",
-    "name": "Sample Bank App",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "DB",
-      "item": [
-        {
-          "name": "Drop Tables",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "{{BASE_URL}}/api/v1/drop-tables",
-              "host": ["{{BASE_URL}}"],
-              "path": ["api", "v1", "drop-tables"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Create Tables",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "{{BASE_URL}}/api/v1/create-tables/",
-              "host": ["{{BASE_URL}}"],
-              "path": ["api", "v1", "create-tables", ""]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Populate Tables",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "{{BASE_URL}}/api/v1/populate-tables/",
-              "host": ["{{BASE_URL}}"],
-              "path": ["api", "v1", "populate-tables", ""]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Account Manager",
-      "item": [
-        {
-          "name": "Get Balance",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "clientId",
-                "value": "38c3de93-874d-444c-b83f-11e89cca252b",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{BASE_URL}}/api/v1/accounts/branch/0001/account/12345/balance",
-              "host": ["{{BASE_URL}}"],
-              "path": [
-                "api",
-                "v1",
-                "accounts",
-                "branch",
-                "0001",
-                "account",
-                "12345",
-                "balance"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Deposit",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"branch\": \"0001\",\n    \"account\": \"12345\",\n    \"type\": \"SAVINGS\",\n    \"amount\": 100\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{BASE_URL}}/api/v1/accounts/deposit",
-              "host": ["{{BASE_URL}}"],
-              "path": ["api", "v1", "accounts", "deposit"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Withdraw",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"branch\": \"0001\",\n    \"account\": \"12345\",\n    \"type\": \"SAVINGS\",\n    \"ammunt\": 100\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{BASE_URL}}/api/v1/accounts/withdraw",
-              "host": ["{{BASE_URL}}"],
-              "path": ["api", "v1", "accounts", "withdraw"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Transfer",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n   \"origin\": {\n        \"branch\": \"0001\",\n        \"account\": \"12345\",\n        \"type\": \"CHECKING\"\n   },\n    \"destiny\": {\n        \"branch\": \"0001\",\n        \"account\": \"12345\",\n        \"type\": \"SAVINGS\"\n   },\n    \"amount\": 100\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{BASE_URL}}/api/v1/accounts/transfer",
-              "host": ["{{BASE_URL}}"],
-              "path": ["api", "v1", "accounts", "transfer"]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Health",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{BASE_URL}}/api/v1/health",
-          "host": ["{{BASE_URL}}"],
-          "path": ["api", "v1", "health"]
-        }
-      },
-      "response": []
-    }
-  ]
+	"info": {
+		"_postman_id": "ee80afc8-631c-4ea0-bae0-9b23ae16bfe6",
+		"name": "Account Type Simulator",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "DB",
+			"item": [
+				{
+					"name": "Drop Tables",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL_SIMULATOR}}/api/v1/drop-tables",
+							"host": [
+								"{{BASE_URL_SIMULATOR}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"drop-tables"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Tables",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL_SIMULATOR}}/api/v1/create-tables/",
+							"host": [
+								"{{BASE_URL_SIMULATOR}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"create-tables",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Populate Tables",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL_SIMULATOR}}/api/v1/populate-tables/",
+							"host": [
+								"{{BASE_URL_SIMULATOR}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"populate-tables",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get all features",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4020/api/v1/plans",
+					"host": [
+						"localhost"
+					],
+					"port": "4020",
+					"path": [
+						"api",
+						"v1",
+						"plans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Best Plan",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[   \n    {\n         \"id\": \"e4c35ce9-8d1f-4224-908d-ab079ab06802\",\n        \"quantity\": 1\n    },\n    {\n        \"id\": \"e5c35ce9-8d1f-4224-908d-ab079ab06802\",\n        \"quantity\": 0\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4020/api/v1/plans/best-plan",
+					"host": [
+						"localhost"
+					],
+					"port": "4020",
+					"path": [
+						"api",
+						"v1",
+						"plans",
+						"best-plan"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/api/v1/health",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	]
 }

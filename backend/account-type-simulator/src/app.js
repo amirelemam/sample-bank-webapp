@@ -5,10 +5,9 @@ const cors = require('cors');
 const sanitize = require('sanitize');
 const morgan = require('morgan');
 const swaggerUi = require('swagger-ui-express');
-const swaggerJsdoc = require('swagger-jsdoc');
 const { v4: uuidv4 } = require('uuid');
 
-const swaggerDefinition = require('./docs/swaggerDefinition');
+const swaggerDocument = require('./docs/swagger');
 const logger = require('./common/logger');
 const routes = require('./routes');
 const { NotFoundError } = require('./common/errors');
@@ -56,15 +55,10 @@ if (!isDev() && !isTest()) {
   });
 }
 
-const options = {
-  swaggerDefinition,
-  apis: ['./components/**/routes.js'],
-};
-const swaggerSpec = swaggerJsdoc(options);
-app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api/v1', routes);
 
+/* istanbul ignore next */
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   if (err) {

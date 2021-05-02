@@ -1,5 +1,6 @@
 const joi = require('joi');
 const logger = require('../../common/logger');
+const { BadRequestError } = require('../../common/errors');
 
 const bestPlan = async ({ body }, res, next) => {
   const schema = joi.array().items(
@@ -14,7 +15,8 @@ const bestPlan = async ({ body }, res, next) => {
     return next();
   } catch (error) {
     logger.error(error);
-    return res.status(400).send();
+    const { status, message } = BadRequestError();
+    return res.status(status).json(message);
   }
 };
 
