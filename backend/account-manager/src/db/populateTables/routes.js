@@ -23,24 +23,4 @@ router.post('/clients', async (req, res, next) => {
   }
 });
 
-router.post('/accounts', async (req, res, next) => {
-  try {
-    await populateTables.accounts();
-
-    return res.status(200).json('OK');
-  } catch (err) {
-    return next(err);
-  }
-});
-
-router.post('/balances', async (req, res, next) => {
-  try {
-    await populateTables.balances();
-
-    return res.status(200).json('OK');
-  } catch (err) {
-    return next(err);
-  }
-});
-
 module.exports = router;

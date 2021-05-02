@@ -3,7 +3,7 @@ const request = require('supertest');
 const app = require('../../../../app');
 const { CHECKING, SAVINGS } = require('../../../../common/enums/accountTypes');
 
-describe('GET /api/v1/accounts/branch/:branch/account/:account/balance', () => {
+describe('GET /api/v1/accounts/balance', () => {
   it('should return OK if amount is got balance successfully', async (done) => {
     await request(app).post('/api/v1/drop-tables');
     await request(app).post('/api/v1/create-tables');
@@ -14,7 +14,7 @@ describe('GET /api/v1/accounts/branch/:branch/account/:account/balance', () => {
     const type = CHECKING;
 
     const response = await request(app).get(
-      `/api/v1/accounts/branch/${branch}/account/${account}/type/${type}/balance`,
+      `/api/v1/accounts/balance?branch=${branch}&account=${account}&type=${type}`,
     );
 
     expect(response.status).toBe(200);
@@ -35,10 +35,25 @@ describe('GET /api/v1/accounts/branch/:branch/account/:account/balance', () => {
     const type = SAVINGS;
 
     const response = await request(app).get(
-      `/api/v1/accounts/branch/${branch}/account/${account}/type/${type}/balance`,
+      `/api/v1/accounts/balance?branch=${branch}&account=${account}&type=${type}`,
     );
 
     expect(response.status).toBe(500);
+    done();
+  });
+  it('should throw BadRequestError if query param is not sent', async (done) => {
+    await request(app).post('/api/v1/drop-tables');
+    await request(app).post('/api/v1/create-tables');
+    await request(app).post('/api/v1/populate-tables');
+
+    const branch = '0001';
+    const account = '12345';
+
+    const response = await request(app).get(
+      `/api/v1/accounts/balance?branch=${branch}&account=${account}`,
+    );
+
+    expect(response.status).toBe(400);
     done();
   });
 });
