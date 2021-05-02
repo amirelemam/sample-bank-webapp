@@ -1,8 +1,10 @@
 import express from 'express';
 import cors from 'cors';
-import mongoose from 'mongoose';
+import swaggerUi from 'swagger-ui-express';
 
 import routes from './routes';
+import swaggerDocument from './docs/swagger';
+import './db';
 
 class App {
   public express: express.Application;
@@ -11,7 +13,6 @@ class App {
     this.express = express();
 
     this.middlewares();
-    this.database();
     this.routes();
   }
 
@@ -20,17 +21,9 @@ class App {
     this.express.use(cors());
   }
 
-  private database(): void {
-    const connStr: string = process.env.DB_CONN_STR || 'mongodb://localhost:27017/samplebank';
-
-    mongoose.connect(connStr, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-  }
-
   private routes(): void {
-    this.express.use(routes);
+    this.express.use('/api/docs/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+    this.express.use('/api/v1/', routes);
   }
 }
 

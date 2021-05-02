@@ -5,6 +5,7 @@ const cors = require('cors');
 const sanitize = require('sanitize');
 const morgan = require('morgan');
 const swaggerUi = require('swagger-ui-express');
+const { v4: uuidv4 } = require('uuid');
 
 const logger = require('./common/logger');
 const routes = require('./routes');
@@ -20,7 +21,26 @@ app.use(bodyParser.json());
 app.use(helmet());
 app.use(cors());
 app.use(sanitize.middleware);
-app.use(morgan('dev'));
+app.use((req, res, next) => {
+  req.id = uuidv4();
+  next();
+});
+app.use(
+  morgan((tokens, req, res) => {
+    logger.http(
+      [
+        req.id,
+        tokens.method(req, res),
+        tokens.url(req, res),
+        tokens.status(req, res),
+        tokens.res(req, res, 'content-length'),
+        '-',
+        tokens['response-time'](req, res),
+        'ms',
+      ].join(' '),
+    );
+  }),
+);
 
 /* istanbul ignore next */
 if (!isDev() && !isTest()) {

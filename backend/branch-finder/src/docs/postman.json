@@ -1,0 +1,136 @@
+{
+	"info": {
+		"_postman_id": "57074333-6acd-48bc-9fcb-9c70111cd59f",
+		"name": "Branch Finder",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "DB",
+			"item": [
+				{
+					"name": "Drop",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"teste@email.com\",\n    \"firstName\": \"Amir\",\n    \"lastName\": \"Elemam\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/db/populate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"db",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Populate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"teste@email.com\",\n    \"firstName\": \"Amir\",\n    \"lastName\": \"Elemam\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/db/populate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"db",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get all branches",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4010/branches",
+					"host": [
+						"localhost"
+					],
+					"port": "4010",
+					"path": [
+						"branches"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get nearest branch",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4010/branches?lat=30&lon=10",
+					"host": [
+						"localhost"
+					],
+					"port": "4010",
+					"path": [
+						"branches"
+					],
+					"query": [
+						{
+							"key": "lat",
+							"value": "30"
+						},
+						{
+							"key": "lon",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4010/health",
+					"host": [
+						"localhost"
+					],
+					"port": "4010",
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

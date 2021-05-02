@@ -5,7 +5,7 @@ describe('GET /branches', () => {
   it('should get Branch New York', async (done) => {
     await request(app).post('/db/drop');
 
-    const response = await request(app).get(`/branches?lat=30&lon=10`);
+    const response = await request(app).get('/branches?lat=30&lon=10');
 
     expect(response.status).toBe(404);
     done();
@@ -14,12 +14,12 @@ describe('GET /branches', () => {
     await request(app).post('/db/drop');
     await request(app).post('/db/populate');
 
-    const response = await request(app).get(`/branches?lat=30&lon=10`);
+    const response = await request(app).get('/branches?lat=30&lon=10');
 
     expect(response.body).toEqual({
       location: { type: 'Point', coordinates: [-73.935242, 40.73061] },
       name: 'Branch New York',
-      address: 'Good Luck, 567',
+      address: '23nd Street, 567',
       city: 'New York',
       state: 'NY',
       zipCode: '10001',
@@ -32,7 +32,7 @@ describe('GET /branches', () => {
     await request(app).post('/db/drop');
     await request(app).post('/db/populate');
 
-    const response = await request(app).get(`/branches`);
+    const response = await request(app).get('/branches');
 
     expect(response.body).toEqual([
       {
@@ -78,7 +78,7 @@ describe('GET /branches', () => {
   it('should return error if collection not found', async (done) => {
     await request(app).post('/db/drop');
 
-    const response = await request(app).get(`/branches`);
+    const response = await request(app).get('/branches');
 
     expect(response.body).toEqual([]);
     expect(response.status).toBe(200);

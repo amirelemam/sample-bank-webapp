@@ -33,9 +33,8 @@ export default winston.createLogger({
           format: 'YYYY-MM-DDHH:mm:ss',
         }),
         winston.format.printf(
-          (info: TransformableInfo) =>
-            `${info.timestamp} ${info.level}: ${info.message}`
-        )
+          (info: TransformableInfo) => `${info.timestamp} ${info.level}: ${info.message}`,
+        ),
       ),
       level: 'info',
     }),

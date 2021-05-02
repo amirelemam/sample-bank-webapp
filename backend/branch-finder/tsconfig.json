@@ -3,7 +3,10 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "strict": true,
-    "outDir": "dist"
+    "outDir": "dist",
   },
-  "include": ["**/*.test.ts", "__tests__"]
+  "include": [
+    "**/*.test.ts",
+    "__tests__"
+  ],
 }
