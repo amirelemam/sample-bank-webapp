@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
-import swaggerUi from 'swagger-ui-express';
+import swagger from 'swagger-ui-express';
 import bodyParser from 'body-parser'
 import helmet from 'helmet'
 import morgan from 'morgan'
@@ -20,7 +20,7 @@ app.use(helmet());
 app.use(cors());
 app.use(morgan('dev'));
 
-app.use('/api/docs/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api/docs/', swagger.serve, swagger.setup(swaggerDocument));
 app.use('/api/v1/', routes);
 
 /* istanbul ignore next */

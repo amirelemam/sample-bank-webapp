@@ -4,7 +4,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const sanitize = require('sanitize');
 const morgan = require('morgan');
-const swaggerUi = require('swagger-ui-express');
+const swagger = require('swagger-ui-express');
 const { v4: uuidv4 } = require('uuid');
 
 const logger = require('./common/logger');
@@ -56,7 +56,7 @@ if (!isDev() && !isTest()) {
   });
 }
 
-app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api/docs', swagger.serve, swagger.setup(swaggerDocument));
 app.use('/api/v1', routes);
 
 /* istanbul ignore next */
