@@ -23,15 +23,15 @@ const getAll = async () => {
 
 const calculateCost = async (features, featuresWithPlans) => {
   let costFree = 0;
-  let costPro = await repository.getCost('pro');
+  let { price: costPro } = await repository.getCost('pro');
 
   for (let i = 0; i < features.length; i += 1) {
     const feature = features[i];
     const extraPro = featuresWithPlans[feature.id].pro - feature.quantity;
     const extraFree = featuresWithPlans[feature.id].free - feature.quantity;
 
-    if (extraPro < 0) { costPro += Math.abs(extraPro) * featuresWithPlans[feature.id].price; }
-    if (extraFree < 0) { costFree += Math.abs(extraFree) * featuresWithPlans[feature.id].price; }
+    if (extraPro < 0) costPro += Math.abs(extraPro) * featuresWithPlans[feature.id].price;
+    if (extraFree < 0) costFree += Math.abs(extraFree) * featuresWithPlans[feature.id].price;
   }
 
   return { costFree, costPro };

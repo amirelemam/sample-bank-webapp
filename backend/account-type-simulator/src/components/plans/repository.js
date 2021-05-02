@@ -16,10 +16,11 @@ const getAll = () => knex
   .innerJoin('plans', 'plans_features.plan_id', '=', 'plans.id');
 
 const getCost = (planName) => knex
-  .select('cost')
+  .select('price')
   .from('plans')
   .where('name', planName)
-  .andWhere('deleted_at', null);
+  .andWhere('deleted_at', null)
+  .first();
 
 module.exports = {
   getAll,

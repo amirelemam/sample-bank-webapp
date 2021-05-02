@@ -111,7 +111,7 @@ describe('controller', () => {
       const costFree = 2;
       const costPro = 10;
 
-      repository.getCost = jest.fn(() => 10);
+      repository.getCost = jest.fn(() => ({ price: 10 }));
 
       const response = await services.calculateCost(features, featuresWithPlans);
       expect(response).toEqual({ costFree, costPro });
@@ -140,7 +140,7 @@ describe('controller', () => {
       const costFree = 0;
       const costPro = 14;
 
-      repository.getCost = jest.fn(() => 10);
+      repository.getCost = jest.fn(() => ({ price: 10 }));
 
       const response = await services.calculateCost(features, featuresWithPlans);
       expect(response).toEqual({ costFree, costPro });
@@ -265,6 +265,40 @@ describe('controller', () => {
         expensive: {
           cost: 12,
           plan: 'free',
+        },
+      });
+    });
+    it('should return both plans with FREE being cheaper', async () => {
+      const features = [
+        {
+          id: 'b0303ba2-9972-4fd3-b2fb-4167d6e116e7',
+          quantity: 3,
+        },
+      ];
+
+      const featuresWithPlans = {
+        'b0303ba2-9972-4fd3-b2fb-4167d6e116e7': {
+          name: 'my feature',
+          extra: '$2/each',
+          price: 2,
+          id: 'b0303ba2-9972-4fd3-b2fb-4167d6e116e7',
+          pro: 2,
+          free: 1,
+        },
+      };
+
+      services.getAll = jest.fn(() => featuresWithPlans);
+      services.calculateCost = jest.fn(() => ({ costFree: 6, costPro: 12 }));
+
+      const response = await services.selectBestPlan(features);
+      expect(response).toEqual({
+        cheaper: {
+          cost: 6,
+          plan: 'free',
+        },
+        expensive: {
+          cost: 12,
+          plan: 'pro',
         },
       });
     });

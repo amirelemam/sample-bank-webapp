@@ -62,7 +62,9 @@ describe('repository', () => {
       db.select = jest.fn(() => ({
         from: () => ({
           where: (() => ({
-            andWhere: (() => cost),
+            andWhere: (() => ({
+              first: () => cost,
+            })),
           })),
         }),
       }));
