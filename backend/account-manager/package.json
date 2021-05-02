@@ -4,9 +4,9 @@
   "description": "This service allows you to manage your bank account",
   "main": "index.js",
   "scripts": {
-    "dev": "cd src && NODE_ENV=dev nodemon -r dotenv/config index.js",
     "prestart": "node -e \"require('./src/db/createTables/controller.js')();\"",
     "start": "cd src && node index.js",
+    "start:local": "cd src && NODE_ENV=dev nodemon -r dotenv/config index.js",
     "test": "NODE_ENV=test jest --detectOpenHandles --runInBand --coverage",
     "test:unit": "NODE_ENV=test jest src/components/**/__tests__/unit/**/*.test.js --detectOpenHandles --runInBand --coverage",
     "test:integration": "NODE_ENV=test jest src/components/**/__tests__/integration/*.test.js --detectOpenHandles --runInBand --coverage"
@@ -28,7 +28,6 @@
     "morgan": "^1.10.0",
     "pg": "^8.5.1",
     "sanitize": "^2.1.0",
-    "swagger-jsdoc": "^6.0.2",
     "swagger-ui-express": "^4.1.6",
     "winston": "^3.3.3"
   },

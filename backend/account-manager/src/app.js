@@ -5,13 +5,12 @@ const cors = require('cors');
 const sanitize = require('sanitize');
 const morgan = require('morgan');
 const swaggerUi = require('swagger-ui-express');
-const swaggerJsdoc = require('swagger-jsdoc');
 
-const swaggerDefinition = require('./docs/swaggerDefinition');
 const logger = require('./common/logger');
 const routes = require('./routes');
 const { NotFoundError } = require('./common/errors');
 const { isDev, isTest } = require('./common/utils');
+const swaggerDocument = require('./docs/swagger');
 require('./db');
 
 const app = express();
@@ -23,7 +22,8 @@ app.use(cors());
 app.use(sanitize.middleware);
 app.use(morgan('dev'));
 
-if (!isDev()) {
+/* istanbul ignore next */
+if (!isDev() && !isTest()) {
   // eslint-disable-next-line no-unused-vars
   app.use((req, res, next) => {
     res.header('Access-Control-Expose-Headers', 'access-token');
@@ -35,21 +35,14 @@ if (!isDev()) {
   });
 }
 
-const options = {
-  swaggerDefinition,
-  apis: ['./components/**/routes.js'],
-};
-const swaggerSpec = swaggerJsdoc(options);
-app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api/v1', routes);
 
+/* istanbul ignore next */
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   if (err) {
-    if (!isDev() && !isTest()) {
-      logger.error(err.stack);
-    }
+    logger.error(err.stack);
 
     if (!err.status) return res.status(500).json();
     return res.status(err.status).send({ error: err.message });

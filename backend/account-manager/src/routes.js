@@ -13,6 +13,7 @@ const router = express.Router();
 router.use('/health', healthCheck);
 router.use('/accounts', accounts);
 
+/* istanbul ignore next */
 // DB
 if (isDev() || isTest()) {
   router.use('/create-tables', createTables);

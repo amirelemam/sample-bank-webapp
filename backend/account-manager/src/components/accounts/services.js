@@ -1,7 +1,4 @@
-const {
-  UnprocessableEntityError,
-  InternalServerError,
-} = require('../../common/errors');
+const { UnprocessableEntityError, InternalServerError } = require('../../common/errors');
 const { NotFoundError } = require('../../common/errors');
 const repository = require('./repository');
 
