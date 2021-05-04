@@ -13,23 +13,16 @@
 					"request": {
 						"method": "POST",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"email\": \"teste@email.com\",\n    \"firstName\": \"Amir\",\n    \"lastName\": \"Elemam\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:3333/db/populate",
+							"raw": "http://localhost:4010/api/v1/db/populate",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3333",
+							"port": "4010",
 							"path": [
+								"api",
+								"v1",
 								"db",
 								"populate"
 							]
@@ -42,23 +35,16 @@
 					"request": {
 						"method": "POST",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"email\": \"teste@email.com\",\n    \"firstName\": \"Amir\",\n    \"lastName\": \"Elemam\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:3333/db/populate",
+							"raw": "http://localhost:4010/api/v1/db/populate",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3333",
+							"port": "4010",
 							"path": [
+								"api",
+								"v1",
 								"db",
 								"populate"
 							]
@@ -74,12 +60,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:4010/branches",
+					"raw": "localhost:4010/api/v1/branches",
 					"host": [
 						"localhost"
 					],
 					"port": "4010",
 					"path": [
+						"api",
+						"v1",
 						"branches"
 					]
 				}
@@ -92,12 +80,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:4010/branches?lat=30&lon=10",
+					"raw": "localhost:4010/api/v1/branches?lat=30&lon=10",
 					"host": [
 						"localhost"
 					],
 					"port": "4010",
 					"path": [
+						"api",
+						"v1",
 						"branches"
 					],
 					"query": [

@@ -1,6 +1,6 @@
-## Sample Bank
+# Sample Bank
 
-### Architecture
+## Architecture
 
 This application is structured as a monorepo, which means that all services (backend and frontend) sit under the same Github repository.
 
@@ -12,15 +12,16 @@ This application is structured as a monorepo, which means that all services (bac
 - Branch Finder: Find the nearest branch to your location
 - Frontend: application interface
 
-### Live Demo
+## Live Demo
 
+Credentials:  
 Branch: 0001   
 Account number: 12345   
 Password: Qwerty@123  
 
-[Live demo](http://amirelemam.com.s3-website-us-east-1.amazonaws.com/)
+[Access Live Demo](http://amirelemam.com.s3-website-us-east-1.amazonaws.com/)  
 
-### Requirements
+## Requirements
 
 - Node.js 12 or later
 - AWS account and awscli. To install awscli [click here](https://aws.amazon.com/cli)
@@ -34,17 +35,23 @@ Password: Qwerty@123
 - PostgreSQL
 -->
 
-### Run
+## Run
 
 You can run all services with docker-compose  
 `$ docker-compose up --build`
 
-### Backend
+## Backend
 
-#### Account Manager
+### Account Manager
 
+**Features**  
 - Transfer money between accounts  
 - Get balance for Savings and Checking accounts  
+
+**Stack**
+- Node.js
+- Jest
+- PostgreSQL
 
 **Environment Variables**
 - DB_HOST: Postgres host
@@ -84,10 +91,16 @@ OpenAPI (former Swagger) `/api/docs`
   Start service  
   `$ npm start`
 
-#### Account Type Simulator
+### Account Type Simulator
 
+**Features**  
 - Simulate which account type is cheaper for your needs: Pro or Free
 - Get pricing for all account types 
+
+**Stack**
+- Node.js
+- Jest
+- PostgreSQL
 
 **Environment Variables**
 - DB_HOST: Postgres host
@@ -127,9 +140,15 @@ OpenAPI (former Swagger) `/api/docs`
   Start service  
   `$ npm start`
 
-#### Branch Finder
+### Branch Finder
 
-- Find the nearest branch to the location given (latitude and longitude).  
+**Stack**
+- Typescript
+- Jest
+- MongoDB
+
+**Features**  
+- Find the nearest branch to the given location (latitude, longitude).  
 
 **Environment Variables**
 - DB_CONN_STR: MongoDB connection string
@@ -167,7 +186,11 @@ OpenAPI (former Swagger) `/api/docs`
   `$ npm start`
 
 
-### Frontend
+## Frontend
+
+**Stack**
+- React.js
+- Material UI
 
 **Environment Variables**
 - GOOGLE_MAPS_API_KEY: Google Maps key
@@ -199,6 +222,6 @@ OpenAPI (former Swagger) `/api/docs`
 ### Deploy
 -->
 
-### License
+## License
 
 These files are licensed under the [MIT License](LICENSE)
