@@ -1,15 +1,8 @@
-# Installation
-# $ brew install graphviz
-# $ pip install diagrams
-
-# Run
-# $ python architecure-diagram.py
-
 from diagrams import Diagram
 from diagrams.onprem.database import PostgreSQL
 from diagrams.onprem.database import MongoDB
-from diagrams.custom import Custom
 from diagrams.onprem.compute import Server
+from diagrams.custom import Custom
 
 with Diagram("Sample Bank Architecture", show=False):
   maps = Custom("Google Maps API", "./maps.png")

@@ -218,11 +218,23 @@ OpenAPI (former Swagger) `/api/docs`
   Start service  
   `$ npm run start:local`
 
-<!-- 
-### CI/CD
+### Generate Architecture Diagram
 
-### Deploy
--->
+This architecture diagram was generated using Python's lib [Diagram](https://diagrams.mingrammer.com/).  
+
+**Install**  
+
+- You need Graphviz installed  
+For MacOS: `$ brew install graphviz`  
+For abother OS check [the installation info](https://graphviz.org/download/#mac)  
+
+- Install dependencies  
+`$ pip install -r requirements.txt`  
+
+**Run**  
+`$ python architecure-diagram.py`  
+
+The file will be saved to the current working directory.  
 
 ## License
 
