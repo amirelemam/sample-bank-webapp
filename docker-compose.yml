@@ -39,7 +39,6 @@ services:
     depends_on:
       - mongodb
 
-
   account_type_simulator:
     container_name: account_type_simulator
     build:
@@ -67,6 +66,8 @@ services:
       - 3000:3000
     environment:
       - REACT_APP_ACCOUNT_MANAGER_API=http://account_manager
+      - REACT_APP_ACCOUNT_TYPE_SIMULATOR_API=http://account_type_simulator
+      - REACT_APP_BRANCH_FINDER_API=http://branch_finder
     networks:
       - sample_bank
     depends_on:

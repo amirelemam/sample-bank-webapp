@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import Amplify from 'aws-amplify';
-import aws_exports from '../../aws-exports';
 import { isAuthenticated } from './auth';
-
-Amplify.configure(aws_exports);
 
 export const ProtectedRoute = ({ component: Component, user, ...rest }) => {
   const [hasAuthenticated, sethasAuthenticated] = useState(true);
@@ -30,25 +26,22 @@ export const ProtectedRoute = ({ component: Component, user, ...rest }) => {
       {...rest}
       render={(props) => {
         if (hasAuthenticated) return <Component {...props} />;
-        else {
-          return (
-            <Route
-              {...rest}
-              render={(props) => {
-                return (
-                  <Redirect
-                    to={{
-                      pathname: '/access-your-account',
-                      state: {
-                        from: props.location,
-                      },
-                    }}
-                  />
-                );
-              }}
-            />
-          );
-        }
+
+        return (
+          <Route
+            {...rest}
+            render={(props) => (
+              <Redirect
+                to={{
+                  pathname: '/access-your-account',
+                  state: {
+                    from: props.location,
+                  },
+                }}
+              />
+            )}
+          />
+        );
       }}
     />
   );

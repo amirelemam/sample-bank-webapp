@@ -1,9 +1,9 @@
 import React from 'react';
-import logo from '../../../assets/img/logo.png';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import logo from '../../../assets/img/logo.png';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     margin: 0,
     textAlign: 'center',

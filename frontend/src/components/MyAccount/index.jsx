@@ -14,17 +14,16 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import axios from 'axios';
 import { button, root } from '../shared/styles';
 import logo from '../../assets/img/logo.png';
 import { isAuthenticated } from '../shared/auth';
-import Amplify, { Auth } from 'aws-amplify';
-import aws_exports from '../../aws-exports';
 import { SAVINGS, CHECKING } from '../../common/enums/accountTypes';
-import axios from 'axios';
-Amplify.configure(aws_exports);
 
 function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+  const {
+    children, value, index, ...other
+  } = props;
 
   return (
     <div
@@ -99,51 +98,50 @@ const MyAccount = ({ history }) => {
 
         if (!hasAuthenticated) {
           return history.push('/access-your-account');
-        } else {
-          const user = (await Auth.currentSession()).getIdToken();
-
-          if (user) {
-            const { payload } = user;
-
-            const branch = payload['custom:branch'];
-            const account = payload['custom:account'];
-
-            const accessToken = user.getJwtToken();
-
-            const responseChecking = await axios.get(
-              `${ACCOUNT_MANAGER_API}/accounts/branch/${branch}/account/${account}/type/${CHECKING}/balance`,
-              {
-                headers: {
-                  Authorization: `Bearer ${accessToken}`,
-                },
-              }
-            );
-
-            const responseSavings = await axios.get(
-              `${ACCOUNT_MANAGER_API}/accounts/branch/${branch}/account/${account}/type/${SAVINGS}/balance`,
-              {
-                headers: {
-                  Authorization: `Bearer ${accessToken}`,
-                },
-              }
-            );
-
-            if (
-              responseChecking &&
-              responseChecking.data &&
-              responseChecking.data.balance
-            ) {
-              setBalanceChecking(responseChecking.data.balance);
-            }
-            if (
-              responseSavings &&
-              responseSavings.data &&
-              responseSavings.data.balance
-            ) {
-              setBalanceSavings(responseSavings.data.balance);
-            }
-          } else return history.push('/access-your-account');
         }
+        const user = (await Auth.currentSession()).getIdToken();
+
+        if (user) {
+          const { payload } = user;
+
+          const branch = payload['custom:branch'];
+          const account = payload['custom:account'];
+
+          const accessToken = user.getJwtToken();
+
+          const responseChecking = await axios.get(
+            `${ACCOUNT_MANAGER_API}/accounts/branch/${branch}/account/${account}/type/${CHECKING}/balance`,
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            },
+          );
+
+          const responseSavings = await axios.get(
+            `${ACCOUNT_MANAGER_API}/accounts/branch/${branch}/account/${account}/type/${SAVINGS}/balance`,
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            },
+          );
+
+          if (
+            responseChecking
+            && responseChecking.data
+            && responseChecking.data.balance
+          ) {
+            setBalanceChecking(responseChecking.data.balance);
+          }
+          if (
+            responseSavings
+            && responseSavings.data
+            && responseSavings.data.balance
+          ) {
+            setBalanceSavings(responseSavings.data.balance);
+          }
+        } else return history.push('/access-your-account');
       } catch (err) {
         return history.push('/access-your-account');
       }
@@ -205,14 +203,14 @@ const MyAccount = ({ history }) => {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          }
+          },
         );
 
         if (
-          response &&
-          response.data &&
-          response.data.origin &&
-          response.data.destiny
+          response
+          && response.data
+          && response.data.origin
+          && response.data.destiny
         ) {
           if (response.data.destiny.type === SAVINGS) {
             setBalanceSavings(response.data.destiny.balance);
@@ -240,7 +238,7 @@ const MyAccount = ({ history }) => {
   const handleOpen = (e) => {
     setIsOpen(true);
     setModalTitle('Transfer');
-    setModalMsg(``);
+    setModalMsg('');
   };
 
   const handleChangeSelect = (event) => {
@@ -264,7 +262,8 @@ const MyAccount = ({ history }) => {
     <div className={classes.root}>
       <div style={{ paddingBottom: '30px' }}>
         <div style={{ textAlign: 'left', float: 'left', width: '40px' }}>
-          <img src={logo} alt="logo" width="30px" />{' '}
+          <img src={logo} alt="logo" width="30px" />
+          {' '}
         </div>
         <div style={{ textAlign: 'left', float: 'left', width: '170px' }}>
           <span style={{ fontSize: '25px' }}> My Account</span>
@@ -348,7 +347,7 @@ const MyAccount = ({ history }) => {
             id="transfer"
             variant="outlined"
             size="medium"
-            fullWidth={true}
+            fullWidth
             className={classes.button2}
             onClick={handleOpen}
           >
@@ -366,7 +365,7 @@ const MyAccount = ({ history }) => {
             <Button
               variant="outlined"
               size="large"
-              fullWidth={true}
+              fullWidth
               className={classes.button}
             >
               <center>
@@ -406,10 +405,10 @@ const MyAccount = ({ history }) => {
               >
                 <option value="checking-to-savings">Checking to Savings</option>
                 <option value="savings-to-checking">Savings to Checking</option>
-                <option disabled={true} value="cheking-to-external">
+                <option disabled value="cheking-to-external">
                   Checking to Someone Else
                 </option>
-                <option disabled={true} value="savings-to-external">
+                <option disabled value="savings-to-external">
                   Savings to Someone Else
                 </option>
               </Select>
@@ -418,11 +417,11 @@ const MyAccount = ({ history }) => {
                 <Input
                   id="amount"
                   label="Amount"
-                  startAdornment={
+                  startAdornment={(
                     <InputAdornment position="start">
                       <AttachMoneyIcon />
                     </InputAdornment>
-                  }
+                  )}
                   value={amount}
                   onChange={handleChangeModal}
                   inputProps={{

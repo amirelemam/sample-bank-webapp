@@ -4,7 +4,7 @@
 
 This application is structured as a monorepo, which means that all services (backend and frontend) sit under the same Github repository.
 
-<!-- image of arquitecture -->
+<img src="./architecture-diagram/sample_bank_architecture.png" alt="Architecure Diagram" />
 
 **Services**
 - Account Manager: Transfer and get balance of Savings and Checking accounts
@@ -27,14 +27,6 @@ Password: Qwerty@123
 - AWS account and awscli. To install awscli [click here](https://aws.amazon.com/cli)
 - Docker (optional)
 
-<!--
-**AWS Services**  
-- AWS Lambda
-- AWS S3
-- AWS API Gateway
-- PostgreSQL
--->
-
 ## Run
 
 You can run all services with docker-compose  
@@ -51,6 +43,9 @@ You can run all services with docker-compose
 **Stack**
 - Node.js
 - Jest
+- PostgreSQL
+
+**External Services**
 - PostgreSQL
 
 **Environment Variables**
@@ -102,6 +97,9 @@ OpenAPI (former Swagger) `/api/docs`
 - Jest
 - PostgreSQL
 
+**External Services**
+- PostgreSQL
+
 **Environment Variables**
 - DB_HOST: Postgres host
 - DB_USER: Postgres user
@@ -146,6 +144,10 @@ OpenAPI (former Swagger) `/api/docs`
 - Typescript
 - Jest
 - MongoDB
+
+**External Services**
+- MongoDB
+- Google Maps API
 
 **Features**  
 - Find the nearest branch to the given location (latitude, longitude).  

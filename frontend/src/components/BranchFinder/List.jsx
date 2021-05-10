@@ -23,10 +23,14 @@ export default function List() {
           Branch Name
         </Typography>
         <Typography component="dd" variant="body2">
-          <b>Nome</b> Loren ipsum
+          <b>Nome</b>
+          {' '}
+          Loren ipsum
         </Typography>
         <Typography component="dd" variant="body2">
-          <b>Idade</b> Loren ipsum
+          <b>Idade</b>
+          {' '}
+          Loren ipsum
         </Typography>
       </Grid>
     </Grid>

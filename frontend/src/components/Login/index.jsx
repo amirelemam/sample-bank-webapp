@@ -11,14 +11,11 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import Logo from '../shared/Logo';
 import { makeStyles } from '@material-ui/core/styles';
+import { Auth } from 'aws-amplify';
+import Logo from '../shared/Logo';
 import { button, root, link } from '../shared/styles';
-import Amplify, { Auth } from 'aws-amplify';
-import aws_exports from '../../aws-exports';
 import { isAuthenticated } from '../shared/auth';
-
-Amplify.configure(aws_exports);
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,11 +66,11 @@ const Login = ({ history }) => {
       const hasAuthenticated = await isAuthenticated();
 
       if (hasAuthenticated) {
-        return history.push('/my-account');
+        history.push('/my-account');
       } else {
         setError(true);
         setErrorTitle('Instructions');
-        setErrorMsg(`Branch: 0001 Account number: 12345 Password: Qwerty@123`);
+        setErrorMsg('Branch: 0001 Account number: 12345 Password: Qwerty@123');
       }
     })();
   }, [history]);
@@ -83,15 +80,15 @@ const Login = ({ history }) => {
       const branch = document.getElementById('branch').value;
       const account = document.getElementById('account').value;
       const password = document.getElementById('password').value;
-      const username = branch + '_' + account;
+      const username = `${branch}_${account}`;
       await Auth.signIn(username, password);
       const accessToken = await (await Auth.currentSession())
         .getIdToken()
         .getJwtToken();
 
       if (accessToken) {
-        return history.push('/my-account');
-      } else throw new Error();
+        history.push('/my-account');
+      } throw new Error();
     } catch (err) {
       setErrorTitle('Error');
       setErrorMsg('Login unsuccessful.');
@@ -165,7 +162,7 @@ const Login = ({ history }) => {
           onChange={handleChange('password')}
           placeholder="*****"
           style={{ color: '#fff' }}
-          endAdornment={
+          endAdornment={(
             <InputAdornment
               position="end"
               onClick={handleClickShowPassword}
@@ -173,14 +170,14 @@ const Login = ({ history }) => {
             >
               {values.showPassword ? <Visibility /> : <VisibilityOff />}
             </InputAdornment>
-          }
+          )}
         />
       </FormControl>
       <br />
       <Button
         variant="outlined"
         size="large"
-        fullWidth={true}
+        fullWidth
         className={classes.button}
         onClick={handleClick}
       >

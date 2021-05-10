@@ -1,10 +1,10 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Menu from './Menu';
 import Logo from '../shared/Logo';
-import { makeStyles } from '@material-ui/core/styles';
 import { root } from '../shared/styles';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     ...root,
     color: 'white',

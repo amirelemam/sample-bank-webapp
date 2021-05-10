@@ -9,10 +9,20 @@
     "autosuggest-highlight": "^3.1.1",
     "aws-amplify": "^3.3.18",
     "aws-amplify-react": "^4.2.17",
+    "axios": "^0.21.1",
+    "lodash": "^4.17.21",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.26.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

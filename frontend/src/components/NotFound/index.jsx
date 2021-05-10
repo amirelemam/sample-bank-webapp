@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import Logo from '../shared/Logo';
 import { root, button } from '../shared/styles';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     ...root,
     margin: 0,
