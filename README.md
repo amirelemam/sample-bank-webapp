@@ -8,7 +8,7 @@ This application is structured as a monorepo, which means that all services (bac
 
 **Services**
 - Account Manager: Transfer and get balance of Savings and Checking accounts
-- Account Type Simulator: Check the cheapest account type based on your needs
+- Plan Simulator: Check the cheapest plan based on your needs
 - Branch Finder: Find the nearest branch to your location
 - Frontend: application interface
 
@@ -89,11 +89,11 @@ OpenAPI (former Swagger) `/api/docs`
   Start service  
   `$ npm start`
 
-### Account Type Simulator
+### Plan Simulator
 
 **Features**  
-- Simulate which account type is cheaper for your needs: Pro or Free
-- Get pricing for all account types 
+- Simulate which plan is cheaper for your needs: Pro or Free
+- Get pricing for all plans
 
 **Stack**
 - Node.js
@@ -123,7 +123,7 @@ OpenAPI (former Swagger) `/api/docs`
 
 - Local  
   Go to the service folder  
-  `$ cd backend/account-type-simulator`  
+  `$ cd backend/plan-simulator`  
   Install dependencies  
   `$ npm install`  
   Run tests  
@@ -133,7 +133,7 @@ OpenAPI (former Swagger) `/api/docs`
 
 - Production  
   Go to the service folder  
-  `$ cd backend/account-type-simulator`  
+  `$ cd backend/plan-simulator`  
   Install dependencies  
   `$ npm install --only=prod`  
   Run tests  

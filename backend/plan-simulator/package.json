@@ -1,5 +1,5 @@
 {
-  "name": "account-type-simulator",
+  "name": "plan-simulator",
   "version": "1.0.0",
   "description": "Simulates which is the best account type",
   "main": "index.js",
