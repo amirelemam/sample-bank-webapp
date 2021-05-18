@@ -12,7 +12,7 @@ with Diagram("Sample Bank Architecture", show=False):
   front = Custom("Frontend", "./react.png")
 
   am = Custom("Account Manager", "./node.png")
-  ats = Custom("Account Type Simulator", "./node.png")
+  ats = Custom("Plan Simulator", "./node.png")
   bf = Custom("Branch Finder", "./ts.png")
 
   db1 = PostgreSQL("PostgreSQL")
