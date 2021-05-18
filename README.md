@@ -1,16 +1,18 @@
 # Sample Bank
 
-Sample Bank allows you to manage your account, choose the cheaper account plan based on your needs and find the nearest branch from your location.
+Sample Bank allows you to manage your account, choose the cheaper account plan based on your needs and find the nearest branch from your location.  
+
+## Services
+
+- Account Manager: Transfer and get balance of Savings and Checking accounts  
+- Plan Simulator: Check the cheapest plan based on your needs  
+- Branch Finder: Find the nearest branch to your location  
+- Frontend: Application interface  
 
 ## Architecture
 
-This application is structured as a monorepo, which means that all services (backend and frontend) sit under the same Github repository.
+This application is structured as a monorepo, which means that all services (backend and frontend) sit under the same repository.
 <img src="./architecture-diagram/sample_bank_architecture.png" alt="Architecure Diagram" />
-**Services**
-- Account Manager: Transfer and get balance of Savings and Checking accounts
-- Plan Simulator: Check the cheapest plan based on your needs
-- Branch Finder: Find the nearest branch to your location
-- Frontend: Application interface
 
 ## Live Demo
 
@@ -23,8 +25,10 @@ Password: Qwerty@123
 
 ## Requirements
 
-- Node.js 12 or later
-- AWS account and awscli. To install awscli [click here](https://aws.amazon.com/cli)
+- Node.js 12 or later  
+- PostgreSQL 12 or later  
+- MongoDB 4.2 or later  
+- Google Maps API key  
 - Docker (optional)
 
 ## Run
@@ -223,13 +227,16 @@ OpenAPI (former Swagger) `/api/docs`
 
 ### Generate Architecture Diagram
 
-This architecture diagram was generated using Python's lib [Diagram](https://diagrams.mingrammer.com/).  
+The architecture diagram was generated using Python's lib [Diagram](https://diagrams.mingrammer.com/).  
+
+**Requirements**
+
+- Python 3.7 or later  
+- Graphviz  
+For MacOS: `$ brew install graphviz`  
+For another OS check [the installation info](https://graphviz.org/download/#mac)  
 
 **Install**  
-
-- You need Graphviz installed  
-For MacOS: `$ brew install graphviz`  
-For abother OS check [the installation info](https://graphviz.org/download/#mac)  
 
 - Install dependencies  
 `$ pip install -r requirements.txt`  
