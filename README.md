@@ -1,16 +1,16 @@
 # Sample Bank
 
+Sample Bank allows you to manage your account, choose the cheaper account plan based on your needs and find the nearest branch from your location.
+
 ## Architecture
 
 This application is structured as a monorepo, which means that all services (backend and frontend) sit under the same Github repository.
-
 <img src="./architecture-diagram/sample_bank_architecture.png" alt="Architecure Diagram" />
-
 **Services**
 - Account Manager: Transfer and get balance of Savings and Checking accounts
 - Plan Simulator: Check the cheapest plan based on your needs
 - Branch Finder: Find the nearest branch to your location
-- Frontend: application interface
+- Frontend: Application interface
 
 ## Live Demo
 

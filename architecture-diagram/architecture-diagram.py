@@ -12,7 +12,7 @@ with Diagram("Sample Bank Architecture", show=False):
   front = Custom("Frontend", "./react.png")
 
   am = Custom("Account Manager", "./node.png")
-  ats = Custom("Plan Simulator", "./node.png")
+  ps = Custom("Plan Simulator", "./node.png")
   bf = Custom("Branch Finder", "./ts.png")
 
   db1 = PostgreSQL("PostgreSQL")
@@ -20,10 +20,10 @@ with Diagram("Sample Bank Architecture", show=False):
   db3 = MongoDB("MongoDB")
 
   dns >> front >> am
-  front >> ats
+  front >> ps
   front >> bf
 
   am >> db1
-  ats >> db2
+  ps >> db2
   bf >> db3
   bf >> maps
