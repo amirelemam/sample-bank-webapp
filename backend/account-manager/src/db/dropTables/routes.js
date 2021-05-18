@@ -1,5 +1,4 @@
 const router = require('express').Router();
-
 const dropTables = require('./controller');
 
 // eslint-disable-next-line no-unused-vars

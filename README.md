@@ -53,6 +53,7 @@ You can run all services with docker-compose
 - DB_USER: Postgres user
 - DB_PASSWORD: Postgres password
 - DB_NAME: Postgres DB name
+- SECRET_TOKEN: Secret used to create JWT tokens
 
 **Docs**
 
@@ -61,6 +62,8 @@ OpenAPI (former Swagger) `/api/docs`
 **Run**
 
 - Docker (recommended)  
+  Make sure you have the file `.env.production` with environment variables  
+  `$ test -e ./backend/account-manager/.env.production && echo file exists || echo file not found`  
   Add permission to execute the script  
   `$ chmod +x startAccountManagerWithDocker.sh`  
   Run the script  

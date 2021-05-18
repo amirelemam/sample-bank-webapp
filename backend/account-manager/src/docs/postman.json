@@ -70,155 +70,138 @@
 			]
 		},
 		{
-			"name": "Get Balance SAVINGS",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "clientId",
-						"value": "38c3de93-874d-444c-b83f-11e89cca252b",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "{{BASE_URL}}/api/v1/accounts/branch/0001/account/12345/type/SAVINGS/balance",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"accounts",
-						"branch",
-						"0001",
-						"account",
-						"12345",
-						"type",
-						"SAVINGS",
-						"balance"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Balance CHECKING",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "clientId",
-						"value": "38c3de93-874d-444c-b83f-11e89cca252b",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "{{BASE_URL}}/api/v1/accounts/branch/0001/account/12345/type/CHECKING/balance",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"accounts",
-						"branch",
-						"0001",
-						"account",
-						"12345",
-						"type",
-						"CHECKING",
-						"balance"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Deposit",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"branch\": \"0001\",\n    \"account\": \"12345\",\n    \"type\": \"CHECKING\",\n    \"amount\": 100\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"branch\": \"0001\",\n    \"account\": \"12345\",\n    \"password\": \"Qwerty@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/auth/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{BASE_URL}}/api/v1/accounts/deposit",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"accounts",
-						"deposit"
-					]
+				{
+					"name": "Verify",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50IjoiMTIzNDUiLCJicmFuY2giOiIwMDAxIiwicGFzc3dvcmQiOiIyMTA1NzBlNzVkYjNiMmM1YTVmNjA5YzBlNTA3ZWQ5YmM4ODQ5MGVkMzExM2NhZTNjNDIxZGEyZTNiMDM2OWNiYWNlNDdhYmU3YmM0NzU5MzhiN2E3M2NmM2QyY2Y5YTgxODUzYmIxZmEyYmQ3MWI4NDc3NTA3MDNkN2JiN2ViZSIsImlhdCI6MTYyMTE0MjY4MywiZXhwIjoxNjIxMjI5MDgzfQ.9f0g4jdwuxaf_Dyfep-6d5o9GFw02ICBUH1mgebxaZk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/auth/verify",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"verify"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Withdraw",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"branch\": \"0001\",\n    \"account\": \"12345\",\n    \"type\": \"CHECKING\",\n    \"ammunt\": 100\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Account",
+			"item": [
+				{
+					"name": "Get Balance",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "clientId",
+								"value": "38c3de93-874d-444c-b83f-11e89cca252b",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/accounts/balance?branch=0001&account=12345&accountType=CHECKING",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"balance"
+							],
+							"query": [
+								{
+									"key": "branch",
+									"value": "0001"
+								},
+								{
+									"key": "account",
+									"value": "12345"
+								},
+								{
+									"key": "accountType",
+									"value": "CHECKING"
+								}
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{BASE_URL}}/api/v1/accounts/withdraw",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"accounts",
-						"withdraw"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Transfer",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n   \"origin\": {\n        \"branch\": \"0001\",\n        \"account\": \"12345\",\n        \"type\": \"CHECKING\"\n   },\n    \"destiny\": {\n        \"branch\": \"0001\",\n        \"account\": \"12345\",\n        \"type\": \"SAVINGS\"\n   },\n    \"amount\": 100\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Transfer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"origin\": {\n        \"branch\": \"0001\",\n        \"account\": \"12345\",\n        \"accountType\": \"CHECKING\"\n   },\n    \"destiny\": {\n        \"branch\": \"0001\",\n        \"account\": \"12345\",\n        \"accountType\": \"SAVINGS\"\n   },\n    \"amount\": 100\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/accounts/transfer",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"transfer"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "{{BASE_URL}}/api/v1/accounts/transfer",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"accounts",
-						"transfer"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
 			"name": "Health",

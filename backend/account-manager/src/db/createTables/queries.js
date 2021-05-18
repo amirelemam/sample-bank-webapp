@@ -59,7 +59,7 @@ const accounts = async () => {
         .primary();
       table.string('branch').notNullable();
       table.string('account_number').notNullable();
-      table.enu('type', [SAVINGS, CHECKING]).defaultTo('checking');
+      table.enu('account_type', [SAVINGS, CHECKING]).defaultTo('checking');
       table.uuid('client_id').notNullable();
       table.timestamp('created_at').defaultTo(knex.fn.now());
       table.timestamp('updated_at').defaultTo(knex.fn.now());
@@ -103,9 +103,35 @@ const balances = async () => {
   }
 };
 
+const auth = async () => {
+  const tableName = 'auth';
+
+  const tableExists = await knex.schema.hasTable(tableName);
+
+  if (!tableExists) {
+    await knex.schema.createTable(tableName, (table) => {
+      table
+        .uuid('id')
+        .defaultTo(knex.raw('uuid_generate_v4()'))
+        .notNullable()
+        .primary();
+      table.string('account').notNullable();
+      table.string('branch').notNullable();
+      table.string('password').notNullable();
+      table.string('salt').notNullable();
+      table.timestamp('created_at').defaultTo(knex.fn.now());
+      table.timestamp('updated_at').defaultTo(knex.fn.now());
+      table.timestamp('deleted_at').nullable();
+    });
+
+    await createTimestamp(tableName);
+  }
+};
+
 module.exports = {
   loadDependencies,
   clients,
   accounts,
   balances,
+  auth,
 };

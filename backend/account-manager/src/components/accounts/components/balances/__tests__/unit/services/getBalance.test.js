@@ -1,6 +1,6 @@
 const services = require('../../../services');
 const repository = require('../../../repository');
-const { CHECKING } = require('../../../../../common/enums/accountTypes');
+const { CHECKING } = require('../../../../../../../common/enums/accountTypes');
 
 describe('getBalance', () => {
   it('should throw error if balance is not found', async () => {
@@ -10,7 +10,7 @@ describe('getBalance', () => {
     const data = {
       branch: '0001',
       account: '12345',
-      type: CHECKING,
+      accountType: CHECKING,
     };
 
     let result;
@@ -28,34 +28,25 @@ describe('getBalance', () => {
     const data = {
       branch: '0001',
       account: '12345',
-      type: CHECKING,
+      accountType: CHECKING,
     };
 
     const result = await services.getBalance(data);
     expect(result).toEqual({
       balance: 1000,
-      branch: '0001',
-      account: '12345',
-      type: CHECKING,
     });
   });
   it('should return balance formatted', async () => {
-    services.getAccountId = jest.fn(() => ({ accountId: 'accountId' }));
     repository.getBalance = jest.fn(() => ({ balance: 1000 }));
 
     const data = {
-      branch: '0001',
-      account: '12345',
-      type: CHECKING,
+      accountId: 'accountId',
       formatted: true,
     };
 
     const result = await services.getBalance(data);
     expect(result).toEqual({
       balance: '$1,000.00',
-      branch: '0001',
-      account: '12345',
-      type: CHECKING,
     });
   });
 });

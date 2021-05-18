@@ -13,6 +13,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+// eslint-disable-next-line no-unused-vars
 router.post('/clients', async (req, res, next) => {
   try {
     await populateTables.clients();

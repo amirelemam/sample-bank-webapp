@@ -1,3 +1,4 @@
+const auth = require('./auth');
 const accounts = require('./accounts');
 
 module.exports = {
@@ -25,6 +26,12 @@ module.exports = {
     },
     '/api/v1/accounts/balance': {
       get: accounts.getBalance,
+    },
+    '/api/v1/auth/login': {
+      post: auth.login,
+    },
+    '/api/v1/auth/verify': {
+      post: auth.verify,
     },
   },
 };

@@ -1,15 +1,12 @@
-FROM node:12-alpine
-
+FROM node:12.22.1-alpine3.11 as dependencies
+USER node
 WORKDIR /usr/src/app
-
-COPY package*.json ./
-
+COPY --chown=node:node package*.json ./
 RUN npm ci --only=production --no-optional
 
-ENV PORT=4000
-
+FROM dependencies
+COPY --chown=node:node --from=dependencies /usr/src/app/node_modules ./node_modules
 COPY . .
-
+ENV NODE_ENV production
+CMD ["npm", "start"]
 EXPOSE 4000
-
-CMD [ "npm", "start" ]

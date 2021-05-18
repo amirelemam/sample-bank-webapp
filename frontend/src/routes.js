@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
+import { makeStyles } from '@material-ui/core/styles';
 import Home from './components/Home';
 import Login from './components/Login';
 import MyAccount from './components/MyAccount';
 import NotFound from './components/NotFound';
 import BranchFinder from './components/BranchFinder';
 import Footer from './components/shared/Footer';
-import { ProtectedRoute } from './components/shared/ProtectedRoute';
-import { makeStyles } from '@material-ui/core/styles';
+import ProtectedRoute from './components/shared/ProtectedRoute';
 import { root } from './components/shared/styles';
 
 const useStyles = makeStyles({

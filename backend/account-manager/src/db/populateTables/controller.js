@@ -4,6 +4,7 @@ const all = async () => {
   await populateTables.clients();
   await populateTables.accounts();
   await populateTables.balances();
+  await populateTables.auth();
 };
 
 const clients = async () => {

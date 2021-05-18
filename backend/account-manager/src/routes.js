@@ -5,6 +5,7 @@ const createTables = require('./db/createTables/routes');
 const dropTables = require('./db/dropTables/routes');
 const populateTables = require('./db/populateTables/routes');
 const accounts = require('./components/accounts/routes');
+const auth = require('./components/auth/routes');
 const { isDev, isTest } = require('./common/utils');
 
 const router = express.Router();
@@ -12,6 +13,7 @@ const router = express.Router();
 // Application
 router.use('/health', healthCheck);
 router.use('/accounts', accounts);
+router.use('/auth', auth);
 
 /* istanbul ignore next */
 // DB

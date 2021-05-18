@@ -1,7 +1,4 @@
-const express = require('express');
-
-const router = express.Router();
-
+const router = require('express').Router();
 const createTables = require('./controller');
 
 // eslint-disable-next-line no-unused-vars

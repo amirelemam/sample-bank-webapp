@@ -1,17 +1,17 @@
 const router = require('express').Router();
 const validation = require('./validation');
-const authentication = require('../../common/middlewares/authentication');
 const controller = require('./controller');
+const { verifyToken } = require('../auth/middlewares');
 
 router.get(
   '/balance',
-  authentication,
+  verifyToken,
   validation.getBalance,
   async (req, res, next) => {
     try {
-      const { branch, account, type } = req.query;
+      const { branch, account, accountType } = req.query;
 
-      const result = await controller.getBalance({ account, branch, type });
+      const result = await controller.getBalance({ account, branch, accountType });
 
       return res.status(200).json(result);
     } catch (err) {
@@ -22,7 +22,7 @@ router.get(
 
 router.post(
   '/transfer',
-  authentication,
+  verifyToken,
   validation.transfer,
   async (req, res, next) => {
     try {

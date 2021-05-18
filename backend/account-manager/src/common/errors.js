@@ -16,3 +16,7 @@ exports.NotFoundError = (
 ) => new GerericError(msg, 404);
 
 exports.UnprocessableEntityError = (msg = 'Unable to perform this action.') => new GerericError(msg, 422);
+
+exports.UnauthorizedError = (msg = 'access-token is invalid or expired.') => new GerericError(msg, 401);
+
+exports.UnauthenticatedError = (msg = 'Invalid username or password.') => new GerericError(msg, 401);

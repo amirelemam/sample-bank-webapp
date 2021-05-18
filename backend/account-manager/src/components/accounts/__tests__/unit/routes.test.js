@@ -18,12 +18,12 @@ describe('routes', () => {
             origin: {
               branch: '0001',
               account: '54321',
-              type: CHECKING,
+              accountType: CHECKING,
             },
             destiny: {
               branch: '0001',
               account: '54321',
-              type: SAVINGS,
+              accountType: SAVINGS,
             },
             amount: 100,
           });
@@ -48,12 +48,12 @@ describe('routes', () => {
           origin: {
             branch: '0001',
             account: '54321',
-            type: CHECKING,
+            accountType: CHECKING,
           },
           destiny: {
             branch: '0001',
             account: '54321',
-            type: SAVINGS,
+            accountType: SAVINGS,
           },
           amount: 100,
         });
@@ -76,12 +76,12 @@ describe('routes', () => {
           origin: {
             branch: '0001',
             account: '12345',
-            type: CHECKING,
+            accountType: CHECKING,
           },
           destiny: {
             branch: '0001',
             account: '12345',
-            type: SAVINGS,
+            accountType: SAVINGS,
           },
           amount: 0,
         });
@@ -111,13 +111,13 @@ describe('routes', () => {
         origin: {
           branch: '0001',
           account: '12345',
-          type: CHECKING,
+          accountType: CHECKING,
           balance: '$1,000.00',
         },
         destiny: {
           branch: '0001',
           account: '12345',
-          type: SAVINGS,
+          accountType: SAVINGS,
           balance: '$400.00',
         },
       };
@@ -130,12 +130,12 @@ describe('routes', () => {
           origin: {
             branch: '0001',
             account: '12345',
-            type: CHECKING,
+            accountType: CHECKING,
           },
           destiny: {
             branch: '0001',
             account: '12345',
-            type: SAVINGS,
+            accountType: SAVINGS,
           },
           amount: 100,
         });
@@ -153,12 +153,12 @@ describe('routes', () => {
 
       const branch = '0001';
       const account = '12345';
-      const type = SAVINGS;
+      const accountType = SAVINGS;
 
       let response;
       try {
         response = await request(app).get(
-          `/api/v1/accounts/balance?branch=${branch}&account=${account}&type=${type}`,
+          `/api/v1/accounts/balance?branch=${branch}&account=${account}&accountType=${accountType}`,
         );
       } catch (error) {
         expect(error.status).toBe(500);
@@ -172,12 +172,12 @@ describe('routes', () => {
 
       const branch = '0001';
       const account = '12345';
-      const type = SAVINGS;
+      const accountType = SAVINGS;
 
       let response;
       try {
         response = await request(app).get(
-          `/api/v1/accounts/balance?branch=${branch}&account=${account}&type=${type}`,
+          `/api/v1/accounts/balance?branch=${branch}&account=${account}&accountType=${accountType}`,
         );
       } catch (error) {
         expect(error.status).toBe(404);
@@ -191,19 +191,19 @@ describe('routes', () => {
 
       const branch = '0001';
       const account = '12345';
-      const type = SAVINGS;
+      const accountType = SAVINGS;
 
       const result = {
         branch: '0001',
         account: '12345',
         balance: '$1,100.00',
-        type: SAVINGS,
+        accountType: SAVINGS,
       };
 
       controller.getBalance = jest.fn(() => result);
 
       const response = await request(app).get(
-        `/api/v1/accounts/balance?branch=${branch}&account=${account}&type=${type}`,
+        `/api/v1/accounts/balance?branch=${branch}&account=${account}&accountType=${accountType}`,
       );
 
       expect(response.status).toBe(200);

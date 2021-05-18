@@ -15,12 +15,12 @@ describe('POST /api/v1/accounts/transfer', () => {
         origin: {
           branch: '0001',
           account: '12345',
-          type: CHECKING,
+          accountType: CHECKING,
         },
         destiny: {
           branch: '0001',
           account: '12345',
-          type: SAVINGS,
+          accountType: SAVINGS,
         },
         amount: 100,
       });
@@ -30,13 +30,13 @@ describe('POST /api/v1/accounts/transfer', () => {
       origin: {
         branch: '0001',
         account: '12345',
-        type: CHECKING,
+        accountType: CHECKING,
         balance: '$1,000.00',
       },
       destiny: {
         branch: '0001',
         account: '12345',
-        type: SAVINGS,
+        accountType: SAVINGS,
         balance: '$400.00',
       },
     });
@@ -55,12 +55,12 @@ describe('POST /api/v1/accounts/transfer', () => {
         origin: {
           branch: '0001',
           account: '54321',
-          type: CHECKING,
+          accountType: CHECKING,
         },
         destiny: {
           branch: '0001',
           account: '54321',
-          type: SAVINGS,
+          accountType: SAVINGS,
         },
         amount: 100,
       });
@@ -80,12 +80,12 @@ describe('POST /api/v1/accounts/transfer', () => {
         origin: {
           branch: '0001',
           account: '54321',
-          type: CHECKING,
+          accountType: CHECKING,
         },
         destiny: {
           branch: '0001',
           account: '54321',
-          type: SAVINGS,
+          accountType: SAVINGS,
         },
         amount: 100,
       });
@@ -105,12 +105,12 @@ describe('POST /api/v1/accounts/transfer', () => {
         origin: {
           branch: '0001',
           account: '12345',
-          type: CHECKING,
+          accountType: CHECKING,
         },
         destiny: {
           branch: '0001',
           account: '12345',
-          type: SAVINGS,
+          accountType: SAVINGS,
         },
         amount: 0,
       });
@@ -130,12 +130,12 @@ describe('POST /api/v1/accounts/transfer', () => {
         origin: {
           branch: '0001',
           account: '12345',
-          type: CHECKING,
+          accountType: CHECKING,
         },
         destiny: {
           branch: '0001',
           account: '24680',
-          type: CHECKING,
+          accountType: CHECKING,
         },
         amount: 9000,
       });
@@ -154,12 +154,12 @@ describe('POST /api/v1/accounts/transfer', () => {
         origin: {
           branch: '0001',
           account: '12345',
-          type: CHECKING,
+          accountType: CHECKING,
         },
         destiny: {
           branch: '0001',
           account: '12345',
-          type: SAVINGS,
+          accountType: SAVINGS,
         },
         amount: 20000,
       });
@@ -178,12 +178,12 @@ describe('POST /api/v1/accounts/transfer', () => {
         origin: {
           branch: '0001',
           account: '12345',
-          type: CHECKING,
+          accountType: CHECKING,
         },
         destiny: {
           branch: '0001',
           account: '12345',
-          type: SAVINGS,
+          accountType: SAVINGS,
         },
         amount: -100,
       });
@@ -203,12 +203,12 @@ describe('POST /api/v1/accounts/transfer', () => {
         origin: {
           branch: '0001',
           account: '12345',
-          type: CHECKING,
+          accountType: CHECKING,
         },
         destiny: {
           branch: '0001',
           account: '12345',
-          type: SAVINGS,
+          accountType: SAVINGS,
         },
         amount: 2000,
       });
@@ -237,12 +237,12 @@ describe('POST /api/v1/accounts/transfer', () => {
         origin: {
           branch: '0001',
           account: '12345',
-          type: CHECKING,
+          accountType: CHECKING,
         },
         destiny: {
           branch: '0001',
           account: '12345',
-          type: SAVINGS,
+          accountType: SAVINGS,
         },
         amount: 100,
       });
@@ -252,7 +252,8 @@ describe('POST /api/v1/accounts/transfer', () => {
   });
 
   it('should return InternalServerError if account balance not found', async (done) => {
-    const repository = require('../../repository');
+    // eslint-disable-next-line global-require
+    const repository = require('../../components/balances/repository');
     const mock = jest.spyOn(repository, 'getBalance');
     mock.mockResolvedValueOnce(null);
 
@@ -266,12 +267,12 @@ describe('POST /api/v1/accounts/transfer', () => {
         origin: {
           branch: '0001',
           account: '12345',
-          type: CHECKING,
+          accountType: CHECKING,
         },
         destiny: {
           branch: '0001',
           account: '12345',
-          type: SAVINGS,
+          accountType: SAVINGS,
         },
         amount: 100,
       });
@@ -282,7 +283,8 @@ describe('POST /api/v1/accounts/transfer', () => {
   });
 
   it('should return InternalServerError if no account is found', async (done) => {
-    const repository = require('../../repository');
+    // eslint-disable-next-line global-require
+    const repository = require('../../components/balances/repository');
     const mock = jest.spyOn(repository, 'update');
     mock.mockResolvedValueOnce([null]);
 
@@ -296,12 +298,12 @@ describe('POST /api/v1/accounts/transfer', () => {
         origin: {
           branch: '0001',
           account: '12345',
-          type: CHECKING,
+          accountType: CHECKING,
         },
         destiny: {
           branch: '0001',
           account: '12345',
-          type: SAVINGS,
+          accountType: SAVINGS,
         },
         amount: 100,
       });
@@ -311,7 +313,8 @@ describe('POST /api/v1/accounts/transfer', () => {
     done();
   });
   it('should return InternalServerError if cannot deposit', async (done) => {
-    const repository = require('../../repository');
+    // eslint-disable-next-line global-require
+    const repository = require('../../components/balances/repository');
     const mock = jest.spyOn(repository, 'update');
     mock
       .mockResolvedValueOnce([{ balance: 100 }])
@@ -327,12 +330,12 @@ describe('POST /api/v1/accounts/transfer', () => {
         origin: {
           branch: '0001',
           account: '12345',
-          type: CHECKING,
+          accountType: CHECKING,
         },
         destiny: {
           branch: '0001',
           account: '12345',
-          type: SAVINGS,
+          accountType: SAVINGS,
         },
         amount: 100,
       });
@@ -342,7 +345,8 @@ describe('POST /api/v1/accounts/transfer', () => {
     done();
   });
   it('should return InternalServerError if cannot withdraw', async (done) => {
-    const repository = require('../../repository');
+    // eslint-disable-next-line global-require
+    const repository = require('../../components/balances/repository');
     const mock = jest.spyOn(repository, 'update');
     mock.mockResolvedValueOnce([null]);
 
@@ -356,12 +360,12 @@ describe('POST /api/v1/accounts/transfer', () => {
         origin: {
           branch: '0001',
           account: '12345',
-          type: CHECKING,
+          accountType: CHECKING,
         },
         destiny: {
           branch: '0001',
           account: '12345',
-          type: SAVINGS,
+          accountType: SAVINGS,
         },
         amount: 100,
       });

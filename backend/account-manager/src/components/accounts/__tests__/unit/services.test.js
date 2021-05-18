@@ -1,6 +1,6 @@
-const services = require('../../../services');
-const repository = require('../../../repository');
-const { CHECKING } = require('../../../../../common/enums/accountTypes');
+const services = require('../../services');
+const repository = require('../../repository');
+const { CHECKING } = require('../../../../common/enums/accountTypes');
 
 describe('getAccountId', () => {
   it('should throw error if account is not found', async () => {
@@ -9,7 +9,7 @@ describe('getAccountId', () => {
     const data = {
       branch: '0001',
       account: '12345',
-      type: CHECKING,
+      accountType: CHECKING,
     };
 
     let result;
@@ -26,7 +26,7 @@ describe('getAccountId', () => {
     const data = {
       branch: '0001',
       account: '12345',
-      type: CHECKING,
+      accountType: CHECKING,
     };
 
     const result = await services.getAccountId(data);

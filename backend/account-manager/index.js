@@ -1,5 +1,5 @@
-const logger = require('./common/logger');
-const app = require('./app');
+const logger = require('./src/common/logger');
+const app = require('./src/app');
 
 app.listen(app.get('port'),
   () => logger.info(`Server running at ${app.get('port')}`));

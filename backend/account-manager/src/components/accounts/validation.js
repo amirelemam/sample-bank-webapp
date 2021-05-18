@@ -8,12 +8,12 @@ const transfer = async ({ body }, res, next) => {
     origin: joi.object().keys({
       branch: joi.string().required(),
       account: joi.string().required(),
-      type: joi.string().valid(SAVINGS, CHECKING).required(),
+      accountType: joi.string().valid(SAVINGS, CHECKING).required(),
     }),
     destiny: joi.object().keys({
       branch: joi.string().required(),
       account: joi.string().required(),
-      type: joi.string().valid(SAVINGS, CHECKING).required(),
+      accountType: joi.string().valid(SAVINGS, CHECKING).required(),
     }),
     amount: joi.number().required(),
   });
@@ -32,7 +32,7 @@ const getBalance = async ({ query }, res, next) => {
   const schema = joi.object().keys({
     branch: joi.string().required(),
     account: joi.string().required(),
-    type: joi.string().valid(SAVINGS, CHECKING).required(),
+    accountType: joi.string().valid(SAVINGS, CHECKING).required(),
   });
 
   try {

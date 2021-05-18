@@ -35,7 +35,7 @@ const logger = winston.createLogger({
           (info) => `${info.timestamp} ${info.level}: ${info.message}`,
         ),
       ),
-      level: process.env.LOGGING_LEVEL || 'info',
+      level: process.env.LOGGING_LEVEL || 'debug',
     }),
   ],
 });

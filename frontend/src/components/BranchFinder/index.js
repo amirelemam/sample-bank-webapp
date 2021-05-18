@@ -134,6 +134,7 @@ export default function GoogleMaps() {
         }}
         renderInput={(params) => (
           <TextField
+            // eslint-disable-next-line react/jsx-props-no-spreading
             {...params}
             label="Type your address..."
             variant="outlined"
@@ -155,6 +156,7 @@ export default function GoogleMaps() {
               <Grid item xs>
                 {parts.map((part, index) => (
                   <span
+                    // eslint-disable-next-line react/no-array-index-key
                     key={index}
                     style={{ fontWeight: part.highlight ? 700 : 400 }}
                   >

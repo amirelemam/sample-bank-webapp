@@ -1,6 +1,6 @@
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -16,9 +16,9 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import axios from 'axios';
 import { button, root } from '../shared/styles';
-import logo from '../../assets/img/logo.png';
-import { isAuthenticated } from '../shared/auth';
+import { isAuthenticated, logout } from '../shared/auth';
 import { SAVINGS, CHECKING } from '../../common/enums/accountTypes';
+import logo from '../../assets/img/logo.png';
 
 function TabPanel(props) {
   const {
@@ -31,6 +31,7 @@ function TabPanel(props) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
+      // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
     >
       {value === index && <Box p={3}>{children}</Box>}
@@ -49,7 +50,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     ...root,
     flexGrow: 1,
-    paddingTop: '100px',
+    paddingTop: '90px',
+    minHeight: 'calc(100vh - 165px)',
   },
   button: { ...button, width: '150px' },
   button2: { ...button, width: '120px' },
@@ -97,52 +99,49 @@ const MyAccount = ({ history }) => {
         const hasAuthenticated = await isAuthenticated();
 
         if (!hasAuthenticated) {
+          logout();
           return history.push('/access-your-account');
         }
-        const user = (await Auth.currentSession()).getIdToken();
 
-        if (user) {
-          const { payload } = user;
+        const branch = localStorage.getItem('branch');
+        const account = localStorage.getItem('account');
+        const accessToken = localStorage.getItem('access-token');
 
-          const branch = payload['custom:branch'];
-          const account = payload['custom:account'];
-
-          const accessToken = user.getJwtToken();
-
-          const responseChecking = await axios.get(
-            `${ACCOUNT_MANAGER_API}/accounts/branch/${branch}/account/${account}/type/${CHECKING}/balance`,
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-              },
+        const responseChecking = await axios.get(
+          `${ACCOUNT_MANAGER_API}/accounts/balance?branch=${branch}&account=${account}&accountType=${CHECKING}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
             },
-          );
+          },
+        );
 
-          const responseSavings = await axios.get(
-            `${ACCOUNT_MANAGER_API}/accounts/branch/${branch}/account/${account}/type/${SAVINGS}/balance`,
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-              },
+        const responseSavings = await axios.get(
+          `${ACCOUNT_MANAGER_API}/accounts/balance?branch=${branch}&account=${account}&accountType=${SAVINGS}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
             },
-          );
+          },
+        );
 
-          if (
-            responseChecking
-            && responseChecking.data
-            && responseChecking.data.balance
-          ) {
-            setBalanceChecking(responseChecking.data.balance);
-          }
-          if (
-            responseSavings
-            && responseSavings.data
-            && responseSavings.data.balance
-          ) {
-            setBalanceSavings(responseSavings.data.balance);
-          }
-        } else return history.push('/access-your-account');
+        if (
+          responseChecking
+          && responseChecking.data
+          && responseChecking.data.balance
+        ) {
+          setBalanceChecking(responseChecking.data.balance);
+        }
+        if (
+          responseSavings
+          && responseSavings.data
+          && responseSavings.data.balance
+        ) {
+          setBalanceSavings(responseSavings.data.balance);
+        }
+        return null;
       } catch (err) {
+        logout();
         return history.push('/access-your-account');
       }
     })();
@@ -164,68 +163,66 @@ const MyAccount = ({ history }) => {
   };
 
   const handleSignOut = async () => {
-    await Auth.signOut();
-    return history.push('/');
+    await logout();
+    history.push('/');
   };
-
   const handleTransfer = async () => {
     try {
       if (Number(amount) <= 0) return;
 
-      const url = `${ACCOUNT_MANAGER_API}/accounts/transfer`;
+      const hasAuthenticated = await isAuthenticated();
 
-      const user = (await Auth.currentSession()).getIdToken();
+      if (!hasAuthenticated) {
+        logout();
+        history.push('/access-your-account');
+      }
 
-      if (user) {
-        const { payload } = user;
+      const branch = localStorage.getItem('branch');
+      const account = localStorage.getItem('account');
+      const accessToken = localStorage.getItem('access-token');
 
-        const branch = payload['custom:branch'];
-        const account = payload['custom:account'];
-
-        const accessToken = user.getJwtToken();
-
-        const response = await axios.post(
-          url,
-          {
-            origin: {
-              branch,
-              account,
-              type: origin,
-            },
-            destiny: {
-              branch,
-              account,
-              type: destiny,
-            },
-            amount: Number(amount),
+      const response = await axios.post(
+        `${ACCOUNT_MANAGER_API}/accounts/transfer`,
+        {
+          origin: {
+            branch,
+            account,
+            accountType: origin,
           },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
+          destiny: {
+            branch,
+            account,
+            accountType: destiny,
           },
-        );
+          amount: Number(amount),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
 
-        if (
-          response
-          && response.data
-          && response.data.origin
-          && response.data.destiny
-        ) {
-          if (response.data.destiny.type === SAVINGS) {
-            setBalanceSavings(response.data.destiny.balance);
-          } else if (response.data.origin.type === SAVINGS) {
-            setBalanceSavings(response.data.origin.balance);
-          }
+      if (
+        response
+        && response.data
+        && response.data.origin
+        && response.data.destiny
+      ) {
+        if (response.data.destiny.accountType === SAVINGS) {
+          setBalanceSavings(response.data.destiny.balance);
+        } else if (response.data.origin.accountType === SAVINGS) {
+          setBalanceSavings(response.data.origin.balance);
+        }
 
-          if (response.data.destiny.type === CHECKING) {
-            setBalanceChecking(response.data.destiny.balance);
-          } else if (response.data.origin.type === CHECKING) {
-            setBalanceChecking(response.data.origin.balance);
-          }
+        if (response.data.destiny.accountType === CHECKING) {
+          setBalanceChecking(response.data.destiny.balance);
+        } else if (response.data.origin.accountType === CHECKING) {
+          setBalanceChecking(response.data.origin.balance);
         }
       }
     } catch (err) {
+      // eslint-disable-next-line
       console.error(err);
     } finally {
       setAmount(0.0);
@@ -235,7 +232,7 @@ const MyAccount = ({ history }) => {
     }
   };
 
-  const handleOpen = (e) => {
+  const handleOpen = () => {
     setIsOpen(true);
     setModalTitle('Transfer');
     setModalMsg('');
@@ -276,15 +273,15 @@ const MyAccount = ({ history }) => {
             paddingRight: '20px',
           }}
         >
-          <span className={classes.link} onClick={handleSignOut}>
-            <ExitToAppIcon />
+          <span className={classes.link}>
+            <ExitToAppIcon onClick={handleSignOut} />
           </span>
         </div>
       </div>
       <AppBar
         position="static"
         color="transparent"
-        style={{ width: '340px', margin: 'auto' }}
+        style={{ width: '340px' }}
       >
         <Tabs
           TabIndicatorProps={{
@@ -293,7 +290,6 @@ const MyAccount = ({ history }) => {
           style={{ color: '#ffffff' }}
           value={value}
           onChange={handleChange}
-          aria-label="simple tabs example"
         >
           <Tab label="Balance" {...a11yProps(0)} />
           <Tab label="Credit Card" {...a11yProps(1)} />
@@ -347,7 +343,7 @@ const MyAccount = ({ history }) => {
             id="transfer"
             variant="outlined"
             size="medium"
-            fullWidth
+            fullWidth={true}
             className={classes.button2}
             onClick={handleOpen}
           >
@@ -365,7 +361,7 @@ const MyAccount = ({ history }) => {
             <Button
               variant="outlined"
               size="large"
-              fullWidth
+              fullWidth={true}
               className={classes.button}
             >
               <center>

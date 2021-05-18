@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "prestart": "node -e \"require('./src/db/createTables/controller.js')();\"",
-    "start": "cd src && node index.js",
-    "start:local": "cd src && NODE_ENV=dev nodemon -r dotenv/config index.js",
-    "test": "NODE_ENV=test jest --detectOpenHandles --runInBand --coverage",
-    "test:unit": "NODE_ENV=test jest src/components/**/__tests__/unit/**/*.test.js --detectOpenHandles --runInBand --coverage",
-    "test:integration": "NODE_ENV=test jest src/components/**/__tests__/integration/*.test.js --detectOpenHandles --runInBand --coverage"
+    "start": "node index.js",
+    "start:local": "NODE_ENV=dev nodemon -r dotenv/config index.js",
+    "test": "NODE_ENV=test SECRET_TOKEN=amir jest --detectOpenHandles --runInBand --coverage",
+    "test:unit": "NODE_ENV=test SECRET_TOKEN=amir jest src/components/**/__tests__/unit/*.test.js --detectOpenHandles --runInBand --coverage",
+    "test:integration": "NODE_ENV=test SECRET_TOKEN=amir jest src/components/**/__tests__/integration/*.test.js --detectOpenHandles --runInBand --coverage"
   },
   "keywords": [],
   "author": "Amir Elemam",
@@ -41,6 +41,7 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "jest": "^26.6.3",
+    "lolex": "^6.0.0",
     "nodemon": "^2.0.7",
     "supertest": "^6.1.3"
   }

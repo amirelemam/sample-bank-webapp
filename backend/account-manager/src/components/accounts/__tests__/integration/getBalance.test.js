@@ -11,10 +11,10 @@ describe('GET /api/v1/accounts/balance', () => {
 
     const branch = '0001';
     const account = '12345';
-    const type = CHECKING;
+    const accountType = CHECKING;
 
     const response = await request(app).get(
-      `/api/v1/accounts/balance?branch=${branch}&account=${account}&type=${type}`,
+      `/api/v1/accounts/balance?branch=${branch}&account=${account}&accountType=${accountType}`,
     );
 
     expect(response.status).toBe(200);
@@ -22,7 +22,7 @@ describe('GET /api/v1/accounts/balance', () => {
       branch: '0001',
       account: '12345',
       balance: '$1,100.00',
-      type: CHECKING,
+      accountType: CHECKING,
     });
     done();
   });
@@ -32,10 +32,10 @@ describe('GET /api/v1/accounts/balance', () => {
 
     const branch = '0001';
     const account = '12345';
-    const type = SAVINGS;
+    const accountType = SAVINGS;
 
     const response = await request(app).get(
-      `/api/v1/accounts/balance?branch=${branch}&account=${account}&type=${type}`,
+      `/api/v1/accounts/balance?branch=${branch}&account=${account}&accountType=${accountType}`,
     );
 
     expect(response.status).toBe(500);
