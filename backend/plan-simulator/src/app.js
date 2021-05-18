@@ -47,11 +47,7 @@ app.use(
 if (!isDev() && !isTest()) {
   // eslint-disable-next-line no-unused-vars
   app.use((req, res, next) => {
-    res.header('Access-Control-Expose-Headers', 'access-token');
-    res.header(
-      'Access-Control-Allow-Origin',
-      'https://amirelemam.com.s3-website-us-east-1.amazonaws.com',
-    );
+    res.header('Access-Control-Allow-Origin', '*');
     return next();
   });
 }
