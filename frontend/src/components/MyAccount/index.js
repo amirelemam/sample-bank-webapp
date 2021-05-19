@@ -50,8 +50,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     ...root,
     flexGrow: 1,
-    paddingTop: '90px',
-    minHeight: 'calc(100vh - 165px)',
+    minHeight: 'calc(100vh - 145px)',
   },
   button: { ...button, width: '150px' },
   button2: { ...button, width: '120px' },
@@ -257,7 +256,7 @@ const MyAccount = ({ history }) => {
 
   return (
     <div className={classes.root}>
-      <div style={{ paddingBottom: '30px' }}>
+      <div style={{ paddingBottom: '30px', width: '500px' }}>
         <div style={{ textAlign: 'left', float: 'left', width: '40px' }}>
           <img src={logo} alt="logo" width="30px" />
           {' '}

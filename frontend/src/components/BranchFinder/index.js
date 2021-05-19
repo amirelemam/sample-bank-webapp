@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {
+  useEffect, useState, useRef, useMemo,
+} from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
@@ -7,8 +9,10 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash/throttle';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import List from './List';
 import { root, link } from '../shared/styles';
+import logo from '../../assets/img/logo.png';
 
 function loadScript(src, position, id) {
   if (!position) {
@@ -44,12 +48,12 @@ const useStyles = makeStyles((theme) => ({
   link,
 }));
 
-export default function GoogleMaps() {
+export default function GoogleMaps({ history }) {
   const classes = useStyles();
-  const [value, setValue] = React.useState(null);
-  const [inputValue, setInputValue] = React.useState('');
-  const [options, setOptions] = React.useState([]);
-  const loaded = React.useRef(false);
+  const [value, setValue] = useState(null);
+  const [inputValue, setInputValue] = useState('');
+  const [options, setOptions] = useState([]);
+  const loaded = useRef(false);
 
   if (typeof window !== 'undefined' && !loaded.current) {
     if (!document.querySelector('#google-maps')) {
@@ -63,14 +67,14 @@ export default function GoogleMaps() {
     loaded.current = true;
   }
 
-  const fetch = React.useMemo(
+  const fetch = useMemo(
     () => throttle((request, callback) => {
       autocompleteService.current.getPlacePredictions(request, callback);
     }, 200),
     [],
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     let active = true;
 
     if (!autocompleteService.current && window.google) {
@@ -106,9 +110,32 @@ export default function GoogleMaps() {
     };
   }, [value, inputValue, fetch]);
 
+  const handleSignOut = async () => {
+    history.push('/');
+  };
+
   return (
     <div className={classes.root}>
-      <div className={classes.title}>FIND A BRANCH</div>
+      <div style={{ width: '500px' }}>
+        <div style={{ textAlign: 'left', float: 'left', width: '40px' }}>
+          <img src={logo} alt="logo" width="30px" />
+          {' '}
+        </div>
+        <div style={{ textAlign: 'left', float: 'left', width: '300px' }}>
+          <span style={{ fontSize: '25px' }}> Find a branch</span>
+        </div>
+        <div
+          style={{
+            textAlign: 'right',
+            float: 'right',
+            width: '120px',
+          }}
+        >
+          <span className={classes.link}>
+            <ExitToAppIcon onClick={handleSignOut} />
+          </span>
+        </div>
+      </div>
 
       <Autocomplete
         id="google-map-demo"
