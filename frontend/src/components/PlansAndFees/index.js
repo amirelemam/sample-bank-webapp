@@ -69,9 +69,7 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   root: {
     ...root,
-    flexGrow: 1,
     minHeight: 'calc(100vh - 100px)',
-    color: '#fff',
   },
   button: { ...button, width: '150px' },
   button2: { ...button, width: '180px' },
@@ -102,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MyAccount = ({ history }) => {
+const PlansAndFees = ({ history }) => {
   const [price, setPrice] = useState(0);
   // const [error, setError] = useState(false);
   // const [errorMsg, setErrorMsg] = useState('');
@@ -191,7 +189,6 @@ const MyAccount = ({ history }) => {
       <div style={{ paddingBottom: '30px', width: '500px' }}>
         <div style={{ textAlign: 'left', float: 'left', width: '40px' }}>
           <img src={logo} alt="logo" width="30px" />
-          {' '}
         </div>
         <div style={{ textAlign: 'left', float: 'left', width: '170px' }}>
           <span style={{ fontSize: '25px' }}> Plans & Fees</span>
@@ -318,12 +315,11 @@ const MyAccount = ({ history }) => {
             width: '500px',
             textAlign: 'center',
             color: '#fff',
-            paddingBottom: '30px',
           }}
         >
           <TableContainer>
             <Table className={classes.table}>
-              <caption style={{ color: '#fff' }}>* Applications are subject to approval</caption>
+              <caption style={{ color: '#fff', fontSize: '10px' }}>* Applications are subject to approval</caption>
               <TableHead>
                 <TableRow>
                   <TableCell style={{ color: '#fff' }}><b>Extra</b></TableCell>
@@ -365,12 +361,11 @@ const MyAccount = ({ history }) => {
             <h5>&#10003; 24/7 Customer Service</h5>
           </div>
         </div>
-        <br />
-        <br />
         <div
           style={{
             width: '500px',
             textAlign: 'center',
+            marginTop: '30px',
           }}
         >
           <center>
@@ -409,25 +404,14 @@ const MyAccount = ({ history }) => {
                     <TableCell style={{ color: '#fff' }} component="th" scope="row">
                       {row.feature}
                     </TableCell>
-                    <TableCell style={{ color: '#fff', width: '100px' }}>
+                    <TableCell style={{ width: '50px' }}>
                       <TextField
-                        style={{ color: '#fff' }}
                         value={price}
                         onChange={handlePriceChange}
                         name="numberformat"
                         id="formatted-numberformat-input"
-                        color="primary"
                         InputProps={{
                           inputComponent: NumberInput,
-                          color: 'primary',
-                          classes: {
-                            input: {
-                              multilineColor: {
-                                color: 'white',
-                              },
-                            },
-                            color: 'white',
-                          },
                         }}
                       />
                     </TableCell>
@@ -437,10 +421,9 @@ const MyAccount = ({ history }) => {
             </Table>
           </TableContainer>
         </form>
-        <br />
-        <br />
         <div
           style={{
+            marginTop: '30px',
             width: '500px',
             textAlign: 'center',
           }}
@@ -463,4 +446,4 @@ const MyAccount = ({ history }) => {
   );
 };
 
-export default MyAccount;
+export default PlansAndFees;

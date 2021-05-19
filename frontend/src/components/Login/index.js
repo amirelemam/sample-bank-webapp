@@ -87,7 +87,7 @@ const Login = ({ history }) => {
       } throw new Error();
     } catch (err) {
       setErrorTitle('Error');
-      setErrorMsg('Login unsuccessful.');
+      setErrorMsg('Login unsuccessful! Please, try again');
       setError(true);
     }
   }

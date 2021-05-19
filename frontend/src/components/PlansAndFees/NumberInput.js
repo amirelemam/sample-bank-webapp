@@ -6,7 +6,10 @@ const NumberInput = ({
   inputRef, onChange, name, ...other
 }) => (
   <NumberFormat
-    style={{ color: '#fff' }}
+    style={{
+      color: '#fff',
+      textAlign: 'center',
+    }}
     {...other}
     getInputRef={inputRef}
     onValueChange={

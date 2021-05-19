@@ -259,7 +259,6 @@ const MyAccount = ({ history }) => {
       <div style={{ paddingBottom: '30px', width: '500px' }}>
         <div style={{ textAlign: 'left', float: 'left', width: '40px' }}>
           <img src={logo} alt="logo" width="30px" />
-          {' '}
         </div>
         <div style={{ textAlign: 'left', float: 'left', width: '170px' }}>
           <span style={{ fontSize: '25px' }}> My Account</span>

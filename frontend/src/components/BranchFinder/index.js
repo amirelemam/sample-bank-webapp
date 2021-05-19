@@ -1,32 +1,12 @@
-import React, {
-  useEffect, useState, useRef, useMemo,
-} from 'react';
+import React, { useEffect, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import parse from 'autosuggest-highlight/parse';
-import throttle from 'lodash/throttle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import axios from 'axios';
 import List from './List';
 import { root, link } from '../shared/styles';
 import logo from '../../assets/img/logo.png';
-
-function loadScript(src, position, id) {
-  if (!position) {
-    return;
-  }
-
-  const script = document.createElement('script');
-  script.setAttribute('async', '');
-  script.setAttribute('id', id);
-  script.src = src;
-  position.appendChild(script);
-}
-
-const autocompleteService = { current: null };
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,62 +33,26 @@ export default function GoogleMaps({ history }) {
   const [value, setValue] = useState(null);
   const [inputValue, setInputValue] = useState('');
   const [options, setOptions] = useState([]);
-  const loaded = useRef(false);
+  const [branches, setBranches] = useState([]);
 
-  if (typeof window !== 'undefined' && !loaded.current) {
-    if (!document.querySelector('#google-maps')) {
-      loadScript(
-        `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`,
-        document.querySelector('head'),
-        'google-maps',
-      );
-    }
+  console.log(inputValue);
 
-    loaded.current = true;
-  }
+  useEffect(async () => {
+    const { data } = await axios.get(`${process.env.REACT_APP_BRANCH_FINDER_API}/branches`);
 
-  const fetch = useMemo(
-    () => throttle((request, callback) => {
-      autocompleteService.current.getPlacePredictions(request, callback);
-    }, 200),
-    [],
-  );
-
-  useEffect(() => {
-    let active = true;
-
-    if (!autocompleteService.current && window.google) {
-      autocompleteService.current = new window.google.maps.places.AutocompleteService();
-    }
-    if (!autocompleteService.current) {
-      return undefined;
-    }
-
-    if (inputValue === '') {
-      setOptions(value ? [value] : []);
-      return undefined;
-    }
-
-    fetch({ input: inputValue }, (results) => {
-      if (active) {
-        let newOptions = [];
-
-        if (value) {
-          newOptions = [value];
-        }
-
-        if (results) {
-          newOptions = [...newOptions, ...results];
-        }
-
-        setOptions(newOptions);
-      }
+    const branchesFormatted = data.map((branch) => {
+      const {
+        name, address, city, state, country, zipCode,
+      } = branch;
+      return {
+        name,
+        address,
+        cityStateZip: `${city}, ${state}, ${zipCode}`,
+        country,
+      };
     });
-
-    return () => {
-      active = false;
-    };
-  }, [value, inputValue, fetch]);
+    setBranches(branchesFormatted);
+  }, []);
 
   const handleSignOut = async () => {
     history.push('/');
@@ -119,7 +63,6 @@ export default function GoogleMaps({ history }) {
       <div style={{ width: '500px' }}>
         <div style={{ textAlign: 'left', float: 'left', width: '40px' }}>
           <img src={logo} alt="logo" width="30px" />
-          {' '}
         </div>
         <div style={{ textAlign: 'left', float: 'left', width: '300px' }}>
           <span style={{ fontSize: '25px' }}> Find a branch</span>
@@ -168,38 +111,8 @@ export default function GoogleMaps({ history }) {
             fullWidth
           />
         )}
-        renderOption={(option) => {
-          const matches = option.structured_formatting.main_text_matched_substrings;
-          const parts = parse(
-            option.structured_formatting.main_text,
-            matches.map((match) => [match.offset, match.offset + match.length]),
-          );
-
-          return (
-            <Grid container alignItems="center">
-              <Grid item>
-                <LocationOnIcon className={classes.icon} />
-              </Grid>
-              <Grid item xs>
-                {parts.map((part, index) => (
-                  <span
-                    // eslint-disable-next-line react/no-array-index-key
-                    key={index}
-                    style={{ fontWeight: part.highlight ? 700 : 400 }}
-                  >
-                    {part.text}
-                  </span>
-                ))}
-
-                <Typography variant="body2" color="textSecondary">
-                  {option.structured_formatting.secondary_text}
-                </Typography>
-              </Grid>
-            </Grid>
-          );
-        }}
       />
-      <List />
+      <List branches={branches} />
     </div>
   );
 }

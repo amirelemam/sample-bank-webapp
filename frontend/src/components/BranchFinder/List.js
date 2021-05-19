@@ -6,33 +6,40 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    maxWidth: 500,
+    maxWidth: '500px',
     color: '#000',
     backgroundColor: theme.palette.background.paper,
     marginTop: '20px',
   },
 }));
 
-export default function List() {
+export default function List({ branches }) {
   const classes = useStyles();
 
   return (
     <Grid className={classes.root} container component="dl" spacing={2}>
-      <Grid item>
-        <Typography component="dt" variant="h6">
-          Branch Name
-        </Typography>
-        <Typography component="dd" variant="body2">
-          <b>Nome</b>
-          {' '}
-          Loren ipsum
-        </Typography>
-        <Typography component="dd" variant="body2">
-          <b>Idade</b>
-          {' '}
-          Loren ipsum
-        </Typography>
-      </Grid>
+      {branches.map((branch, key) => (
+        <>
+          <Grid item id={key} xs={12}>
+            <Typography component="dt" variant="h6">
+              {' '}
+              {branch.name}
+            </Typography>
+            <Typography component="dd" variant="body2">
+              {' '}
+              {branch.address}
+            </Typography>
+            <Typography component="dd" variant="body2">
+              {' '}
+              {branch.cityStateZip}
+            </Typography>
+            <Typography component="dd" variant="body2">
+              {' '}
+              {branch.country}
+            </Typography>
+          </Grid>
+        </>
+      ))}
     </Grid>
   );
 }
