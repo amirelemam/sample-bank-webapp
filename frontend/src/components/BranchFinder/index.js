@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import axios from 'axios';
@@ -31,25 +31,32 @@ export default function GoogleMaps({ history }) {
   const classes = useStyles();
   const [branches, setBranches] = useState([]);
 
-  // useEffect(async () => {
-  //   const { data } = await axios.get(`${process.env.REACT_APP_BRANCH_FINDER_API}/branches`);
+  const requestAllBranches = async () => {
+    const { data } = await axios.get(`${process.env.REACT_APP_BRANCH_FINDER_API}/branches`);
 
-  //   const branchesFormatted = data.map((branch) => {
-  //     const {
-  //       name, address, city, state, country, zipCode,
-  //     } = branch;
-  //     return {
-  //       name,
-  //       address,
-  //       cityStateZip: `${city}, ${state}, ${zipCode}`,
-  //       country,
-  //     };
-  //   });
-  //   setBranches(branchesFormatted);
-  // }, []);
+    const branchesFormatted = data.map((branch) => {
+      const {
+        name, address, city, state, country, zipCode,
+      } = branch;
+      return {
+        name,
+        address,
+        cityStateZip: `${city}, ${state}, ${zipCode}`,
+        country,
+      };
+    });
+    setBranches(branchesFormatted);
+  };
+  useEffect(async () => {
+    requestAllBranches();
+  }, []);
 
   const handleSignOut = async () => {
     history.push('/');
+  };
+
+  const handleInput = (input) => {
+    if (input.length === 0) requestAllBranches();
   };
 
   const handleAddress = async ({ lat, lng }) => {
@@ -93,7 +100,7 @@ export default function GoogleMaps({ history }) {
             <ExitToAppIcon onClick={handleSignOut} />
           </span>
         </div>
-        <PlaceAutocomplete handleAddress={handleAddress} />
+        <PlaceAutocomplete handleAddress={handleAddress} handleInput={handleInput} />
       </div>
       <List branches={branches} />
     </div>

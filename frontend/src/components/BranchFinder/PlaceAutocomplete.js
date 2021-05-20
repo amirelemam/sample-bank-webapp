@@ -5,7 +5,7 @@ import PlacesAutocomplete, {
 } from 'react-places-autocomplete';
 import TextField from '@material-ui/core/TextField';
 
-export default function PlaceAutocomplete({ handleAddress }) {
+export default function PlaceAutocomplete({ handleAddress, handleInput }) {
   const [currentAddress, setCurrentAddress] = useState('');
 
   const handleChange = (address) => {
@@ -16,8 +16,11 @@ export default function PlaceAutocomplete({ handleAddress }) {
     geocodeByAddress(address)
       .then((results) => getLatLng(results[0]))
       .then((latLng) => { handleAddress(latLng); })
+      // eslint-disable-next-line
       .catch((error) => console.error('Error', error));
   };
+
+  handleInput(currentAddress);
 
   return (
     <PlacesAutocomplete
