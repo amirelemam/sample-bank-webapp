@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import axios from 'axios';
 import List from './List';
 import { root, link } from '../shared/styles';
 import logo from '../../assets/img/logo.png';
+import PlaceAutocomplete from './PlaceAutocomplete';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,32 +29,48 @@ const useStyles = makeStyles((theme) => ({
 
 export default function GoogleMaps({ history }) {
   const classes = useStyles();
-  const [value, setValue] = useState(null);
-  const [inputValue, setInputValue] = useState('');
-  const [options, setOptions] = useState([]);
   const [branches, setBranches] = useState([]);
 
-  console.log(inputValue);
+  // useEffect(async () => {
+  //   const { data } = await axios.get(`${process.env.REACT_APP_BRANCH_FINDER_API}/branches`);
 
-  useEffect(async () => {
-    const { data } = await axios.get(`${process.env.REACT_APP_BRANCH_FINDER_API}/branches`);
+  //   const branchesFormatted = data.map((branch) => {
+  //     const {
+  //       name, address, city, state, country, zipCode,
+  //     } = branch;
+  //     return {
+  //       name,
+  //       address,
+  //       cityStateZip: `${city}, ${state}, ${zipCode}`,
+  //       country,
+  //     };
+  //   });
+  //   setBranches(branchesFormatted);
+  // }, []);
 
-    const branchesFormatted = data.map((branch) => {
+  const handleSignOut = async () => {
+    history.push('/');
+  };
+
+  const handleAddress = async ({ lat, lng }) => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_BRANCH_FINDER_API}/branches?lat=${lat}&lon=${lng}`);
+
       const {
         name, address, city, state, country, zipCode,
-      } = branch;
-      return {
+      } = response.data;
+
+      const branchFormatted = {
         name,
         address,
         cityStateZip: `${city}, ${state}, ${zipCode}`,
         country,
       };
-    });
-    setBranches(branchesFormatted);
-  }, []);
-
-  const handleSignOut = async () => {
-    history.push('/');
+      setBranches([branchFormatted]);
+    } catch (error) {
+      // eslint-disable-next-line
+      console.error(error);
+    }
   };
 
   return (
@@ -78,40 +93,8 @@ export default function GoogleMaps({ history }) {
             <ExitToAppIcon onClick={handleSignOut} />
           </span>
         </div>
+        <PlaceAutocomplete handleAddress={handleAddress} />
       </div>
-
-      <Autocomplete
-        id="google-map-demo"
-        style={{
-          width: '100%',
-          maxWidth: 500,
-          backgroundColor: '#fff',
-          marginTop: '30px',
-        }}
-        getOptionLabel={(option) => (typeof option === 'string' ? option : option.description)}
-        filterOptions={(x) => x}
-        options={options}
-        autoComplete
-        includeInputInList
-        filterSelectedOptions
-        value={value}
-        onChange={(event, newValue) => {
-          setOptions(newValue ? [newValue, ...options] : options);
-          setValue(newValue);
-        }}
-        onInputChange={(event, newInputValue) => {
-          setInputValue(newInputValue);
-        }}
-        renderInput={(params) => (
-          <TextField
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...params}
-            label="Type your address..."
-            variant="outlined"
-            fullWidth
-          />
-        )}
-      />
       <List branches={branches} />
     </div>
   );

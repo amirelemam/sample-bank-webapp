@@ -7,6 +7,7 @@ import Login from './components/Login';
 import MyAccount from './components/MyAccount';
 import NotFound from './components/NotFound';
 import BranchFinder from './components/BranchFinder';
+import Place from './components/BranchFinder/PlaceAutocomplete';
 import Footer from './components/shared/Footer';
 import PlansAndFees from './components/PlansAndFees';
 import ProtectedRoute from './components/shared/ProtectedRoute';
@@ -33,6 +34,7 @@ const Routes = () => {
         <Route path="/find-a-branch" component={BranchFinder} sensitive exact />
         <Route path="/plans-and-fees" component={PlansAndFees} sensitive exact />
         <Route path="/footer" component={Footer} />
+        <Route path="/place" component={Place} />
         <Route path="*" component={NotFound} />
       </Switch>
       <Footer />

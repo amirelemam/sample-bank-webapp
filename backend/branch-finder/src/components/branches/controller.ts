@@ -6,7 +6,7 @@ class BranchController {
     const longitude: string = req.query.lon as string;
     const latitude: string = req.query.lat as string;
 
-    if (latitude && longitude) {
+    if (parseFloat(latitude) && parseFloat(longitude)) {
       const branch = await BranchServices.getNearest(
         Number(longitude),
         Number(latitude)
