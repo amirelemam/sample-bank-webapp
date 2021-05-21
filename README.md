@@ -202,10 +202,10 @@ OpenAPI (former Swagger) `/api/docs`
 - Material UI
 
 **Environment Variables**
-- GOOGLE_MAPS_API_KEY: Google Maps key
 - ACCOUNT_MANAGER_API: Account Manager backend URL
 - ACCOUNT_TYPE_SIMULATOR_API: Account Type Simulator backend URL
 - BRANCH_FINDER_API: Branch Finder backend URL
+- Google Maps key (on index.html)
 
 **Run**
 
