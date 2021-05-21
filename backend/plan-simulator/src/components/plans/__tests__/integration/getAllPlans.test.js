@@ -34,7 +34,7 @@ describe('GET /plans', () => {
             label: '5 Wire Transfer',
           },
           {
-            id: 'e5c35ce9-8d1f-4224-908d-ab079ab06802',
+            id: 'e8c35ce9-8d1f-4224-908d-ab079ab06802',
             label: 'No Credit Card Fee',
           },
           {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AppBar from '@material-ui/core/AppBar';
@@ -6,7 +6,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
-// import axios from 'axios';
+import axios from 'axios';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -14,32 +14,15 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { useFormik } from 'formik';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import NumberInput from './NumberInput';
 import logo from '../../assets/img/logo.png';
 import { button, root } from '../shared/styles';
-
-function createData(feature, price) {
-  return {
-    feature, price,
-  };
-}
-
-const rows = [
-  createData('Wire transfer', '$5 / each'),
-  createData('ATM withdrawal (our network)', '$2 / each'),
-  createData('ATM withdrawal (other banks)', '$3 / each'),
-  createData('Credit card fee*', '$50 / year'),
-];
-
-const rows2 = [
-  createData('Wire transfer'),
-  createData('ATM withdrawal (our network)'),
-  createData('ATM withdrawal (other banks)'),
-  createData('Credit card'),
-];
 
 function TabPanel(props) {
   const {
@@ -101,74 +84,83 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PlansAndFees = ({ history }) => {
-  const [price, setPrice] = useState(0);
-  // const [error, setError] = useState(false);
-  // const [errorMsg, setErrorMsg] = useState('');
-
-  // const PLAN_SIMULATOR_API = process.env.REACT_APP_PLAN_SIMULATOR_API;
-  const classes = useStyles();
+  const [planPro, setPlanPro] = useState([]);
+  const [planBasic, setPlanBasic] = useState([]);
+  const [features, setFeatures] = useState([]);
   const [value, setValue] = useState(0);
+  // eslint-disable-next-line
+  const [planCosts, setPlanCosts] = useState({});
+  const classes = useStyles();
+
+  const PLAN_SIMULATOR_API = process.env.REACT_APP_PLAN_SIMULATOR_API;
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const responsePlans = await axios.get(`${PLAN_SIMULATOR_API}/plans`);
+
+        const responseFeatures = await axios.get(`${PLAN_SIMULATOR_API}/features`);
+
+        responsePlans.data.forEach((plan) => {
+          if (plan.name === 'basic') setPlanBasic(plan.features);
+          if (plan.name === 'pro') setPlanPro(plan.features);
+        });
+
+        setFeatures(responseFeatures.data);
+      } catch (err) {
+        // eslint-disable-next-line
+        console.error(err);
+      }
+    })();
+  }, []);
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      wireTransfers: '',
-      withdrawalsWithinNetwork: '',
-      withdrawalsOutsideNetwork: '',
+      creditCard: 'no',
+      wireTransfers: 0,
+      withdrawalsWithinNetwork: 0,
+      withdrawalsOutsideNetwork: 0,
     },
 
-    validate: (values) => {
-      const errors = {};
+    onSubmit: async (values) => {
+      try {
+        const {
+          creditCard,
+          wireTransfers,
+          withdrawalsWithinNetwork,
+          withdrawalsOutsideNetwork,
+        } = values;
 
-      if (!values.wireTransfers) errors.wireTransfers = true;
-      if (!values.withdrawalsWithinNetwork) errors.withdrawalsWithinNetwork = true;
-      if (!values.withdrawalsOutsideNetwork) errors.withdrawalsOutsideNetwork = true;
+        const { data } = await axios.post(
+          `${PLAN_SIMULATOR_API}/plans/best-plan`,
+          [
+            {
+              id: 'e4c35ce9-8d1f-4224-908d-ab079ab06802',
+              quantity: wireTransfers || 0,
+            },
+            {
+              id: 'e8c35ce9-8d1f-4224-908d-ab079ab06802',
+              quantity: creditCard === 'yes' ? 1 : 0,
+            },
+            {
+              id: 'e6c35ce9-8d1f-4224-908d-ab079ab06802',
+              quantity: withdrawalsWithinNetwork || 0,
+            },
+            {
+              id: 'e7c35ce9-8d1f-4224-908d-ab079ab06802',
+              quantity: withdrawalsOutsideNetwork || 0,
+            },
+          ],
+        );
 
-      return errors;
+        setPlanCosts(data);
+      } catch (error) {
+        // eslint-disable-next-line
+        console.error(error);
+      }
     },
-    // validate before send to api
-    // onSubmit: async (values) => {
-    //   // const {
-    //   //   wireTransfers,
-    //   //   withdrawalsWithinNetwork,
-    //   //   withdrawalsOutsideNetwork,
-    //   // } = values;
-
-    // const { status } = await axios.post(
-    //   `${process.env.REACT_APP_BACKEND_URL}/payment-transactions`,
-    //   {
-    //     wireTransfers,
-    //     withdrawalsWithinNetwork,
-    //     withdrawalsOutsideNetwork,
-    //   },
-
-    // );
-
-    // if (status >= 200 && status < 400) {
-    //   setErrorMsg('');
-    //   setError(false);
-    // return history.push('/confirmacao-pedido');
-    // }
-    // setErrorMsg('Erro processando o cartão');
-    // setError(true);
-    // } else {
-    //   localStorage.setItem('redirectPage', 'informacoes-de-pagamento');
-    //   return history.push('/entrar');
-    // }
-    // },
   });
-
-  // load plans data
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-
-  //       return null;
-  //     } catch (err) {
-  //       return history.push('/access-your-account');
-  //     }
-  //   })();
-  // }, [PLAN_SIMULATOR_API, history]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -176,12 +168,6 @@ const PlansAndFees = ({ history }) => {
 
   const handleSignOut = async () => {
     history.push('/');
-  };
-
-  const handlePriceChange = (e) => {
-    if (!Number.isNaN(parseFloat(e.target.value))) {
-      setPrice(parseFloat(e.target.value));
-    }
   };
 
   return (
@@ -247,8 +233,7 @@ const PlansAndFees = ({ history }) => {
             >
               <br />
               <h2>BASIC</h2>
-              <h4>1 Wire Transfer</h4>
-              <h4>1 ATM Withdrawal (our network)</h4>
+              {planBasic.map((item) => <h4>{item.label}</h4>)}
               <h4>&nbsp;</h4>
               <center>
                 <div style={{
@@ -284,12 +269,7 @@ const PlansAndFees = ({ history }) => {
             >
               <br />
               <h2>PRO</h2>
-              <h4>5 Wire Transfers</h4>
-              <h4>
-                3 ATM Withdrawals (our network)
-              </h4>
-              <h4>1 ATM Withdrawal (other banks)</h4>
-              <h4>No Credit Card Fee</h4>
+              {planPro.map((item) => <h4>{item.label}</h4>)}
               <center>
                 <div style={{
                   color: '#00030e',
@@ -327,12 +307,12 @@ const PlansAndFees = ({ history }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row) => (
-                  <TableRow key={row.name}>
+                {features.map((feature) => (
+                  <TableRow key={feature.id}>
                     <TableCell style={{ color: '#fff' }} component="th" scope="row">
-                      {row.feature}
+                      {feature.name}
                     </TableCell>
-                    <TableCell style={{ color: '#fff' }}>{row.price}</TableCell>
+                    <TableCell style={{ color: '#fff' }}>{`$${feature.price} / ${feature.pricetype}`}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -361,26 +341,6 @@ const PlansAndFees = ({ history }) => {
             <h5>&#10003; 24/7 Customer Service</h5>
           </div>
         </div>
-        <div
-          style={{
-            width: '500px',
-            textAlign: 'center',
-            marginTop: '30px',
-          }}
-        >
-          <center>
-            <Button
-              variant="outlined"
-              size="medium"
-              fullWidth={true}
-              className={classes.button2}
-            >
-              <center>
-                <b>FIND YOUR PLAN</b>
-              </center>
-            </Button>
-          </center>
-        </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <center>
@@ -395,52 +355,157 @@ const PlansAndFees = ({ history }) => {
               <TableHead>
                 <TableRow>
                   <TableCell style={{ color: '#fff' }}><b>Feature</b></TableCell>
-                  <TableCell style={{ color: '#fff' }}><b>Quantity</b></TableCell>
+                  <TableCell style={{ color: '#fff', textAlign: 'center' }}><b>Quantity</b></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows2.map((row) => (
-                  <TableRow key={row.name}>
-                    <TableCell style={{ color: '#fff' }} component="th" scope="row">
-                      {row.feature}
-                    </TableCell>
-                    <TableCell style={{ width: '50px' }}>
-                      <TextField
-                        value={price}
-                        onChange={handlePriceChange}
-                        name="numberformat"
-                        id="formatted-numberformat-input"
-                        InputProps={{
-                          inputComponent: NumberInput,
-                        }}
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))}
+                <TableRow>
+                  <TableCell style={{ color: '#fff' }} component="th" scope="row">
+                    Wire Transfer
+                  </TableCell>
+                  <TableCell style={{ color: '#fff', width: '50px' }}>
+                    <TextField
+                      id="wireTransfers"
+                      name="wireTransfers"
+                      onChange={formik.handleChange}
+                      error={formik.errors.wireTransfers && formik.touched.wireTransfers}
+                      value={formik.values.wireTransfers}
+                      InputProps={{
+                        inputComponent: NumberInput,
+                      }}
+                    />
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell style={{ color: '#fff' }} component="th" scope="row">
+                    ATM Withdrawal (our network)
+                  </TableCell>
+                  <TableCell style={{ color: '#fff', width: '50px' }}>
+                    <TextField
+                      id="withdrawalsWithinNetwork"
+                      name="withdrawalsWithinNetwork"
+                      onChange={formik.handleChange}
+                      error={formik.errors.withdrawalsWithinNetwork
+                        && formik.touched.withdrawalsWithinNetwork}
+                      value={formik.values.withdrawalsWithinNetwork}
+                      InputProps={{
+                        inputComponent: NumberInput,
+                      }}
+                    />
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell style={{ color: '#fff' }} component="th" scope="row">
+                    ATM Withdrawal (other banks)
+                  </TableCell>
+                  <TableCell style={{ color: '#fff', width: '50px' }}>
+                    <TextField
+                      id="withdrawalsOutsideNetwork"
+                      onChange={formik.handleChange}
+                      name="withdrawalsOutsideNetwork"
+                      error={formik.errors.withdrawalsOutsideNetwork
+                        && formik.touched.withdrawalsOutsideNetwork}
+                      value={formik.values.withdrawalsOutsideNetwork}
+                      InputProps={{
+                        inputComponent: NumberInput,
+                      }}
+                    />
+                  </TableCell>
+                </TableRow>
+
+                <TableRow>
+                  <TableCell style={{ color: '#fff' }} component="th" scope="row">
+                    Do you want a Credit Card?
+                  </TableCell>
+                  <TableCell style={{ color: '#fff', width: '150px' }}>
+                    <RadioGroup
+                      row
+                      aria-label="position"
+                      defaultValue="top"
+                      name="creditCard"
+                      value={formik.values.creditCard}
+                      onChange={formik.handleChange}
+                    >
+                      <FormControlLabel value="yes" control={<Radio name="creditCard" style={{ color: 'white' }} />} label="Yes" />
+                      <FormControlLabel value="no" control={<Radio name="creditCard" style={{ color: 'white' }} />} label="No" />
+                    </RadioGroup>
+                  </TableCell>
+                </TableRow>
               </TableBody>
             </Table>
           </TableContainer>
+
+          <div
+            style={{
+              marginTop: '30px',
+              width: '500px',
+              textAlign: 'center',
+            }}
+          >
+            <center>
+              <Button
+                variant="outlined"
+                size="medium"
+                fullWidth={true}
+                className={classes.button2}
+                type="submit"
+              >
+                <center>
+                  <b>SIMULATE</b>
+                </center>
+              </Button>
+              <br />
+              <br />
+              <br />
+              <div
+                style={{
+                  width: '500px',
+                  textAlign: 'center',
+                }}
+                hidden={Object.keys(planCosts).length === 0}
+              >
+                <div
+                  style={{
+                    border: '1px solid',
+                    borderColor: '#999',
+                    borderRadius: '10px',
+                    lineHeight: '.5em',
+                    width: '248px',
+                    float: 'left',
+                  }}
+                >
+                  <br />
+                  <h5>{planCosts.expensive && planCosts.expensive.plan.toUpperCase()}</h5>
+                  <h5>
+                    $
+                    {planCosts.expensive && planCosts.expensive.cost}
+                    /mo.
+                  </h5>
+                </div>
+                <div
+                  style={{
+                    border: '1px solid',
+                    borderColor: '#999',
+                    borderRadius: '10px',
+                    lineHeight: '.5em',
+                    width: '248px',
+                    backgroundColor: '#fff',
+                    color: '#00030e',
+                    float: 'right',
+                  }}
+                >
+                  <h3 style={{ color: '#d4af37' }}>CHEAPER</h3>
+                  <h4>{planCosts.cheaper && planCosts.cheaper.plan.toUpperCase()}</h4>
+                  <h4>
+                    $
+                    {planCosts.cheaper && planCosts.cheaper.cost}
+                    /mo.
+                  </h4>
+                </div>
+              </div>
+            </center>
+          </div>
         </form>
-        <div
-          style={{
-            marginTop: '30px',
-            width: '500px',
-            textAlign: 'center',
-          }}
-        >
-          <center>
-            <Button
-              variant="outlined"
-              size="medium"
-              fullWidth={true}
-              className={classes.button2}
-            >
-              <center>
-                <b>SIMULATE</b>
-              </center>
-            </Button>
-          </center>
-        </div>
       </TabPanel>
     </div>
   );

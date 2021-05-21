@@ -11,7 +11,7 @@ describe('POST /plans/best-plan', () => {
           id: 'e4c35ce9-8d1f-4224-908d-ab079ab06802',
           quantity: 1,
         }, {
-          id: 'e5c35ce9-8d1f-4224-908d-ab079ab06802',
+          id: 'e8c35ce9-8d1f-4224-908d-ab079ab06802',
           quantity: 0,
         },
       ]);
@@ -38,7 +38,7 @@ describe('POST /plans/best-plan', () => {
         id: 'e4c35ce9-8d1f-4224-908d-ab079ab06802',
         quantity: 1,
       }, {
-        id: 'e5c35ce9-8d1f-4224-908d-ab079ab06802',
+        id: 'e8c35ce9-8d1f-4224-908d-ab079ab06802',
         quantity: 0,
       },
     ]);

@@ -41,7 +41,7 @@ describe('controller', () => {
           planName: 'pro',
         },
         {
-          featureId: 'e5c35ce9-8d1f-4224-908d-ab079ab06802',
+          featureId: 'e8c35ce9-8d1f-4224-908d-ab079ab06802',
           featureName: 'Credit Card Fee',
           featureQuantity: null,
           planId: '48c3de93-874d-444c-b83f-11e89cca252b',
@@ -81,7 +81,7 @@ describe('controller', () => {
             id: 'e4c35ce9-8d1f-4224-908d-ab079ab06802',
             label: '5 Wire Transfer',
           }, {
-            id: 'e5c35ce9-8d1f-4224-908d-ab079ab06802',
+            id: 'e8c35ce9-8d1f-4224-908d-ab079ab06802',
             label: 'No Credit Card Fee',
           }, {
             id: 'e6c35ce9-8d1f-4224-908d-ab079ab06802',
@@ -103,7 +103,7 @@ describe('controller', () => {
     it('should return data if service returns', async () => {
       const features = [
         {
-          featureId: 'e5c35ce9-8d1f-4224-908d-ab079ab06802',
+          featureId: 'e8c35ce9-8d1f-4224-908d-ab079ab06802',
           featureName: 'Credit Card Fee',
           featureQuantity: null,
           planId: '48c3de93-874d-444c-b83f-11e89cca252b',
@@ -160,7 +160,7 @@ describe('controller', () => {
         },
         '48c3de93-874d-444c-b83f-11e89cca252b': {
           features: [{
-            id: 'e5c35ce9-8d1f-4224-908d-ab079ab06802',
+            id: 'e8c35ce9-8d1f-4224-908d-ab079ab06802',
             label: 'No Credit Card Fee',
           }, {
             id: 'e4c35ce9-8d1f-4224-908d-ab079ab06802',
@@ -390,7 +390,7 @@ describe('controller', () => {
               label: '5 Wire Transfer',
             },
             {
-              id: 'e5c35ce9-8d1f-4224-908d-ab079ab06802',
+              id: 'e8c35ce9-8d1f-4224-908d-ab079ab06802',
               label: 'No Credit Card Fee',
             },
             {

@@ -25,18 +25,7 @@ const plansFeatures = () => {
       feature_id: 'e4c35ce9-8d1f-4224-908d-ab079ab06802',
       plan_id: '38c3de93-874d-444c-b83f-11e89cca252b',
     },
-    {
-      id: '5cd84b0d-4673-4261-bf43-50095919eeb0',
-      quantity: 0,
-      feature_id: 'e5c35ce9-8d1f-4224-908d-ab079ab06802',
-      plan_id: '38c3de93-874d-444c-b83f-11e89cca252b',
-    },
-    {
-      id: '6cd84b0d-4673-4261-bf43-50095919eeb0',
-      quantity: 1,
-      feature_id: 'e6c35ce9-8d1f-4224-908d-ab079ab06802',
-      plan_id: '38c3de93-874d-444c-b83f-11e89cca252b',
-    },
+
     {
       id: '7cd84b0d-4673-4261-bf43-50095919eeb0',
       quantity: 0,
@@ -50,12 +39,6 @@ const plansFeatures = () => {
       plan_id: '48c3de93-874d-444c-b83f-11e89cca252b',
     },
     {
-      id: '8cd84b0d-4673-4261-bf43-50095919eeb0',
-      quantity: null,
-      feature_id: 'e5c35ce9-8d1f-4224-908d-ab079ab06802',
-      plan_id: '48c3de93-874d-444c-b83f-11e89cca252b',
-    },
-    {
       id: '0cd84b0d-4673-4261-bf43-50095919eeb0',
       quantity: 3,
       feature_id: 'e6c35ce9-8d1f-4224-908d-ab079ab06802',
@@ -66,6 +49,24 @@ const plansFeatures = () => {
       quantity: 1,
       feature_id: 'e7c35ce9-8d1f-4224-908d-ab079ab06802',
       plan_id: '48c3de93-874d-444c-b83f-11e89cca252b',
+    },
+    {
+      id: '6cd84b0d-4673-4261-bf43-50095919eeb0',
+      quantity: 1,
+      feature_id: 'e6c35ce9-8d1f-4224-908d-ab079ab06802',
+      plan_id: '38c3de93-874d-444c-b83f-11e89cca252b',
+    },
+    {
+      id: '8cd84b0d-4673-4261-bf43-50095919eeb0',
+      quantity: null,
+      feature_id: 'e8c35ce9-8d1f-4224-908d-ab079ab06802',
+      plan_id: '48c3de93-874d-444c-b83f-11e89cca252b',
+    },
+    {
+      id: '5cd84b0d-4673-4261-bf43-50095919eeb0',
+      quantity: 0,
+      feature_id: 'e8c35ce9-8d1f-4224-908d-ab079ab06802',
+      plan_id: '38c3de93-874d-444c-b83f-11e89cca252b',
     },
   ];
 
@@ -81,12 +82,6 @@ const features = () => {
       price_type: 'each',
     },
     {
-      id: 'e5c35ce9-8d1f-4224-908d-ab079ab06802',
-      name: 'Credit Card Fee',
-      price: 50,
-      price_type: 'year',
-    },
-    {
       id: 'e6c35ce9-8d1f-4224-908d-ab079ab06802',
       name: 'ATM Withdrawal (our network)',
       price: 2,
@@ -97,6 +92,12 @@ const features = () => {
       name: 'ATM Withdrawal (other banks)',
       price: 3,
       price_type: 'each',
+    },
+    {
+      id: 'e8c35ce9-8d1f-4224-908d-ab079ab06802',
+      name: 'Credit Card Fee*',
+      price: 50,
+      price_type: 'year',
     },
   ];
 

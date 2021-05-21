@@ -19,7 +19,7 @@ describe('controller', () => {
     });
     it('should return data if service returns', async () => {
       const features = [{
-        id: 'e5c35ce9-8d1f-4224-908d-ab079ab06802',
+        id: 'e8c35ce9-8d1f-4224-908d-ab079ab06802',
         name: 'Credit Card Fee',
         price: 50,
         pricetype: 'year',
