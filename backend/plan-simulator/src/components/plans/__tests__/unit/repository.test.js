@@ -18,19 +18,22 @@ describe('repository', () => {
       }
     });
     it('should return data if db returns', async () => {
-      const features = {
-        'b0303ba2-9972-4fd3-b2fb-4167d6e116e7': {
-          name: 'my feature',
-          extra: 1,
-          id: 'b0303ba2-9972-4fd3-b2fb-4167d6e116e7',
-        },
-      };
+      const features = [{
+        featureName: 'ATM Withdrawal (our network)',
+        featureQuantity: 1,
+        planId: '38c3de93-874d-444c-b83f-11e89cca252b',
+        planName: 'basic',
+      }];
 
       db.select = jest.fn(() => ({
         from: () => ({
           where: (() => ({
             leftJoin: (() => ({
-              innerJoin: () => features,
+              where: (() => ({
+                orWhere: (() => ({
+                  innerJoin: () => features,
+                })),
+              })),
             })),
           })),
         }),
@@ -40,7 +43,7 @@ describe('repository', () => {
       expect(response).toEqual(features);
     });
   });
-  describe('getCost', () => {
+  describe('getPrice', () => {
     it('should throw InternalServerError if db rejects', async () => {
       db.select = jest.fn(() => {
         throw InternalServerError();
@@ -48,7 +51,7 @@ describe('repository', () => {
 
       let response;
       try {
-        response = await repository.getCost('plan');
+        response = await repository.getPrice('plan');
       } catch (error) {
         expect(error.status).toBe(500);
         expect(response).toBeUndefined();
@@ -69,7 +72,7 @@ describe('repository', () => {
         }),
       }));
 
-      const response = await repository.getCost('pro');
+      const response = await repository.getPrice('pro');
       expect(response).toEqual(cost);
     });
   });

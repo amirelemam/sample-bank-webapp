@@ -5,11 +5,13 @@ const createTables = require('./db/createTables/routes');
 const dropTables = require('./db/dropTables/routes');
 const populateTables = require('./db/populateTables/routes');
 const plans = require('./components/plans/routes');
+const features = require('./components/features/routes');
 const { isDev, isTest } = require('./common/utils');
 
 const router = express.Router();
 
 router.use('/health', healthCheck);
+router.use('/features', features);
 router.use('/plans', plans);
 
 /* istanbul ignore next */

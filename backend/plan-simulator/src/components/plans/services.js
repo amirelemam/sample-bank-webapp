@@ -1,50 +1,61 @@
 const repository = require('./repository');
 
 const getAll = async () => {
-  const features = await repository.getAll();
+  const plans = await repository.getAll();
 
   const result = {};
 
-  for (let i = 0; i < features.length; i += 1) {
-    const feature = features[i];
+  for (let i = 0; i < plans.length; i += 1) {
+    const plan = plans[i];
 
-    if (!result[feature.id]) {
-      result[feature.id] = {};
-      result[feature.id].id = feature.id;
-      result[feature.id].name = feature.name;
-      result[feature.id].price = feature.price;
-      result[feature.id].extra = `$${feature.price}/${feature.price_type}`;
-      result[feature.id][feature.plan] = feature.quantity;
-    } else result[feature.id][feature.plan] = feature.quantity;
+    if (!result[plan.planId]) {
+      result[plan.planId] = {};
+      result[plan.planId].id = plan.planId;
+      result[plan.planId].name = plan.planName;
+      result[plan.planId].features = [];
+      if (plan.featureQuantity === null) result[plan.planId].features.push({ id: plan.featureId, label: `No ${plan.featureName}` });
+      else result[plan.planId].features.push({ id: plan.featureId, label: `${plan.featureQuantity} ${plan.featureName}` });
+    } else if (plan.featureQuantity === null) result[plan.planId].features.push({ id: plan.featureId, label: `No ${plan.featureName}` });
+    else { result[plan.planId].features.push({ id: plan.featureId, label: `${plan.featureQuantity} ${plan.featureName}` }); }
   }
 
   return result;
 };
 
 const calculateCost = async (features, featuresWithPlans) => {
-  let costFree = 0;
-  let { price: costPro } = await repository.getCost('pro');
+  let { price: costBasic } = await repository.getPrice('basic');
+  let { price: costPro } = await repository.getPrice('pro');
 
   for (let i = 0; i < features.length; i += 1) {
     const feature = features[i];
-    const extraPro = featuresWithPlans[feature.id].pro - feature.quantity;
-    const extraFree = featuresWithPlans[feature.id].free - feature.quantity;
+    let extraPro;
+    let extraBasic;
 
-    if (extraPro < 0) costPro += Math.abs(extraPro) * featuresWithPlans[feature.id].price;
-    if (extraFree < 0) costFree += Math.abs(extraFree) * featuresWithPlans[feature.id].price;
+    if (featuresWithPlans[feature.id].pro === null) extraPro = 0;
+    else extraPro = featuresWithPlans[feature.id].pro - feature.quantity;
+
+    if (featuresWithPlans[feature.id].basic === null) extraBasic = 0;
+    else extraBasic = featuresWithPlans[feature.id].basic - feature.quantity;
+
+    const term = featuresWithPlans[feature.id].priceType === 'year' ? 12 : 1;
+
+    if (extraPro < 0) costPro += (Math.abs(extraPro) * featuresWithPlans[feature.id].price) / term;
+    if (extraBasic < 0) {
+      costBasic += (Math.abs(extraBasic) * featuresWithPlans[feature.id].price) / term;
+    }
   }
 
-  return { costFree, costPro };
+  // limit to 2 floating points
+  costBasic = parseFloat(costBasic.toFixed(2));
+  costPro = parseFloat(costPro.toFixed(2));
+
+  return { costBasic, costPro };
 };
 
-const selectBestPlan = async (features) => {
-  const featuresWithPlans = await module.exports.getAll();
-
-  const { costFree, costPro } = await module.exports.calculateCost(features, featuresWithPlans);
-
-  const free = {
-    cost: costFree,
-    plan: 'free',
+const selectBestPlan = ({ costBasic, costPro }) => {
+  const basic = {
+    cost: costBasic,
+    plan: 'basic',
   };
 
   const pro = {
@@ -52,12 +63,12 @@ const selectBestPlan = async (features) => {
     plan: 'pro',
   };
 
-  if (costFree < costPro) return { cheaper: free, expensive: pro };
-  return { cheaper: pro, expensive: free };
+  if (costBasic < costPro) return { cheaper: basic, expensive: pro };
+  return { cheaper: pro, expensive: basic };
 };
 
 module.exports = {
   getAll,
-  selectBestPlan,
   calculateCost,
+  selectBestPlan,
 };

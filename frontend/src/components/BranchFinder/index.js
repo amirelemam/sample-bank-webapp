@@ -8,9 +8,7 @@ import logo from '../../assets/img/logo.png';
 import PlaceAutocomplete from './PlaceAutocomplete';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    ...root,
-  },
+  root: { ...root },
   icon: {
     color: theme.palette.text.secondary,
     marginRight: theme.spacing(2),

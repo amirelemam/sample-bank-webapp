@@ -13,7 +13,6 @@ const NumberInput = ({
     {...other}
     getInputRef={inputRef}
     onValueChange={
-      /* istanbul ignore next */
       (values) => {
         onChange({
           target: {

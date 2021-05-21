@@ -47,7 +47,7 @@ describe('POST /plans/best-plan', () => {
     expect(response.body).toEqual({
       cheaper: {
         cost: 0,
-        plan: 'free',
+        plan: 'basic',
       },
       expensive: {
         cost: 10,

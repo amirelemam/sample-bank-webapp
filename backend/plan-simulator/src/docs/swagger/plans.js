@@ -27,7 +27,7 @@ module.exports = {
                   extra: {
                     type: 'string',
                   },
-                  free: {
+                  basic: {
                     type: 'number',
                     format: 'double',
                   },

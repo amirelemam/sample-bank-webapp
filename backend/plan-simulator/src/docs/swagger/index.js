@@ -1,3 +1,4 @@
+const features = require('./features');
 const plans = require('./plans');
 
 module.exports = {
@@ -20,6 +21,9 @@ module.exports = {
     securitySchemes: {},
   },
   paths: {
+    '/api/v1/features': {
+      get: features.getAll,
+    },
     '/api/v1/plans': {
       get: plans.getAll,
     },

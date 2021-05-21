@@ -4,7 +4,7 @@ const plans = () => {
   const rows = [
     {
       id: '38c3de93-874d-444c-b83f-11e89cca252b',
-      name: 'free',
+      name: 'basic',
       price: 0,
     },
     {
@@ -51,7 +51,7 @@ const plansFeatures = () => {
     },
     {
       id: '8cd84b0d-4673-4261-bf43-50095919eeb0',
-      quantity: 1,
+      quantity: null,
       feature_id: 'e5c35ce9-8d1f-4224-908d-ab079ab06802',
       plan_id: '48c3de93-874d-444c-b83f-11e89cca252b',
     },

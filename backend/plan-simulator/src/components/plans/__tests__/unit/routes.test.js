@@ -19,10 +19,21 @@ describe('routes', () => {
       }
     });
     it('should return data if controller returns', async () => {
-      const features = {
-        name: 'my feature',
-        extra: 1,
-      };
+      const features = [{
+        id: '38c3de93-874d-444c-b83f-11e89cca252b',
+        name: 'basic',
+        features: [
+          {
+            id: 'e4c35ce9-8d1f-4224-908d-ab079ab06802',
+            label: '1 Wire Transfer',
+          },
+          {
+            id: 'e6c35ce9-8d1f-4224-908d-ab079ab06802',
+            label: '1 ATM Withdrawal (our network)',
+          },
+        ],
+      }];
+
       controller.getAll = jest.fn(() => features);
 
       const response = await request(app).get('/api/v1//plans');
@@ -86,7 +97,7 @@ describe('routes', () => {
         },
         expensive: {
           cost: 12,
-          plan: 'free',
+          plan: 'basic',
         },
       };
 
