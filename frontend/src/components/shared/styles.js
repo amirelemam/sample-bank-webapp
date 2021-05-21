@@ -26,3 +26,7 @@ export const link = {
   textDecoration: 'none',
   '&:hover': { color: '#d4af37', textDecoration: 'underline' },
 };
+
+export const radioButton = {
+  color: '#fff',
+};

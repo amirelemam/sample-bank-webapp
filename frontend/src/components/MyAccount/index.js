@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -18,7 +17,7 @@ import axios from 'axios';
 import { button, root } from '../shared/styles';
 import { isAuthenticated, logout } from '../shared/auth';
 import { SAVINGS, CHECKING } from '../../common/enums/accountTypes';
-import logo from '../../assets/img/logo.png';
+import Header from '../shared/Header';
 
 function TabPanel(props) {
   const {
@@ -74,6 +73,14 @@ const useStyles = makeStyles((theme) => ({
     color: '#00030e',
   },
   form: {
+    paddingTop: '20px',
+  },
+  account: {
+    width: '300px',
+    textAlign: 'center',
+    border: '1px solid',
+    borderColor: '#999',
+    borderRadius: '10px',
     paddingTop: '20px',
   },
 }));
@@ -165,6 +172,7 @@ const MyAccount = ({ history }) => {
     await logout();
     history.push('/');
   };
+
   const handleTransfer = async () => {
     try {
       if (Number(amount) <= 0) return;
@@ -256,26 +264,7 @@ const MyAccount = ({ history }) => {
 
   return (
     <div className={classes.root}>
-      <div style={{ paddingBottom: '30px', width: '500px' }}>
-        <div style={{ textAlign: 'left', float: 'left', width: '40px' }}>
-          <img src={logo} alt="logo" width="30px" />
-        </div>
-        <div style={{ textAlign: 'left', float: 'left', width: '170px' }}>
-          <span style={{ fontSize: '25px' }}> My Account</span>
-        </div>
-        <div
-          style={{
-            textAlign: 'right',
-            float: 'right',
-            width: '120px',
-            paddingRight: '20px',
-          }}
-        >
-          <span className={classes.link}>
-            <ExitToAppIcon onClick={handleSignOut} />
-          </span>
-        </div>
-      </div>
+      <Header title="My Account" historyParent={history} handleSignOutParent={handleSignOut} />
       <AppBar
         position="static"
         color="transparent"
@@ -294,41 +283,13 @@ const MyAccount = ({ history }) => {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <div
-          style={{
-            width: '300px',
-            textAlign: 'center',
-          }}
-        >
-          <div
-            style={{
-              border: '1px solid',
-              borderColor: '#999',
-              borderRadius: '10px',
-            }}
-          >
-            <br />
-            <b>Checking Account:</b>
-            <h2>{balanceChecking}</h2>
-          </div>
+        <div className={classes.account}>
+          <b>Checking Account:</b>
+          <h2>{balanceChecking}</h2>
         </div>
-        <div
-          style={{
-            width: '300px',
-            textAlign: 'center',
-          }}
-        >
-          <div
-            style={{
-              border: '1px solid',
-              borderColor: '#999',
-              borderRadius: '10px',
-            }}
-          >
-            <br />
-            <b>Savings Account:</b>
-            <h2>{balanceSavings}</h2>
-          </div>
+        <div className={classes.account}>
+          <b>Savings Account:</b>
+          <h2>{balanceSavings}</h2>
         </div>
         <br />
         <div

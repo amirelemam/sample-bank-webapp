@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import axios from 'axios';
 import List from './List';
 import { root, link } from '../shared/styles';
-import logo from '../../assets/img/logo.png';
 import PlaceAutocomplete from './PlaceAutocomplete';
+import Header from '../shared/Header';
 
 const useStyles = makeStyles((theme) => ({
   root: { ...root },
@@ -49,10 +48,6 @@ export default function GoogleMaps({ history }) {
     requestAllBranches();
   }, []);
 
-  const handleSignOut = async () => {
-    history.push('/');
-  };
-
   const handleInput = (input) => {
     if (input.length === 0) requestAllBranches();
   };
@@ -80,26 +75,8 @@ export default function GoogleMaps({ history }) {
 
   return (
     <div className={classes.root}>
-      <div style={{ width: '500px' }}>
-        <div style={{ textAlign: 'left', float: 'left', width: '40px' }}>
-          <img src={logo} alt="logo" width="30px" />
-        </div>
-        <div style={{ textAlign: 'left', float: 'left', width: '300px' }}>
-          <span style={{ fontSize: '25px' }}> Find a branch</span>
-        </div>
-        <div
-          style={{
-            textAlign: 'right',
-            float: 'right',
-            width: '120px',
-          }}
-        >
-          <span className={classes.link}>
-            <ExitToAppIcon onClick={handleSignOut} />
-          </span>
-        </div>
-        <PlaceAutocomplete handleAddress={handleAddress} handleInput={handleInput} />
-      </div>
+      <Header title="Find a branch" historyParent={history} />
+      <PlaceAutocomplete handleAddress={handleAddress} handleInput={handleInput} />
       <List branches={branches} />
     </div>
   );
