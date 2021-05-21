@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "ee80afc8-631c-4ea0-bae0-9b23ae16bfe6",
-		"name": "Account Type Simulator",
+		"name": "Plan Simulator",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -70,54 +70,84 @@
 			]
 		},
 		{
-			"name": "Get all features",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:4020/api/v1/plans",
-					"host": [
-						"localhost"
-					],
-					"port": "4020",
-					"path": [
-						"api",
-						"v1",
-						"plans"
-					]
+			"name": "Plans",
+			"item": [
+				{
+					"name": "Get all plans",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4020/api/v1/plans",
+							"host": [
+								"localhost"
+							],
+							"port": "4020",
+							"path": [
+								"api",
+								"v1",
+								"plans"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Best Plan",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[   \n    {\n         \"id\": \"e4c35ce9-8d1f-4224-908d-ab079ab06802\",\n        \"quantity\": 3\n    },\n    {\n        \"id\": \"e5c35ce9-8d1f-4224-908d-ab079ab06802\",\n        \"quantity\": 0\n    },{\n        \"id\": \"e5c35ce9-8d1f-4224-908d-ab079ab06802\",\n        \"quantity\": 1\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4020/api/v1/plans/best-plan",
+							"host": [
+								"localhost"
+							],
+							"port": "4020",
+							"path": [
+								"api",
+								"v1",
+								"plans",
+								"best-plan"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Best Plan",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "[   \n    {\n         \"id\": \"e4c35ce9-8d1f-4224-908d-ab079ab06802\",\n        \"quantity\": 1\n    },\n    {\n        \"id\": \"e8c35ce9-8d1f-4224-908d-ab079ab06802\",\n        \"quantity\": 0\n    }\n]",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Features",
+			"item": [
+				{
+					"name": "Get all features",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4020/api/v1/features",
+							"host": [
+								"localhost"
+							],
+							"port": "4020",
+							"path": [
+								"api",
+								"v1",
+								"features"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "localhost:4020/api/v1/plans/best-plan",
-					"host": [
-						"localhost"
-					],
-					"port": "4020",
-					"path": [
-						"api",
-						"v1",
-						"plans",
-						"best-plan"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
 			"name": "Health",
@@ -125,10 +155,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{BASE_URL}}/api/v1/health",
+					"raw": "localhost:4020/api/v1/health",
 					"host": [
-						"{{BASE_URL}}"
+						"localhost"
 					],
+					"port": "4020",
 					"path": [
 						"api",
 						"v1",
