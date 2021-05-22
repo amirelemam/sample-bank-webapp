@@ -12,5 +12,5 @@ dist
 .eslintcache
 
 .env
-.env.prod
+.env.production
 *.js

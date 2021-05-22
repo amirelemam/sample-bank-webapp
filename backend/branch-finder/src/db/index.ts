@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import logger from '../common/logger'
 
-const connStr: string = process.env.DB_CONN_STR || 'mongodb://localhost:27017/samplebank';
+const connStr: string = process.env.DB_CONN_STR as string;
 
 mongoose.connect(connStr, {
   useNewUrlParser: true,

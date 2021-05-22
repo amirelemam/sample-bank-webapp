@@ -4,7 +4,7 @@
   "description": "This service allows you to find the nearest branch",
   "scripts": {
     "build": "tsc",
-    "prestart": "npm run build && node dist/db/populate/services.js checkIfCollectionIsEmptyAndPopulate",
+    "prestart": "npm run build",
     "start": "node dist/app",
     "start:local": "NODE_ENV=dev nodemon src/index.ts",
     "test": "NODE_ENV=test jest --detectOpenHandles --runInBand --coverage"
