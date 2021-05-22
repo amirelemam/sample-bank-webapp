@@ -62,7 +62,7 @@ You can run all services with docker-compose
 **Docs**
 
 [Live OpenAPI (former Swagger)](`https://amirelemam.com/samplebank/account-manager/api/docs`)   
-Postman collection on `account-manager/src/docs/postman.json`  
+Postman collection on `./backend/account-manager/src/docs/postman.json`  
 
 **Run**
 
@@ -117,7 +117,7 @@ Postman collection on `account-manager/src/docs/postman.json`
 **Docs**
 
 [Live OpenAPI (former Swagger)](`https://amirelemam.com/samplebank/plan-simulator/api/docs`)   
-Postman collection on `plan-simulator/src/docs/postman.json`  
+Postman collection on `./backend/plan-simulator/src/docs/postman.json`  
 
 **Run**
 
@@ -169,7 +169,7 @@ Postman collection on `plan-simulator/src/docs/postman.json`
 **Docs**
 
 [Live OpenAPI (former Swagger)](`https://amirelemam.com/samplebank/branch-finder/api/docs`)   
-Postman collection on `branch-finder/src/docs/postman.json`  
+Postman collection on `./backend/branch-finder/src/docs/postman.json`  
 
 **Run**
 
@@ -222,7 +222,7 @@ Postman collection on `branch-finder/src/docs/postman.json`
 
 **Run**
 
-Before running, you need to change the Google Maps API Key on `frontend/public/index.html`  
+Before running, you need to change the Google Maps API Key on `./frontend/public/index.html`  
 
 - Docker (recommended)  
   Make sure you have the file `.env.production` with the environment variables  
