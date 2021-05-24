@@ -36,7 +36,7 @@ export default winston.createLogger({
           (info: TransformableInfo) => `${info.timestamp} ${info.level}: ${info.message}`,
         ),
       ),
-      level: 'info',
+      level: 'debug',
     }),
   ],
 });

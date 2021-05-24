@@ -6,7 +6,7 @@ CONTAINER_NAME="frontend"
 docker stop ${CONTAINER_NAME}
 docker rm ${CONTAINER_NAME}
 
-ENV_FILE=./frontend/.env.production
+ENV_FILE=./frontend/.env
 if [ -f "$ENV_FILE" ]; then
   echo "$ENV_FILE found."
   docker build -t ${IMAGE_NAME} ./frontend

@@ -1,7 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import swagger from 'swagger-ui-express';
-import bodyParser from 'body-parser'
 import helmet from 'helmet'
 import morgan from 'morgan'
 
@@ -9,13 +8,13 @@ import logger from './common/logger'
 import routes from './routes';
 import swaggerDocument from './docs/swagger';
 import { NotFoundError, HttpException } from './common/errors'
-import './db';
 
+import './db';
 const app = express();
 
 app.set('port', process.env.PORT || 4010)
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(helmet());
 app.use(cors());
 app.use(morgan('dev'));
