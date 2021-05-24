@@ -6,7 +6,7 @@ CONTAINER_NAME="account_manager"
 docker stop ${CONTAINER_NAME}
 docker rm ${CONTAINER_NAME}
 
-ENV_FILE=./backend/account-manager/.env.production
+ENV_FILE=./backend/account-manager/.env
 if [ -f "$ENV_FILE" ]; then
   echo "$ENV_FILE found."
   docker build -t ${IMAGE_NAME} ./backend/account-manager
