@@ -1,4 +1,4 @@
-FROM node:12.22.1-alpine3.11 as dependencies
+FROM node:14.17.0-alpine3.11 AS dependencies
 USER node
 WORKDIR /usr/src/app
 COPY --chown=node:node package*.json ./
