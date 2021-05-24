@@ -6,7 +6,7 @@ CONTAINER_NAME="plan_simulator"
 docker stop ${CONTAINER_NAME}
 docker rm ${CONTAINER_NAME}
 
-ENV_FILE=./backend/plan-simulator/.env.production
+ENV_FILE=./backend/plan-simulator/.env
 if [ -f "$ENV_FILE" ]; then
   echo "$ENV_FILE found."
   docker build -t ${IMAGE_NAME} ./backend/plan-simulator

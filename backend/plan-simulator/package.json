@@ -4,9 +4,9 @@
   "description": "Simulates which is the best account type",
   "main": "index.js",
   "scripts": {
-    "prestart": "node -e \"require('./src/db/createTables/controller.js')();\"",
-    "start": "cd src && node index.js",
-    "start:local": "cd src && NODE_ENV=dev nodemon -r dotenv/config index.js",
+    "start": "node index.js",
+    "start:local": "NODE_ENV=dev nodemon -r dotenv/config index.js",
+    "poststart": "node -e \"require('./src/db/createTables/controller.js')();\"",
     "test": "NODE_ENV=test jest --detectOpenHandles --runInBand --coverage",
     "test:unit": "NODE_ENV=test jest src/components/**/__tests__/unit/**/*.test.js --detectOpenHandles --runInBand --coverage",
     "test:integration": "NODE_ENV=test jest src/components/**/__tests__/integration/*.test.js --detectOpenHandles --runInBand --coverage"

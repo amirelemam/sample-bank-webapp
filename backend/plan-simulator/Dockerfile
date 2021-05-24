@@ -6,7 +6,5 @@ RUN npm ci --only=production --no-optional
 
 FROM dependencies
 COPY --chown=node:node --from=dependencies /usr/src/app/node_modules ./node_modules
-COPY . .
-ENV NODE_ENV production
+COPY --chown=node:node . .
 CMD ["npm", "start"]
-EXPOSE 4020

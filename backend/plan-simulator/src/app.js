@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const cors = require('cors');
 const sanitize = require('sanitize');
@@ -11,14 +10,21 @@ const swaggerDocument = require('./docs/swagger');
 const logger = require('./common/logger');
 const routes = require('./routes');
 const { NotFoundError } = require('./common/errors');
-const { isDev, isTest } = require('./common/utils');
+const { isDev, isTest, checkRequiredVars } = require('./common/utils');
+
+checkRequiredVars([
+  'DB_HOST',
+  'DB_USER',
+  'DB_PASSWORD',
+  'DB_NAME',
+]);
 require('./db');
 
 const app = express();
 
 app.set('port', process.env.PORT || 4020);
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(helmet());
 app.use(cors());
 app.use(sanitize.middleware);
