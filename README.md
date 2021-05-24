@@ -14,14 +14,14 @@ Sample Bank allows you to manage your account, choose the cheaper account plan b
 This application is structured as a monorepo, which means that all services (backend and frontend) sit under the same repository.
 <img src="./architecture-diagram/sample_bank_architecture.png" alt="Architecure Diagram" />
 
-## Live Demo
+<!-- ## Live Demo
 
 Credentials:  
 Branch: 0001   
 Account number: 12345   
 Password: Qwerty@123  
 
-[Access Live Demo](http://amirelemam.com.s3-website-us-east-1.amazonaws.com/)  
+[Access Live Demo](http://amirelemam.com.s3-website-us-east-1.amazonaws.com/)   -->
 
 ## Requirements
 
@@ -67,8 +67,8 @@ Postman collection on `./backend/account-manager/src/docs/postman.json`
 **Run**
 
 - Docker (recommended)  
-  Make sure you have the file `.env.production` with the environment variables  
-  `$ test -e ./backend/account-manager/.env.production && echo file exists || echo file not found`  
+  Make sure you have the file `.env` with the environment variables  
+  `$ test -e ./backend/account-manager/.env && echo file exists || echo file not found`  
   Add permission to execute the script  
   `$ chmod +x startAccountManagerWithDocker.sh`  
   Run the script  
@@ -122,8 +122,8 @@ Postman collection on `./backend/plan-simulator/src/docs/postman.json`
 **Run**
 
 - Docker (recommended)   
-  Make sure you have the file `.env.production` with the environment variables  
-  `$ test -e ./backend/plan-simulator/.env.production && echo file exists || echo file not found`  
+  Make sure you have the file `.env` with the environment variables  
+  `$ test -e ./backend/plan-simulator/.env && echo file exists || echo file not found`  
   Add permission to execute the script  
   `$ chmod +x startPlanSimulatorWithDocker.sh`  
   Run the script  
@@ -174,8 +174,8 @@ Postman collection on `./backend/branch-finder/src/docs/postman.json`
 **Run**
 
 - Docker (recommended)  
-  Make sure you have the file `.env.production` with the environment variables  
-  `$ test -e ./backend/branch-finder/.env.production && echo file exists || echo file not found`  
+  Make sure you have the file `.env` with the environment variables  
+  `$ test -e ./backend/branch-finder/.env && echo file exists || echo file not found`  
   Add permission to execute the script  
   `$ chmod +x startBranchFinderWithDocker.sh`  
   Run the script  
@@ -225,8 +225,8 @@ Postman collection on `./backend/branch-finder/src/docs/postman.json`
 Before running, you need to change the Google Maps API Key on `./frontend/public/index.html`  
 
 - Docker (recommended)  
-  Make sure you have the file `.env.production` with the environment variables  
-  `$ test -e ./fronend/.env.production && echo file exists || echo file not found`  
+  Make sure you have the file `.env` with the environment variables  
+  `$ test -e ./fronend/.env && echo file exists || echo file not found`  
   Add permission to execute the script  
   `$ chmod +x startFrontendWithDocker.sh`  
   Run the script  
