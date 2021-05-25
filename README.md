@@ -21,7 +21,8 @@ Branch: 0001
 Account number: 12345   
 Password: Qwerty@123  
 
-[Access Live Demo](http://amirelemam.com.s3-website-us-east-1.amazonaws.com/)   -->
+[Access Live Demo](http://samplebank.amirelemam.com)
+-->
 
 ## Requirements
 
@@ -62,7 +63,7 @@ After all services are up, go to each service to create and populate the tables 
 
 **Docs**
 
-[Live OpenAPI (former Swagger)](`https://amirelemam.com/samplebank/account-manager/api/docs`)   
+<!-- [Live OpenAPI (former Swagger)](`https://accountmanager.amirelemam.com/api/docs`)    -->
 Postman collection on `./backend/account-manager/src/docs/postman.json`  
 
 **Run**
@@ -74,6 +75,7 @@ Postman collection on `./backend/account-manager/src/docs/postman.json`
   `$ chmod +x startAccountManagerWithDocker.sh`  
   Run the script  
   `$ ./startAccountManagerWithDocker`
+  **On first run: create and populate tables on DB (routes on Postman)**  
 
 - Local  
   Go to the service folder  
@@ -84,16 +86,7 @@ Postman collection on `./backend/account-manager/src/docs/postman.json`
   `$ npm test`  
   Start service  
   `$ npm run start:local`
-
-- Production  
-  Go to the service folder  
-  `$ cd backend/account-manager`  
-  Install dependencies  
-  `$ npm install --only=prod`  
-  Run tests  
-  `$ npm test`  
-  Start service  
-  `$ npm start`
+  **On first run: create and populate tables on DB (routes on Postman)**  
 
 ### Plan Simulator
 
@@ -117,7 +110,7 @@ Postman collection on `./backend/account-manager/src/docs/postman.json`
 
 **Docs**
 
-[Live OpenAPI (former Swagger)](`https://amirelemam.com/samplebank/plan-simulator/api/docs`)   
+<!-- [Live OpenAPI (former Swagger)](`https://plansimulator.amirelemam.com/api/docs`)    -->
 Postman collection on `./backend/plan-simulator/src/docs/postman.json`  
 
 **Run**
@@ -129,6 +122,7 @@ Postman collection on `./backend/plan-simulator/src/docs/postman.json`
   `$ chmod +x startPlanSimulatorWithDocker.sh`  
   Run the script  
   `$ ./startPlanSimulatorWithDocker`
+  **On first run: create and populate tables on DB (routes on Postman)**  
 
 - Local  
   Go to the service folder  
@@ -139,16 +133,7 @@ Postman collection on `./backend/plan-simulator/src/docs/postman.json`
   `$ npm test`  
   Start service  
   `$ npm run start:local`
-
-- Production  
-  Go to the service folder  
-  `$ cd backend/plan-simulator`  
-  Install dependencies  
-  `$ npm install --only=prod`  
-  Run tests  
-  `$ npm test`  
-  Start service  
-  `$ npm start`
+  **On first run: create and populate tables on DB (routes on Postman)**  
 
 ### Branch Finder
 
@@ -169,7 +154,7 @@ Postman collection on `./backend/plan-simulator/src/docs/postman.json`
 
 **Docs**
 
-[Live OpenAPI (former Swagger)](`https://amirelemam.com/samplebank/branch-finder/api/docs`)   
+<!-- [Live OpenAPI (former Swagger)](`https://branchfinder.amirelemam.com/api/docs`)    -->
 Postman collection on `./backend/branch-finder/src/docs/postman.json`  
 
 **Run**
@@ -181,6 +166,7 @@ Postman collection on `./backend/branch-finder/src/docs/postman.json`
   `$ chmod +x startBranchFinderWithDocker.sh`  
   Run the script  
   `$ ./startBranchFinderWithDocker`
+  **On first run: populate tables on DB (route on Postman)**  
 
 - Local  
   Go to the service folder  
@@ -191,17 +177,7 @@ Postman collection on `./backend/branch-finder/src/docs/postman.json`
   `$ npm test`  
   Start service  
   `$ npm run start:local`
-
-- Production  
-  Go to the service folder  
-  `$ cd backend/branch-finder`  
-  Install dependencies  
-  `$ npm install --only=prod`  
-  Run tests  
-  `$ npm test`  
-  Start service  
-  `$ npm start`
-
+  **On first run: populate tables on DB (route on Postman)**  
 
 ## Frontend
 
@@ -238,10 +214,8 @@ Before running, you need to change the Google Maps API Key on `./frontend/public
   `$ cd frontend`  
   Install dependencies  
   `$ npm install`  
-  Run tests  
-  `$ npm test`  
   Start service  
-  `$ npm run start:local`
+  `$ npm start`
 
 ### Generate Architecture Diagram
 
