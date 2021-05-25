@@ -63,7 +63,7 @@ services:
     build: ./frontend
     command: npm start
     ports:
-      - 3000:3000
+      - 8080:8080
     environment:
       - REACT_APP_ACCOUNT_MANAGER_API=http://account_manager
       - REACT_APP_ACCOUNT_TYPE_SIMULATOR_API=http://plan_simulator

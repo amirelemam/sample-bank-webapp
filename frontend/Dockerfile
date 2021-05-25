@@ -5,7 +5,7 @@ COPY --chown=node:node package*.json ./
 RUN npm ci --only=production --no-optional
 COPY public ./public
 COPY src ./src
-CMD ["npm", "run", "build"]
+RUN npm run build
 
 FROM nginx:alpine
 COPY --from=build /app/build /usr/share/nginx/html

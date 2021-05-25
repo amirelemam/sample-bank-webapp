@@ -25,7 +25,7 @@ const checkRequiredVars = (listOfEnvNames) => {
   }
 };
 
-const testDBConnection = db
+const testDBConnection = () => db
   .raw('SELECT 1')
   .then(() => logger.info({ message: 'Successfully connected to DB' }))
   .catch((error) => {
