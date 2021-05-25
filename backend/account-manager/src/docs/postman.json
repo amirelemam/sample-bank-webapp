@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "3343b145-d9da-48df-bd47-d253c2ca682f",
+		"_postman_id": "c607945a-7ab3-4813-9951-907f66666126",
 		"name": "Account Manager",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,9 +14,9 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/api/v1/drop-tables",
+							"raw": "{{ACCOUNT_MANAGER}}/api/v1/drop-tables",
 							"host": [
-								"{{BASE_URL}}"
+								"{{ACCOUNT_MANAGER}}"
 							],
 							"path": [
 								"api",
@@ -33,9 +33,9 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/api/v1/create-tables/",
+							"raw": "{{ACCOUNT_MANAGER}}/api/v1/create-tables/",
 							"host": [
-								"{{BASE_URL}}"
+								"{{ACCOUNT_MANAGER}}"
 							],
 							"path": [
 								"api",
@@ -53,9 +53,9 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/api/v1/populate-tables/",
+							"raw": "{{ACCOUNT_MANAGER}}/api/v1/populate-tables/",
 							"host": [
-								"{{BASE_URL}}"
+								"{{ACCOUNT_MANAGER}}"
 							],
 							"path": [
 								"api",
@@ -87,9 +87,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/api/v1/auth/login",
+							"raw": "{{ACCOUNT_MANAGER}}/api/v1/auth/login",
 							"host": [
-								"{{BASE_URL}}"
+								"{{ACCOUNT_MANAGER}}"
 							],
 							"path": [
 								"api",
@@ -113,9 +113,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{BASE_URL}}/api/v1/auth/verify",
+							"raw": "{{ACCOUNT_MANAGER}}/api/v1/auth/verify",
 							"host": [
-								"{{BASE_URL}}"
+								"{{ACCOUNT_MANAGER}}"
 							],
 							"path": [
 								"api",
@@ -135,6 +135,16 @@
 				{
 					"name": "Get Balance",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50IjoiMTIzNDUiLCJicmFuY2giOiIwMDAxIiwicGFzc3dvcmQiOiIyMTA1NzBlNzVkYjNiMmM1YTVmNjA5YzBlNTA3ZWQ5YmM4ODQ5MGVkMzExM2NhZTNjNDIxZGEyZTNiMDM2OWNiYWNlNDdhYmU3YmM0NzU5MzhiN2E3M2NmM2QyY2Y5YTgxODUzYmIxZmEyYmQ3MWI4NDc3NTA3MDNkN2JiN2ViZSIsImlhdCI6MTYyMTgxNzQ3NywiZXhwIjoxNjIxOTAzODc3fQ.KK5KQx0-S5tP4c9qFo4ATTqUvN9yuB1wVSlLFCUpQNQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -144,9 +154,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{BASE_URL}}/api/v1/accounts/balance?branch=0001&account=12345&accountType=CHECKING",
+							"raw": "{{ACCOUNT_MANAGER}}/api/v1/accounts/balance?branch=0001&account=12345&accountType=CHECKING",
 							"host": [
-								"{{BASE_URL}}"
+								"{{ACCOUNT_MANAGER}}"
 							],
 							"path": [
 								"api",
@@ -175,6 +185,16 @@
 				{
 					"name": "Transfer",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50IjoiMTIzNDUiLCJicmFuY2giOiIwMDAxIiwicGFzc3dvcmQiOiIyMTA1NzBlNzVkYjNiMmM1YTVmNjA5YzBlNTA3ZWQ5YmM4ODQ5MGVkMzExM2NhZTNjNDIxZGEyZTNiMDM2OWNiYWNlNDdhYmU3YmM0NzU5MzhiN2E3M2NmM2QyY2Y5YTgxODUzYmIxZmEyYmQ3MWI4NDc3NTA3MDNkN2JiN2ViZSIsImlhdCI6MTYyMTgxNzQ3NywiZXhwIjoxNjIxOTAzODc3fQ.KK5KQx0-S5tP4c9qFo4ATTqUvN9yuB1wVSlLFCUpQNQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -187,9 +207,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/api/v1/accounts/transfer",
+							"raw": "{{ACCOUNT_MANAGER}}/api/v1/accounts/transfer",
 							"host": [
-								"{{BASE_URL}}"
+								"{{ACCOUNT_MANAGER}}"
 							],
 							"path": [
 								"api",
@@ -209,9 +229,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{BASE_URL}}/api/v1/health",
+					"raw": "{{ACCOUNT_MANAGER}}/api/v1/health",
 					"host": [
-						"{{BASE_URL}}"
+						"{{ACCOUNT_MANAGER}}"
 					],
 					"path": [
 						"api",

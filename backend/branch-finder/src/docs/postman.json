@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "57074333-6acd-48bc-9fcb-9c70111cd59f",
+		"_postman_id": "19f32f7a-4f0b-4a5f-88d0-22fda2df4b17",
 		"name": "Branch Finder",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,12 +14,10 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:4010/api/v1/db/populate",
-							"protocol": "http",
+							"raw": "{{BRANCH_FINDER}}/api/v1/db/populate",
 							"host": [
-								"localhost"
+								"{{BRANCH_FINDER}}"
 							],
-							"port": "4010",
 							"path": [
 								"api",
 								"v1",
@@ -36,12 +34,10 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:4010/api/v1/db/populate",
-							"protocol": "http",
+							"raw": "{{BRANCH_FINDER}}/api/v1/db/populate",
 							"host": [
-								"localhost"
+								"{{BRANCH_FINDER}}"
 							],
-							"port": "4010",
 							"path": [
 								"api",
 								"v1",
@@ -60,11 +56,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:4010/api/v1/branches",
+					"raw": "{{BRANCH_FINDER}}/api/v1/branches",
 					"host": [
-						"localhost"
+						"{{BRANCH_FINDER}}"
 					],
-					"port": "4010",
 					"path": [
 						"api",
 						"v1",
@@ -80,11 +75,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:4010/api/v1/branches?lat=30&lon=10",
+					"raw": "{{BRANCH_FINDER}}/api/v1/branches?lat=30&lon=10",
 					"host": [
-						"localhost"
+						"{{BRANCH_FINDER}}"
 					],
-					"port": "4010",
 					"path": [
 						"api",
 						"v1",
@@ -110,12 +104,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:4010/health",
+					"raw": "{{BRANCH_FINDER}}/api/v1/health",
 					"host": [
-						"localhost"
+						"{{BRANCH_FINDER}}"
 					],
-					"port": "4010",
 					"path": [
+						"api",
+						"v1",
 						"health"
 					]
 				}

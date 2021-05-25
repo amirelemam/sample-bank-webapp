@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ee80afc8-631c-4ea0-bae0-9b23ae16bfe6",
+		"_postman_id": "4f757132-78ff-47a8-a0ff-c638d2d48d30",
 		"name": "Plan Simulator",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,9 +14,9 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL_SIMULATOR}}/api/v1/drop-tables",
+							"raw": "{{PLAN_SIMULATOR}}/api/v1/drop-tables",
 							"host": [
-								"{{BASE_URL_SIMULATOR}}"
+								"{{PLAN_SIMULATOR}}"
 							],
 							"path": [
 								"api",
@@ -33,9 +33,9 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL_SIMULATOR}}/api/v1/create-tables/",
+							"raw": "{{PLAN_SIMULATOR}}/api/v1/create-tables/",
 							"host": [
-								"{{BASE_URL_SIMULATOR}}"
+								"{{PLAN_SIMULATOR}}"
 							],
 							"path": [
 								"api",
@@ -53,9 +53,9 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL_SIMULATOR}}/api/v1/populate-tables/",
+							"raw": "{{PLAN_SIMULATOR}}/api/v1/populate-tables/",
 							"host": [
-								"{{BASE_URL_SIMULATOR}}"
+								"{{PLAN_SIMULATOR}}"
 							],
 							"path": [
 								"api",
@@ -78,11 +78,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:4020/api/v1/plans",
+							"raw": "{{PLAN_SIMULATOR}}/api/v1/plans",
 							"host": [
-								"localhost"
+								"{{PLAN_SIMULATOR}}"
 							],
-							"port": "4020",
 							"path": [
 								"api",
 								"v1",
@@ -99,7 +98,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[   \n    {\n         \"id\": \"e4c35ce9-8d1f-4224-908d-ab079ab06802\",\n        \"quantity\": 3\n    },\n    {\n        \"id\": \"e5c35ce9-8d1f-4224-908d-ab079ab06802\",\n        \"quantity\": 0\n    },{\n        \"id\": \"e5c35ce9-8d1f-4224-908d-ab079ab06802\",\n        \"quantity\": 1\n    }\n]",
+							"raw": "[   \n    {\n         \"id\": \"e4c35ce9-8d1f-4224-908d-ab079ab06802\",\n        \"quantity\": 3\n    },\n    {\n        \"id\": \"e8c35ce9-8d1f-4224-908d-ab079ab06802\",\n        \"quantity\": 0\n    },{\n        \"id\": \"e6c35ce9-8d1f-4224-908d-ab079ab06802\",\n        \"quantity\": 1\n    }\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -107,11 +106,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:4020/api/v1/plans/best-plan",
+							"raw": "{{PLAN_SIMULATOR}}/api/v1/plans/best-plan",
 							"host": [
-								"localhost"
+								"{{PLAN_SIMULATOR}}"
 							],
-							"port": "4020",
 							"path": [
 								"api",
 								"v1",
@@ -133,11 +131,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:4020/api/v1/features",
+							"raw": "{{PLAN_SIMULATOR}}/api/v1/features",
 							"host": [
-								"localhost"
+								"{{PLAN_SIMULATOR}}"
 							],
-							"port": "4020",
 							"path": [
 								"api",
 								"v1",
@@ -155,11 +152,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:4020/api/v1/health",
+					"raw": "{{PLAN_SIMULATOR}}/api/v1/health",
 					"host": [
-						"localhost"
+						"{{PLAN_SIMULATOR}}"
 					],
-					"port": "4020",
 					"path": [
 						"api",
 						"v1",
