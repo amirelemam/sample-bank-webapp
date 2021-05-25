@@ -23,17 +23,17 @@ Password: Qwerty@123
 
 ## Requirements
 
-- Node.js 12 or later  
-- PostgreSQL 12 or later  
-- MongoDB 4.2 or later  
+- Node.js 12+  
+- PostgreSQL 12+  
+- MongoDB 4.2+  
 - Google Maps API key  
 - Docker (optional)
 
 ## Run
 
-You can run all services with docker-compose  
-`$ docker-compose up --build`  
-After all services are up, go to each service and populate the tables on the database (routes on Postman)  
+You can run all services with docker-compose (now a Docker command)   
+`$ docker compose up --build`  
+After all services are up, go to each service and populate the tables on the database (you can find the routes on Postman)  
 
 ## Backend
 
@@ -71,7 +71,7 @@ Postman collection on `./backend/account-manager/src/docs/postman.json`
   Add permission to execute the script  
   `$ chmod +x startAccountManagerWithDocker.sh`  
   Run the script  
-  `$ ./startAccountManagerWithDocker`
+  `$ ./startAccountManagerWithDocker`  
   **On first run: populate tables on DB (you can find the route on Postman)**  
 
 - Local  
@@ -82,7 +82,7 @@ Postman collection on `./backend/account-manager/src/docs/postman.json`
   Run tests  
   `$ npm test`  
   Start service  
-  `$ npm run start:local`
+  `$ npm run start:local`  
   **On first run: populate tables on DB (you can find the route on Postman)**  
 
 ### Plan Simulator
@@ -118,7 +118,7 @@ Postman collection on `./backend/plan-simulator/src/docs/postman.json`
   Add permission to execute the script  
   `$ chmod +x startPlanSimulatorWithDocker.sh`  
   Run the script  
-  `$ ./startPlanSimulatorWithDocker`
+  `$ ./startPlanSimulatorWithDocker`  
   **On first run: populate tables on DB (you can find the route on Postman)**  
 
 - Local  
@@ -129,7 +129,7 @@ Postman collection on `./backend/plan-simulator/src/docs/postman.json`
   Run tests  
   `$ npm test`  
   Start service  
-  `$ npm run start:local`
+  `$ npm run start:local`  
   **On first run: populate tables on DB (you can find the route on Postman)**   
 
 ### Branch Finder
@@ -161,7 +161,7 @@ Postman collection on `./backend/branch-finder/src/docs/postman.json`
   Add permission to execute the script  
   `$ chmod +x startBranchFinderWithDocker.sh`  
   Run the script  
-  `$ ./startBranchFinderWithDocker`
+  `$ ./startBranchFinderWithDocker`  
   **On first run: populate tables on DB (you can find the route on Postman)**  
 
 - Local  
@@ -172,7 +172,7 @@ Postman collection on `./backend/branch-finder/src/docs/postman.json`
   Run tests  
   `$ npm test`  
   Start service  
-  `$ npm run start:local`
+  `$ npm run start:local`  
   **On first run: populate tables on DB (you can find the route on Postman)**  
 
 ## Frontend
@@ -195,6 +195,7 @@ Postman collection on `./backend/branch-finder/src/docs/postman.json`
 - [Generate Google Maps API Key](https://developers.google.com/maps/documentation/javascript/get-api-key)
 - [Enable Places API](https://console.cloud.google.com/marketplace/product/google/places-backend.googleapis.com)
 - [Enable Geocoding API](https://console.cloud.google.com/marketplace/product/google/geocoding-backend.googleapis.com)
+- [Enable Maps Javascript API](https://console.cloud.google.com/marketplace/product/google/maps-backend.googleapis.com)
 
 **Run**
 
@@ -222,7 +223,7 @@ The architecture diagram was generated using Python's lib [Diagram](https://diag
 
 **Requirements**
 
-- Python 3.7 or later  
+- Python 3.7+  
 - Graphviz  
 For MacOS: `$ brew install graphviz`  
 For another OS, check [the installation info](https://graphviz.org/download)  
@@ -235,7 +236,7 @@ For another OS, check [the installation info](https://graphviz.org/download)
 - Generate diagram  
 `$ python architecure-diagram.py`  
 
-The file will be saved to the current working directory.  
+The file will be saved on the current working directory.  
 
 ## License
 

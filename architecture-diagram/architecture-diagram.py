@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from diagrams import Diagram
 from diagrams.onprem.database import PostgreSQL
 from diagrams.onprem.database import MongoDB
