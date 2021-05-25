@@ -34,7 +34,8 @@ Password: Qwerty@123
 ## Run
 
 You can run all services with docker-compose  
-`$ docker-compose up --build`
+`$ docker-compose up --build`  
+After all services are up, go to each service to create and populate the tables on the database  
 
 ## Backend
 
