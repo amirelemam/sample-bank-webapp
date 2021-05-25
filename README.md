@@ -2,18 +2,6 @@
 
 Sample Bank allows you to manage your account, choose the cheaper account plan based on your needs and find the nearest branch from your location.  
 
-## Services
-
-- Account Manager: Transfer and get balance of Savings and Checking accounts  
-- Plan Simulator: Check the cheapest plan based on your needs  
-- Branch Finder: Find the nearest branch to your location  
-- Frontend: Application interface  
-
-## Architecture
-
-This application is structured as a monorepo, which means that all services (backend and frontend) sit under the same repository.
-<img src="./architecture-diagram/sample_bank_architecture.png" alt="Architecure Diagram" />
-
 <!-- ## Live Demo
 
 Credentials:  
@@ -23,6 +11,15 @@ Password: Qwerty@123
 
 [Access Live Demo](http://samplebank.amirelemam.com)
 -->
+## Architecture
+<img src="./architecture-diagram/sample_bank_architecture.png" alt="Architecure Diagram" />
+
+## Services
+
+- Account Manager: Transfer and get balance of Savings and Checking accounts  
+- Plan Simulator: Check the cheapest plan based on your needs  
+- Branch Finder: Find the nearest branch to your location  
+- Frontend: Application interface  
 
 ## Requirements
 
@@ -69,13 +66,13 @@ Postman collection on `./backend/account-manager/src/docs/postman.json`
 **Run**
 
 - Docker (recommended)  
-  Make sure you have the file `.env` with the environment variables  
+  Make sure you have the `.env` file with the environment variables  
   `$ test -e ./backend/account-manager/.env && echo file exists || echo file not found`  
   Add permission to execute the script  
   `$ chmod +x startAccountManagerWithDocker.sh`  
   Run the script  
   `$ ./startAccountManagerWithDocker`
-  **On first run: populate tables on DB (route on Postman)**  
+  **On first run: populate tables on DB (you can find the route on Postman)**  
 
 - Local  
   Go to the service folder  
@@ -86,7 +83,7 @@ Postman collection on `./backend/account-manager/src/docs/postman.json`
   `$ npm test`  
   Start service  
   `$ npm run start:local`
-  **On first run: populate tables on DB (route on Postman)**  
+  **On first run: populate tables on DB (you can find the route on Postman)**  
 
 ### Plan Simulator
 
@@ -116,13 +113,13 @@ Postman collection on `./backend/plan-simulator/src/docs/postman.json`
 **Run**
 
 - Docker (recommended)   
-  Make sure you have the file `.env` with the environment variables  
+  Make sure you have the `.env` file with the environment variables  
   `$ test -e ./backend/plan-simulator/.env && echo file exists || echo file not found`  
   Add permission to execute the script  
   `$ chmod +x startPlanSimulatorWithDocker.sh`  
   Run the script  
   `$ ./startPlanSimulatorWithDocker`
-  **On first run: populate tables on DB (route on Postman)**  
+  **On first run: populate tables on DB (you can find the route on Postman)**  
 
 - Local  
   Go to the service folder  
@@ -133,7 +130,7 @@ Postman collection on `./backend/plan-simulator/src/docs/postman.json`
   `$ npm test`  
   Start service  
   `$ npm run start:local`
-  **On first run: populate tables on DB (route on Postman)**  
+  **On first run: populate tables on DB (you can find the route on Postman)**   
 
 ### Branch Finder
 
@@ -142,9 +139,8 @@ Postman collection on `./backend/plan-simulator/src/docs/postman.json`
 - Jest
 - MongoDB
 
-**External Services**
-- MongoDB
-- Google Maps API
+**External Services**  
+- MongoDB  
 
 **Features**  
 - Find the nearest branch to the given location (latitude, longitude).  
@@ -160,13 +156,13 @@ Postman collection on `./backend/branch-finder/src/docs/postman.json`
 **Run**
 
 - Docker (recommended)  
-  Make sure you have the file `.env` with the environment variables  
+  Make sure you have the `.env` file with the environment variables  
   `$ test -e ./backend/branch-finder/.env && echo file exists || echo file not found`  
   Add permission to execute the script  
   `$ chmod +x startBranchFinderWithDocker.sh`  
   Run the script  
   `$ ./startBranchFinderWithDocker`
-  **On first run: populate tables on DB (route on Postman)**  
+  **On first run: populate tables on DB (you can find the route on Postman)**  
 
 - Local  
   Go to the service folder  
@@ -177,7 +173,7 @@ Postman collection on `./backend/branch-finder/src/docs/postman.json`
   `$ npm test`  
   Start service  
   `$ npm run start:local`
-  **On first run: populate tables on DB (route on Postman)**  
+  **On first run: populate tables on DB (you can find the route on Postman)**  
 
 ## Frontend
 
@@ -185,11 +181,14 @@ Postman collection on `./backend/branch-finder/src/docs/postman.json`
 - React.js
 - Material UI
 
+**External Services**  
+- Google Maps API  
+
 **Environment Variables**
 - ACCOUNT_MANAGER_API: Account Manager backend URL
 - ACCOUNT_TYPE_SIMULATOR_API: Account Type Simulator backend URL
 - BRANCH_FINDER_API: Branch Finder backend URL
-- Google Maps key (on index.html)
+- Google Maps key (on `public/index.html`)
 
 **Requirements**
 
@@ -199,10 +198,10 @@ Postman collection on `./backend/branch-finder/src/docs/postman.json`
 
 **Run**
 
-Before running, you need to change the Google Maps API Key on `./frontend/public/index.html`  
+Before running, you need to replace the Google Maps API Key on `./frontend/public/index.html`  
 
 - Docker (recommended)  
-  Make sure you have the file `.env` with the environment variables  
+  Make sure you have the `.env` file with the environment variables  
   `$ test -e ./fronend/.env && echo file exists || echo file not found`  
   Add permission to execute the script  
   `$ chmod +x startFrontendWithDocker.sh`  
@@ -226,7 +225,7 @@ The architecture diagram was generated using Python's lib [Diagram](https://diag
 - Python 3.7 or later  
 - Graphviz  
 For MacOS: `$ brew install graphviz`  
-For another, OS check [the installation info](https://graphviz.org/download/#mac)  
+For another OS, check [the installation info](https://graphviz.org/download)  
 
 **Install**  
 - Install dependencies  

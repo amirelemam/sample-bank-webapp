@@ -95,8 +95,8 @@ services:
     networks:
       - sample_bank
     volumes:
-      - ./postgresdata:/var/lib/postgresql/data
+      - ./pgdata:/var/lib/postgresql/data
 
 volumes:
-  postgresdata:
+  pgdata:
   mongodata:
