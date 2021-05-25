@@ -44,7 +44,6 @@ const getBalance = async (
    *                         branch: "0001",
    *                         account: "12345"
    *                        }
-   * @author Amir Elemam
    */
 const deposit = async (
   accountId, amount, balance,
@@ -88,7 +87,6 @@ const deposit = async (
    *                          branch: "0001",
    *                          account: "12345"
    *                        }
-   * @author Amir Elemam
    */
 const withdraw = async (
   accountId, amount, balance,

@@ -49,7 +49,6 @@ const transfer = async ({ amount, origin, destiny }) => {
  *                     account: "12345"
  *                     accountType: "CHECKING"
  *                   }
- * @author Amir Elemam
  */
 const getBalance = async ({
   account, branch, accountType,

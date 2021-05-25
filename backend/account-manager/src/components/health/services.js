@@ -6,7 +6,6 @@ const packageJson = require('../../../package.json');
  *                     message: "I'm alive!",
  *                     version: "1.0"
  *                   }
- * @author Amir Elemam
  */
 const isAlive = () => ({
   message: "I'm alive!",

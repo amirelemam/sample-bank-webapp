@@ -7,7 +7,6 @@ const repository = require('./repository');
  * @param {string} obj.account Account number
  * @param {string} obj.branch Branch
  * @returns {Object} { accountId: "ID" }
- * @author Amir Elemam
  */
 const getAccountId = async (account, branch, accountType) => {
   const clientAccount = await repository.getAccount({ account, branch, accountType });

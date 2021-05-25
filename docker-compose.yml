@@ -80,6 +80,8 @@ services:
       - '27017:27017'
     networks:
       - sample_bank
+    volumes: 
+      - ./mongodata/data:/data/db
 
   postgres:
     image: postgres
@@ -93,7 +95,8 @@ services:
     networks:
       - sample_bank
     volumes:
-      - ./dbdata:/var/lib/postgresql/data
+      - ./postgresdata:/var/lib/postgresql/data
 
 volumes:
-  dbdata:
+  postgresdata:
+  mongodata:

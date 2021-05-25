@@ -36,7 +36,7 @@ Password: Qwerty@123
 
 You can run all services with docker-compose  
 `$ docker-compose up --build`  
-After all services are up, go to each service to create and populate the tables on the database  
+After all services are up, go to each service and populate the tables on the database (routes on Postman)  
 
 ## Backend
 
@@ -75,7 +75,7 @@ Postman collection on `./backend/account-manager/src/docs/postman.json`
   `$ chmod +x startAccountManagerWithDocker.sh`  
   Run the script  
   `$ ./startAccountManagerWithDocker`
-  **On first run: create and populate tables on DB (routes on Postman)**  
+  **On first run: populate tables on DB (route on Postman)**  
 
 - Local  
   Go to the service folder  
@@ -86,7 +86,7 @@ Postman collection on `./backend/account-manager/src/docs/postman.json`
   `$ npm test`  
   Start service  
   `$ npm run start:local`
-  **On first run: create and populate tables on DB (routes on Postman)**  
+  **On first run: populate tables on DB (route on Postman)**  
 
 ### Plan Simulator
 
@@ -122,7 +122,7 @@ Postman collection on `./backend/plan-simulator/src/docs/postman.json`
   `$ chmod +x startPlanSimulatorWithDocker.sh`  
   Run the script  
   `$ ./startPlanSimulatorWithDocker`
-  **On first run: create and populate tables on DB (routes on Postman)**  
+  **On first run: populate tables on DB (route on Postman)**  
 
 - Local  
   Go to the service folder  
@@ -133,7 +133,7 @@ Postman collection on `./backend/plan-simulator/src/docs/postman.json`
   `$ npm test`  
   Start service  
   `$ npm run start:local`
-  **On first run: create and populate tables on DB (routes on Postman)**  
+  **On first run: populate tables on DB (route on Postman)**  
 
 ### Branch Finder
 
