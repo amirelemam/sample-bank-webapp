@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   link,
 }));
 
-export default function GoogleMaps({ history }) {
+const BranchFinder = ({ history }) => {
   const classes = useStyles();
   const [branches, setBranches] = useState([]);
 
@@ -44,7 +44,8 @@ export default function GoogleMaps({ history }) {
     });
     setBranches(branchesFormatted);
   };
-  useEffect(async () => {
+
+  useEffect(() => {
     requestAllBranches();
   }, []);
 
@@ -80,4 +81,5 @@ export default function GoogleMaps({ history }) {
       <List branches={branches} />
     </div>
   );
-}
+};
+export default BranchFinder;

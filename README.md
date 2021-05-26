@@ -2,15 +2,15 @@
 
 Sample Bank allows you to manage your account, choose the cheaper account plan based on your needs and find the nearest branch from your location.  
 
-<!-- ## Live Demo
+## Live Demo
 
 Credentials:  
 Branch: 0001   
 Account number: 12345   
 Password: Qwerty@123  
 
-[Access Live Demo](http://samplebank.amirelemam.com)
--->
+[Access Live Demo](https://frontend-vikfo2njwa-uc.a.run.app/)
+
 ## Architecture
 <img src="./architecture-diagram/sample_bank_architecture.png" alt="Architecure Diagram" />
 
@@ -60,7 +60,7 @@ After all services are up, go to each service and populate the tables on the dat
 
 **Docs**
 
-<!-- [Live OpenAPI (former Swagger)](`https://accountmanager.amirelemam.com/api/docs`)    -->
+[Live OpenAPI (former Swagger)](`https://account-manager-vikfo2njwa-uc.a.run.app/api/docs`)   
 Postman collection on `./backend/account-manager/src/docs/postman.json`  
 
 **Run**
@@ -107,7 +107,7 @@ Postman collection on `./backend/account-manager/src/docs/postman.json`
 
 **Docs**
 
-<!-- [Live OpenAPI (former Swagger)](`https://plansimulator.amirelemam.com/api/docs`)    -->
+[Live OpenAPI (former Swagger)](`https://plan-simulator-vikfo2njwa-uc.a.run.app/api/docs`)   
 Postman collection on `./backend/plan-simulator/src/docs/postman.json`  
 
 **Run**
@@ -186,7 +186,7 @@ Postman collection on `./backend/branch-finder/src/docs/postman.json`
 
 **Environment Variables**
 - ACCOUNT_MANAGER_API: Account Manager backend URL
-- ACCOUNT_TYPE_SIMULATOR_API: Account Type Simulator backend URL
+- PLAN_SIMULATOR_API: Plan Simulator backend URL
 - BRANCH_FINDER_API: Branch Finder backend URL
 - Google Maps key (on `public/index.html`)
 

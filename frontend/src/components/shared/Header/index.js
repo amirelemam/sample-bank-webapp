@@ -33,7 +33,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default ({ title, historyParent, handleSignOutParent }) => {
+const Header = ({ title, historyParent, handleSignOutParent }) => {
   const classes = useStyles();
 
   const handleSignOut = async () => {
@@ -52,3 +52,5 @@ export default ({ title, historyParent, handleSignOutParent }) => {
     </div>
   );
 };
+
+export default Header;

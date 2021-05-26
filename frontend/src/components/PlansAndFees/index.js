@@ -189,14 +189,12 @@ const PlansAndFees = ({ history }) => {
   const [planCosts, setPlanCosts] = useState({});
   const classes = useStyles();
 
-  const PLAN_SIMULATOR_API = process.env.REACT_APP_PLAN_SIMULATOR_API;
-
   useEffect(() => {
     (async () => {
       try {
-        const responsePlans = await axios.get(`${PLAN_SIMULATOR_API}/plans`);
+        const responsePlans = await axios.get(`${process.env.REACT_APP_PLAN_SIMULATOR_API}/plans`);
 
-        const responseFeatures = await axios.get(`${PLAN_SIMULATOR_API}/features`);
+        const responseFeatures = await axios.get(`${process.env.REACT_APP_PLAN_SIMULATOR_API}/features`);
 
         responsePlans.data.forEach((plan) => {
           if (plan.name === 'basic') setPlanBasic(plan.features);
@@ -230,7 +228,7 @@ const PlansAndFees = ({ history }) => {
         } = values;
 
         const { data } = await axios.post(
-          `${PLAN_SIMULATOR_API}/plans/best-plan`,
+          `${process.env.REACT_APP_PLAN_SIMULATOR_API}/plans/best-plan`,
           [
             {
               id: 'e4c35ce9-8d1f-4224-908d-ab079ab06802',

@@ -1,7 +1,7 @@
 {
   "name": "plan-simulator",
   "version": "1.0.0",
-  "description": "Simulates which is the best account type",
+  "description": "Simulates which is the best plan",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

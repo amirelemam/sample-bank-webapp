@@ -4,9 +4,9 @@ const plans = require('./plans');
 module.exports = {
   openapi: '3.0.1',
   info: {
-    title: 'Account Type Simulator',
+    title: 'Plan Simulator',
     version: '1.0.0',
-    description: 'This service simulates which is the best account type',
+    description: 'This service simulates which is the best plan',
     contact: {
       name: 'Amir Elemam',
     },
