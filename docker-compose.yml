@@ -81,7 +81,7 @@ services:
     networks:
       - sample_bank
     volumes: 
-      - ./mongodata/data:/data/db
+      - mongodata:/data/db
 
   postgres:
     image: postgres
@@ -95,8 +95,10 @@ services:
     networks:
       - sample_bank
     volumes:
-      - ./pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
 
 volumes:
   pgdata:
+    driver: local
   mongodata:
+    driver: local
