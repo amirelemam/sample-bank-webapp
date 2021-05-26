@@ -150,7 +150,7 @@ Postman collection on `./backend/plan-simulator/src/docs/postman.json`
 
 **Docs**
 
-<!-- [Live OpenAPI (former Swagger)](`https://branchfinder.amirelemam.com/api/docs`)    -->
+[Live OpenAPI (former Swagger)](`https://branch-finder-vikfo2njwa-uc.a.run.app/api/docs`)   
 Postman collection on `./backend/branch-finder/src/docs/postman.json`  
 
 **Run**
