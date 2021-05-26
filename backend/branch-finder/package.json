@@ -5,8 +5,9 @@
   "scripts": {
     "build": "tsc",
     "prestart": "npm run build",
-    "start": "node dist/app",
-    "start:local": "NODE_ENV=dev nodemon src/index.ts",
+    "serve": "node dist/server.js",
+    "start": "npm run serve",
+    "start:local": "NODE_ENV=dev nodemon src/server.ts",
     "test": "NODE_ENV=test jest --detectOpenHandles --runInBand --coverage"
   },
   "keywords": [],
