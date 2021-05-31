@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: 
+    - master
+    paths:  
+    - 'frontend/**'
+
+env: 
+  BUCKET: samplebank.amirelemam.com 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+        
+      - name: Install Dependencies
+        run: npm install
+        
+      - name: Build
+        run: npm run build --production
+        
+      - uses: google-github-actions/setup-gcloud@master
+        with:
+          version: '290.0.1'
+          project_id: ${{ secrets.GCP_PROJECT }}
+          service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+          export_default_credentials: true
+      
+      - name: Upload files to bucket
+        run: gsutil -m rsync -R ./build gs://"$BUCKET"
+
+      - name: Allow AllUsers
+        run: gsutil -m acl ch -R -u AllUsers:R gs://"$BUCKET"
+        
+      # Set cache meta for static files
+      - name: Set Cache-Control (static files)
+        run: gsutil -m setmeta -h "Cache-Control:public, max-age=15768000" gs://"$BUCKET"/**/*.{png,css,js}
+      
+      # Set cache meta for index.html
+      - name: Set Cache-Control (index.html)
+        run: gsutil -m setmeta -h "Cache-Control:no-cache, no-store" gs://"$BUCKET"/index.html
