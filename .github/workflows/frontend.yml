@@ -36,7 +36,7 @@ jobs:
           export_default_credentials: true
       
       - name: Upload files to bucket
-        run: gsutil -m rsync -R ./build gs://"$BUCKET"
+        run: gsutil -m rsync -R ./frontend/build gs://"$BUCKET"
 
       - name: Allow AllUsers
         run: gsutil -m acl ch -R -u AllUsers:R gs://"$BUCKET"
