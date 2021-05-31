@@ -26,7 +26,7 @@ jobs:
         run: cd frontend && npm install
         
       - name: Build
-        run: npm run build --production
+        run: cd frontend && npm run build --production
         
       - uses: google-github-actions/setup-gcloud@master
         with:
