@@ -8,7 +8,10 @@ on:
     - 'frontend/**'
 
 env: 
-  BUCKET: samplebank.amirelemam.com 
+  BUCKET: ${{ secrets.GCP_BUCKET_NAME }}
+  REACT_APP_PLAN_SIMULATOR_API: ${{ secrets.REACT_APP_PLAN_SIMULATOR_API }}
+  REACT_APP_ACCOUNT_MANAGER_API: ${{ secrets.REACT_APP_ACCOUNT_MANAGER_API }}
+  REACT_APP_BRANCH_FINDER_API: ${{ secrets.REACT_APP_BRANCH_FINDER_API }}
 
 jobs:
   build:
