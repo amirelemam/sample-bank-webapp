@@ -9,7 +9,20 @@ Branch: 0001
 Account number: 12345   
 Password: Qwerty@123  
 
-[Access Live Demo](https://frontend-vikfo2njwa-uc.a.run.app/)
+[Access Live Demo](https://samplebank.amirelemam.com/)
+
+## Table of Contents
+- [Architecture](#architecture)
+- [Services](#services)
+- [Requirements](#requirements)
+- [Run](#run)
+- [Backend](#backend)
+  * [Account Manager](#account-manager)
+  * [Plan Simulator](#plan-simulator)
+  * [Branch Finder](#branch-finder)
+- [Frontend](#frontend)
+  * [Generate Architecture Diagram](#generate-architecture-diagram)
+- [License](#license)
 
 ## Architecture
 <img src="./architecture-diagram/sample_bank_architecture.png" alt="Architecure Diagram" />
