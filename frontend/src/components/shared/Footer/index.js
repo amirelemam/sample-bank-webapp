@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
-    width: '100%',
+    width: '100vw',
     height: '60px',
     bottom: 0,
   },

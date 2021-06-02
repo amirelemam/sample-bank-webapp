@@ -7,7 +7,9 @@ import PlaceAutocomplete from './PlaceAutocomplete';
 import Header from '../shared/Header';
 
 const useStyles = makeStyles((theme) => ({
-  root: { ...root },
+  root: {
+    ...root,
+  },
   icon: {
     color: theme.palette.text.secondary,
     marginRight: theme.spacing(2),
@@ -77,7 +79,10 @@ const BranchFinder = ({ history }) => {
   return (
     <div className={classes.root}>
       <Header title="Find a branch" historyParent={history} />
-      <PlaceAutocomplete handleAddress={handleAddress} handleInput={handleInput} />
+      <PlaceAutocomplete
+        handleAddress={handleAddress}
+        handleInput={handleInput}
+      />
       <List branches={branches} />
     </div>
   );

@@ -49,11 +49,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     ...root,
     flexGrow: 1,
-    minHeight: 'calc(100vh - 145px)',
   },
   button: { ...button, width: '150px' },
   button2: { ...button, width: '120px' },
-  button3: { border: '1px solid', width: '120px', marginRight: '30px' },
+  button3: { border: '1px solid', width: '100px', marginRight: '30px' },
   link: {
     color: '#fff',
     textDecoration: 'none',
@@ -268,7 +267,7 @@ const MyAccount = ({ history }) => {
       <AppBar
         position="static"
         color="transparent"
-        style={{ width: '340px' }}
+        style={{ width: '90vw', maxWidth: '500px' }}
       >
         <Tabs
           TabIndicatorProps={{

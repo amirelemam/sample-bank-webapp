@@ -5,11 +5,12 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
+    width: '98vw',
     maxWidth: '500px',
     color: '#000',
     backgroundColor: theme.palette.background.paper,
     marginTop: '20px',
+    marginBottom: '20px',
   },
 }));
 
@@ -18,9 +19,9 @@ export default function List({ branches }) {
 
   return (
     <Grid className={classes.root} container component="dl" spacing={2}>
-      {branches.map((branch, key) => (
+      {branches.map((branch) => (
         <>
-          <Grid item id={key} xs={12}>
+          <Grid item key={branch.id} xs={12}>
             <Typography component="dt" variant="h6">
               {' '}
               {branch.name}

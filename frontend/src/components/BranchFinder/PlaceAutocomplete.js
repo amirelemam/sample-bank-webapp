@@ -35,7 +35,9 @@ export default function PlaceAutocomplete({ handleAddress, handleInput }) {
           <div>
             <TextField
               variant="outlined"
-              style={{ width: '500px', backgroundColor: '#fff', marginTop: '30px' }}
+              style={{
+                backgroundColor: '#fff', marginTop: '30px', width: '98vw', maxWidth: '500px',
+              }}
               {...getInputProps({
                 placeholder: 'Type your address...',
                 className: 'location-search-input',
@@ -52,9 +54,10 @@ export default function PlaceAutocomplete({ handleAddress, handleInput }) {
                   : { backgroundColor: '#000', cursor: 'pointer' };
                 return (
                   <div
+                    key={suggestion.index}
                     {...getSuggestionItemProps(suggestion, {
                       className,
-                      style,
+                      style: { ...style, width: '98vw', maxWidth: '500px' },
                     })}
                   >
                     <span>{suggestion.description}</span>

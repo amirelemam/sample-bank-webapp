@@ -7,7 +7,7 @@ const useStyles = makeStyles(() => ({
   exit: {
     textAlign: 'right',
     float: 'right',
-    width: '120px',
+    width: '40px',
     color: '#fff',
     textDecoration: 'none',
     '&:hover': { color: '#d4af37' },
@@ -21,7 +21,8 @@ const useStyles = makeStyles(() => ({
   },
   root: {
     paddingBottom: '30px',
-    width: '500px',
+    width: '90vw',
+    maxWidth: '500px',
   },
   logo: {
     textAlign: 'left',

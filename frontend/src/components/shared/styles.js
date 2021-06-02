@@ -15,10 +15,12 @@ export const root = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  minHeight: 'calc(100vh - 90px)',
+  minHeight: 'calc(100vh - 72px)',
   justifyContent: 'flex-start',
   bottom: 0,
   padding: '15px',
+  paddingBottom: '0px',
+  marginBottom: '0px',
 };
 
 export const link = {

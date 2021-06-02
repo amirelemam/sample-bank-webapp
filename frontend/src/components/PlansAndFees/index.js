@@ -52,7 +52,6 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   root: {
     ...root,
-    minHeight: 'calc(100vh - 100px)',
     color: '#fff',
   },
   button: { ...button, width: '150px' },
@@ -88,20 +87,28 @@ const useStyles = makeStyles((theme) => ({
     width: '150px',
   },
   row: {
-    width: '500px',
+    width: '90vw',
+    maxWidth: '500px',
     textAlign: 'center',
   },
   rowSimulate: {
-    width: '500px',
+    width: '90vw',
+    maxWidth: '500px',
     textAlign: 'center',
     margin: 'auto',
     marginBottom: '30px',
     marginTop: '30px',
   },
   pricingLeft: {
-    width: '248px',
+    [theme.breakpoints.down('xs')]: {
+      width: '90vw',
+      marginBottom: '10px',
+    },
+    [theme.breakpoints.up('sm')]: {
+      width: '248px',
+      float: 'left',
+    },
     textAlign: 'center',
-    float: 'left',
     border: '1px solid',
     borderColor: '#999',
     borderRadius: '10px',
@@ -109,9 +116,14 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: '15px',
   },
   pricingRight: {
-    width: '250px',
+    [theme.breakpoints.down('xs')]: {
+      width: '90vw',
+    },
+    [theme.breakpoints.up('sm')]: {
+      width: '250px',
+      float: 'right',
+    },
     textAlign: 'center',
-    float: 'right',
   },
   pricingPro: {
     minHeight: '300px',
@@ -127,7 +139,8 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '.5em',
     paddingTop: '30px',
     paddingBottom: '15px',
-    width: '500px',
+    width: '90vw',
+    maxWidth: '500px',
     textAlign: 'center',
   },
   divCheaper: {
@@ -135,18 +148,28 @@ const useStyles = makeStyles((theme) => ({
     borderColor: '#999',
     borderRadius: '10px',
     lineHeight: '.5em',
-    width: '248px',
     backgroundColor: '#fff',
     color: '#00030e',
-    float: 'right',
+    [theme.breakpoints.down('xs')]: {
+      width: '90vw',
+    },
+    [theme.breakpoints.up('sm')]: {
+      width: '248px',
+      float: 'right',
+    },
   },
   divExpensive: {
     border: '1px solid',
     borderColor: '#999',
     borderRadius: '10px',
     lineHeight: '.5em',
-    width: '248px',
-    float: 'left',
+    [theme.breakpoints.down('xs')]: {
+      width: '90vw',
+    },
+    [theme.breakpoints.up('sm')]: {
+      width: '248px',
+      float: 'right',
+    },
   },
   btnBasic: {
     color: '#00030e',
@@ -177,7 +200,8 @@ const useStyles = makeStyles((theme) => ({
     color: '#d4af37',
   },
   appBar: {
-    width: '340px',
+    width: '90vw',
+    maxWidth: '340px',
   },
 }));
 
@@ -282,7 +306,7 @@ const PlansAndFees = ({ history }) => {
         <div className={classes.row}>
           <div className={classes.pricingLeft}>
             <h2>BASIC</h2>
-            {planBasic.map((item) => <h4>{item.label}</h4>)}
+            {planBasic.map((item) => <h4 key={item.id}>{item.label}</h4>)}
             <div className={classes.btnBasic}>
               FREE
             </div>
@@ -293,7 +317,7 @@ const PlansAndFees = ({ history }) => {
               className={classes.pricingPro}
             >
               <h2>PRO</h2>
-              {planPro.map((item) => <h4>{item.label}</h4>)}
+              {planPro.map((item) => <h4 key={item.id}>{item.label}</h4>)}
               <div className={classes.btnPro}>
                 $10/mo.
               </div>
@@ -301,7 +325,7 @@ const PlansAndFees = ({ history }) => {
           </div>
         </div>
         <div className={classes.row}>
-          <TableContainer>
+          <TableContainer style={{ width: '90vw', maxWidth: '500px' }}>
             <Table>
               <caption style={tableCaption}>
                 * Applications are subject to approval
@@ -339,7 +363,7 @@ const PlansAndFees = ({ history }) => {
           </Typography>
         </center>
 
-        <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={formik.handleSubmit} style={{ width: '90vw', maxWidth: '500px' }}>
           <TableContainer>
             <Table>
               <TableHead>
@@ -441,15 +465,6 @@ const PlansAndFees = ({ history }) => {
             className={classes.row}
             hidden={Object.keys(planCosts).length === 0}
           >
-            <div className={classes.divExpensive}>
-              <br />
-              <h5>{planCosts.expensive && planCosts.expensive.plan.toUpperCase()}</h5>
-              <h5>
-                $
-                {planCosts.expensive && planCosts.expensive.cost}
-                /mo.
-              </h5>
-            </div>
             <div className={classes.divCheaper}>
               <h3 className={classes.titleSimulate}>CHEAPER</h3>
               <h4>{planCosts.cheaper && planCosts.cheaper.plan.toUpperCase()}</h4>
@@ -458,6 +473,15 @@ const PlansAndFees = ({ history }) => {
                 {planCosts.cheaper && planCosts.cheaper.cost}
                 /mo.
               </h4>
+            </div>
+            <div className={classes.divExpensive}>
+              <br />
+              <h5>{planCosts.expensive && planCosts.expensive.plan.toUpperCase()}</h5>
+              <h5>
+                $
+                {planCosts.expensive && planCosts.expensive.cost}
+                /mo.
+              </h5>
             </div>
           </div>
         </form>
