@@ -18,7 +18,7 @@ describe('POST /api/v1/auth/verify', () => {
 
     const response = await request(app)
       .post('/api/v1/auth/verify')
-      .set('access-token', validToken)
+      .set('authorization', `bearer ${validToken}`)
       .send();
 
     clock.uninstall();
@@ -42,7 +42,7 @@ describe('POST /api/v1/auth/verify', () => {
     try {
       response = await request(app)
         .post('/api/v1/auth/verify')
-        .set('access-token', invalidToken)
+        .set('authorization', `bearer ${invalidToken}`)
         .send();
     } catch (error) {
       expect(error.status).toBe(401);
