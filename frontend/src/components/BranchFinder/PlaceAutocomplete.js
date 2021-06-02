@@ -4,6 +4,8 @@ import PlacesAutocomplete, {
   getLatLng,
 } from 'react-places-autocomplete';
 import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import CloseIcon from '@material-ui/icons/Close';
 
 export default function PlaceAutocomplete({ handleAddress, handleInput }) {
   const [currentAddress, setCurrentAddress] = useState('');
@@ -18,6 +20,10 @@ export default function PlaceAutocomplete({ handleAddress, handleInput }) {
       .then((latLng) => { handleAddress(latLng); })
       // eslint-disable-next-line
       .catch((error) => console.error('Error', error));
+  };
+
+  const handleClear = () => {
+    setCurrentAddress('');
   };
 
   handleInput(currentAddress);
@@ -37,6 +43,13 @@ export default function PlaceAutocomplete({ handleAddress, handleInput }) {
               variant="outlined"
               style={{
                 backgroundColor: '#fff', marginTop: '30px', width: '98vw', maxWidth: '500px',
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <CloseIcon onClick={handleClear} style={{ cursor: 'pointer' }} />
+                  </InputAdornment>
+                ),
               }}
               {...getInputProps({
                 placeholder: 'Type your address...',
