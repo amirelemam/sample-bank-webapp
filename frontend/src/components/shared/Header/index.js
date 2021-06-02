@@ -10,6 +10,7 @@ const useStyles = makeStyles(() => ({
     width: '40px',
     color: '#fff',
     textDecoration: 'none',
+    cursor: 'pointer',
     '&:hover': { color: '#d4af37' },
   },
   title: {
