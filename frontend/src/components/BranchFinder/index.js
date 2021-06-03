@@ -52,7 +52,7 @@ const BranchFinder = ({ history }) => {
   }, []);
 
   const handleInput = (input) => {
-    if (input.length === 0 && branches.length <= 1) requestAllBranches();
+    if (input.length === 0) requestAllBranches();
   };
 
   const handleAddress = async ({ lat, lng }) => {

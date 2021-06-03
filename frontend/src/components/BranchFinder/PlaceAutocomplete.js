@@ -12,6 +12,7 @@ export default function PlaceAutocomplete({ handleAddress, handleInput }) {
 
   const handleChange = (address) => {
     setCurrentAddress(address);
+    handleInput(currentAddress);
   };
 
   const handleSelect = (address) => {
@@ -24,9 +25,8 @@ export default function PlaceAutocomplete({ handleAddress, handleInput }) {
 
   const handleClear = () => {
     setCurrentAddress('');
+    handleInput('');
   };
-
-  handleInput(currentAddress);
 
   return (
     <PlacesAutocomplete
