@@ -42,7 +42,7 @@ export default function PlaceAutocomplete({ handleAddress, handleInput }) {
             <TextField
               variant="outlined"
               style={{
-                backgroundColor: '#fff', marginTop: '30px', width: '98vw', maxWidth: '500px',
+                backgroundColor: '#fff', marginTop: '10px', width: '98vw', maxWidth: '500px',
               }}
               InputProps={{
                 endAdornment: (
