@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
     paddingRight: '5px',
   },
   root: {
-    paddingBottom: '30px',
+    paddingBottom: '10px',
     width: '90vw',
     maxWidth: '500px',
   },
