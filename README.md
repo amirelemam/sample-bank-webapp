@@ -21,7 +21,7 @@ Password: Qwerty@123
   * [Plan Simulator](#plan-simulator)
   * [Branch Finder](#branch-finder)
 - [Frontend](#frontend)
-  * [Generate Architecture Diagram](#generate-architecture-diagram)
+- [Generate Architecture Diagram](#generate-architecture-diagram)
 - [License](#license)
 
 ## Architecture
