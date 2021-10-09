@@ -1,6 +1,8 @@
 import winston from 'winston';
 import { TransformableInfo } from 'logform';
 
+const { combine, printf, colorize, errors } = winston.format;
+
 const customLevels = {
   levels: {
     error: 0,
@@ -25,18 +27,18 @@ const customLevels = {
 winston.addColors(customLevels.colors);
 
 export default winston.createLogger({
+  format: combine(
+    errors({ stack: true }),
+    winston.format.timestamp({ format: 'DD-MM-YYYY HH:mm:ss' }),
+    colorize(),
+    printf(
+      ({ timestamp, level, message, stack }) =>
+        `${timestamp} - ${level}: ${level === '\x1B[31merror\x1B[39m' ? `${stack}` : `${message}`}`,
+    ),
+  ),
   transports: [
     new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.timestamp({
-          format: 'YYYY-MM-DDHH:mm:ss',
-        }),
-        winston.format.printf(
-          (info: TransformableInfo) => `${info.timestamp} ${info.level}: ${info.message}`,
-        ),
-      ),
-      level: 'debug',
+      level: process.env.LOGGING_LEVEL || 'debug',
     }),
   ],
 });

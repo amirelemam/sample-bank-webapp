@@ -1,5 +1,9 @@
 const winston = require('winston');
 
+const {
+  combine, printf, colorize, errors,
+} = winston.format;
+
 const customLevels = {
   levels: {
     error: 0,
@@ -26,13 +30,14 @@ winston.addColors(customLevels.colors);
 const logger = winston.createLogger({
   transports: [
     new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.timestamp({
-          format: 'YYYY-MM-DDHH:mm:ss',
-        }),
-        winston.format.printf(
-          (info) => `${info.timestamp} ${info.level}: ${info.message}`,
+      format: combine(
+        errors({ stack: true }),
+        winston.format.timestamp({ format: 'DD-MM-YYYY HH:mm:ss' }),
+        colorize(),
+        printf(
+          ({
+            timestamp, level, message, stack,
+          }) => `${timestamp} - ${level}: ${level === '\x1B[31merror\x1B[39m' ? `${stack}` : `${message}`}`,
         ),
       ),
       level: process.env.LOGGING_LEVEL || 'debug',

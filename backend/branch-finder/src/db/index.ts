@@ -16,7 +16,7 @@ mongoose.connection.on('connected', () => {
   mongoose.set('returnOriginal', false);
 });
 
-mongoose.connection.on('err', (err) => {
+mongoose.connection.on('err', (err: any) => {
   logger.error(`Mongoose connected error=${err}`);
 });
 
