@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
 import List from './List';
 import { root, link } from '../shared/styles';
@@ -29,22 +30,31 @@ const useStyles = makeStyles((theme) => ({
 const BranchFinder = ({ history }) => {
   const classes = useStyles();
   const [branches, setBranches] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const requestAllBranches = async () => {
-    const { data } = await axios.get(`${process.env.REACT_APP_BRANCH_FINDER_API}/branches`);
+    try {
+      const { data } = await axios.get(`${process.env.REACT_APP_BRANCH_FINDER_API}/branches`);
 
-    const branchesFormatted = data.map((branch) => {
-      const {
-        name, address, city, state, country, zipCode,
-      } = branch;
-      return {
-        name,
-        address,
-        cityStateZip: `${city}, ${state}, ${zipCode}`,
-        country,
-      };
-    });
-    setBranches(branchesFormatted);
+      const branchesFormatted = data.map((branch) => {
+        const {
+          name, address, city, state, country, zipCode,
+        } = branch;
+        return {
+          name,
+          address,
+          cityStateZip: `${city}, ${state}, ${zipCode}`,
+          country,
+        };
+      });
+      setBranches(branchesFormatted);
+      setLoading(false);
+    } catch (err) {
+      // eslint-disable-next-line
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -83,8 +93,11 @@ const BranchFinder = ({ history }) => {
         handleAddress={handleAddress}
         handleInput={handleInput}
       />
-      <List branches={branches} />
+      {loading
+        ? <CircularProgress color="light" />
+        : <List branches={branches} />}
     </div>
   );
 };
+
 export default BranchFinder;

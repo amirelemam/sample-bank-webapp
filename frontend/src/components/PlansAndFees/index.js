@@ -19,6 +19,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { useFormik } from 'formik';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import NumberInput from './NumberInput';
 import { button, root, radioButton } from '../shared/styles';
 import { tabs, tableCaption } from './styles';
@@ -211,6 +212,7 @@ const PlansAndFees = ({ history }) => {
   const [features, setFeatures] = useState([]);
   const [value, setValue] = useState(0);
   const [planCosts, setPlanCosts] = useState({});
+  const [loading, setLoading] = useState(true);
   const classes = useStyles();
 
   useEffect(() => {
@@ -219,6 +221,8 @@ const PlansAndFees = ({ history }) => {
         const responsePlans = await axios.get(`${process.env.REACT_APP_PLAN_SIMULATOR_API}/plans`);
 
         const responseFeatures = await axios.get(`${process.env.REACT_APP_PLAN_SIMULATOR_API}/features`);
+
+        setLoading(false);
 
         responsePlans.data.forEach((plan) => {
           if (plan.name === 'basic') setPlanBasic(plan.features);
@@ -229,6 +233,8 @@ const PlansAndFees = ({ history }) => {
       } catch (err) {
         // eslint-disable-next-line
         console.error(err);
+      } finally {
+        setLoading(false);
       }
     })();
   }, []);
@@ -302,190 +308,195 @@ const PlansAndFees = ({ history }) => {
           <Tab label="Find Your Plan" {...a11yProps(1)} />
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0}>
-        <div className={classes.row}>
-          <div className={classes.pricingLeft}>
-            <h2>BASIC</h2>
-            {planBasic.map((item) => <h4 key={item.id}>{item.label}</h4>)}
-            <div className={classes.btnBasic}>
-              FREE
-            </div>
-          </div>
-          <div className={classes.pricingRight}>
-            <Paper
-              elevation={0}
-              className={classes.pricingPro}
-            >
-              <h2>PRO</h2>
-              {planPro.map((item) => <h4 key={item.id}>{item.label}</h4>)}
-              <div className={classes.btnPro}>
-                $10/mo.
+      {loading ? <CircularProgress color="light" />
+        : (
+          <>
+            <TabPanel value={value} index={0}>
+              <div className={classes.row}>
+                <div className={classes.pricingLeft}>
+                  <h2>BASIC</h2>
+                  {planBasic.map((item) => <h4 key={item.id}>{item.label}</h4>)}
+                  <div className={classes.btnBasic}>
+                    FREE
+                  </div>
+                </div>
+                <div className={classes.pricingRight}>
+                  <Paper
+                    elevation={0}
+                    className={classes.pricingPro}
+                  >
+                    <h2>PRO</h2>
+                    {planPro.map((item) => <h4 key={item.id}>{item.label}</h4>)}
+                    <div className={classes.btnPro}>
+                      $10/mo.
+                    </div>
+                  </Paper>
+                </div>
               </div>
-            </Paper>
-          </div>
-        </div>
-        <div className={classes.row}>
-          <TableContainer style={{ width: '90vw', maxWidth: '500px' }}>
-            <Table>
-              <caption style={tableCaption}>
-                * Applications are subject to approval
-              </caption>
-              <TableHead>
-                <TableRow>
-                  <TableCell className={classes.tableCell}><b>Extra</b></TableCell>
-                  <TableCell className={classes.tableCell}><b>Price</b></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {features.map((feature) => (
-                  <TableRow key={feature.id}>
-                    <TableCell className={classes.tableCell} component="th" scope="row">
-                      {feature.name}
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>{`$${feature.price} / ${feature.pricetype}`}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
-        <div className={classes.commonFeatures}>
-          <b>All plans include:</b>
-          <h5>&#10003; Debit Card</h5>
-          <h5>&#10003; Mobile App</h5>
-          <h5>&#10003; 24/7 Customer Service</h5>
-        </div>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <center>
-          <Typography>
-            Type your monthly usage:
-          </Typography>
-        </center>
+              <div className={classes.row}>
+                <TableContainer style={{ width: '90vw', maxWidth: '500px' }}>
+                  <Table>
+                    <caption style={tableCaption}>
+                      * Applications are subject to approval
+                    </caption>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell className={classes.tableCell}><b>Extra</b></TableCell>
+                        <TableCell className={classes.tableCell}><b>Price</b></TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {features.map((feature) => (
+                        <TableRow key={feature.id}>
+                          <TableCell className={classes.tableCell} component="th" scope="row">
+                            {feature.name}
+                          </TableCell>
+                          <TableCell className={classes.tableCell}>{`$${feature.price} / ${feature.pricetype}`}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </div>
+              <div className={classes.commonFeatures}>
+                <b>All plans include:</b>
+                <h5>&#10003; Debit Card</h5>
+                <h5>&#10003; Mobile App</h5>
+                <h5>&#10003; 24/7 Customer Service</h5>
+              </div>
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              <center>
+                <Typography>
+                  Type your monthly usage:
+                </Typography>
+              </center>
 
-        <form onSubmit={formik.handleSubmit} style={{ width: '90vw', maxWidth: '500px' }}>
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell className={classes.tableCell}><b>Feature</b></TableCell>
-                  <TableCell className={classes.tableCell}>
-                    <center><b>Quantity</b></center>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow>
-                  <TableCell className={classes.tableCell} component="th" scope="row">
-                    Wire Transfer
-                  </TableCell>
-                  <TableCell className={classes.smallTableCell}>
-                    <TextField
-                      id="wireTransfers"
-                      name="wireTransfers"
-                      onChange={formik.handleChange}
-                      error={formik.errors.wireTransfers && formik.touched.wireTransfers}
-                      value={formik.values.wireTransfers}
-                      InputProps={{
-                        inputComponent: NumberInput,
-                      }}
-                    />
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className={classes.tableCell} component="th" scope="row">
-                    ATM Withdrawal (our network)
-                  </TableCell>
-                  <TableCell className={classes.smallTableCell}>
-                    <TextField
-                      id="withdrawalsWithinNetwork"
-                      name="withdrawalsWithinNetwork"
-                      onChange={formik.handleChange}
-                      error={formik.errors.withdrawalsWithinNetwork
-                        && formik.touched.withdrawalsWithinNetwork}
-                      value={formik.values.withdrawalsWithinNetwork}
-                      InputProps={{
-                        inputComponent: NumberInput,
-                      }}
-                    />
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className={classes.tableCell} component="th" scope="row">
-                    ATM Withdrawal (other banks)
-                  </TableCell>
-                  <TableCell className={classes.smallTableCell}>
-                    <TextField
-                      id="withdrawalsOutsideNetwork"
-                      onChange={formik.handleChange}
-                      name="withdrawalsOutsideNetwork"
-                      error={formik.errors.withdrawalsOutsideNetwork
-                        && formik.touched.withdrawalsOutsideNetwork}
-                      value={formik.values.withdrawalsOutsideNetwork}
-                      InputProps={{
-                        inputComponent: NumberInput,
-                      }}
-                    />
-                  </TableCell>
-                </TableRow>
+              <form onSubmit={formik.handleSubmit} style={{ width: '90vw', maxWidth: '500px' }}>
+                <TableContainer>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell className={classes.tableCell}><b>Feature</b></TableCell>
+                        <TableCell className={classes.tableCell}>
+                          <center><b>Quantity</b></center>
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell className={classes.tableCell} component="th" scope="row">
+                          Wire Transfer
+                        </TableCell>
+                        <TableCell className={classes.smallTableCell}>
+                          <TextField
+                            id="wireTransfers"
+                            name="wireTransfers"
+                            onChange={formik.handleChange}
+                            error={formik.errors.wireTransfers && formik.touched.wireTransfers}
+                            value={formik.values.wireTransfers}
+                            InputProps={{
+                              inputComponent: NumberInput,
+                            }}
+                          />
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className={classes.tableCell} component="th" scope="row">
+                          ATM Withdrawal (our network)
+                        </TableCell>
+                        <TableCell className={classes.smallTableCell}>
+                          <TextField
+                            id="withdrawalsWithinNetwork"
+                            name="withdrawalsWithinNetwork"
+                            onChange={formik.handleChange}
+                            error={formik.errors.withdrawalsWithinNetwork
+                              && formik.touched.withdrawalsWithinNetwork}
+                            value={formik.values.withdrawalsWithinNetwork}
+                            InputProps={{
+                              inputComponent: NumberInput,
+                            }}
+                          />
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className={classes.tableCell} component="th" scope="row">
+                          ATM Withdrawal (other banks)
+                        </TableCell>
+                        <TableCell className={classes.smallTableCell}>
+                          <TextField
+                            id="withdrawalsOutsideNetwork"
+                            onChange={formik.handleChange}
+                            name="withdrawalsOutsideNetwork"
+                            error={formik.errors.withdrawalsOutsideNetwork
+                              && formik.touched.withdrawalsOutsideNetwork}
+                            value={formik.values.withdrawalsOutsideNetwork}
+                            InputProps={{
+                              inputComponent: NumberInput,
+                            }}
+                          />
+                        </TableCell>
+                      </TableRow>
 
-                <TableRow>
-                  <TableCell className={classes.tableCell} component="th" scope="row">
-                    Do you want a Credit Card?
-                  </TableCell>
-                  <TableCell className={classes.largeTableCell}>
-                    <RadioGroup
-                      row
-                      aria-label="position"
-                      defaultValue="top"
-                      name="creditCard"
-                      value={formik.values.creditCard}
-                      onChange={formik.handleChange}
-                    >
-                      <FormControlLabel value="yes" control={<Radio name="creditCard" style={radioButton} />} label="Yes" />
-                      <FormControlLabel value="no" control={<Radio name="creditCard" style={radioButton} />} label="No" />
-                    </RadioGroup>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <div className={classes.rowSimulate}>
-            <Button
-              variant="outlined"
-              size="medium"
-              fullWidth={true}
-              className={classes.btnSimulate}
-              type="submit"
-            >
-              SIMULATE
-            </Button>
-          </div>
-          <div
-            className={classes.row}
-            hidden={Object.keys(planCosts).length === 0}
-          >
-            <div className={classes.divCheaper}>
-              <h3 className={classes.titleSimulate}>CHEAPER</h3>
-              <h4>{planCosts.cheaper && planCosts.cheaper.plan.toUpperCase()}</h4>
-              <h4>
-                $
-                {planCosts.cheaper && planCosts.cheaper.cost}
-                /mo.
-              </h4>
-            </div>
-            <div className={classes.divExpensive}>
-              <br />
-              <h5>{planCosts.expensive && planCosts.expensive.plan.toUpperCase()}</h5>
-              <h5>
-                $
-                {planCosts.expensive && planCosts.expensive.cost}
-                /mo.
-              </h5>
-            </div>
-          </div>
-        </form>
-      </TabPanel>
+                      <TableRow>
+                        <TableCell className={classes.tableCell} component="th" scope="row">
+                          Do you want a Credit Card?
+                        </TableCell>
+                        <TableCell className={classes.largeTableCell}>
+                          <RadioGroup
+                            row
+                            aria-label="position"
+                            defaultValue="top"
+                            name="creditCard"
+                            value={formik.values.creditCard}
+                            onChange={formik.handleChange}
+                          >
+                            <FormControlLabel value="yes" control={<Radio name="creditCard" style={radioButton} />} label="Yes" />
+                            <FormControlLabel value="no" control={<Radio name="creditCard" style={radioButton} />} label="No" />
+                          </RadioGroup>
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+                <div className={classes.rowSimulate}>
+                  <Button
+                    variant="outlined"
+                    size="medium"
+                    fullWidth={true}
+                    className={classes.btnSimulate}
+                    type="submit"
+                  >
+                    SIMULATE
+                  </Button>
+                </div>
+                <div
+                  className={classes.row}
+                  hidden={Object.keys(planCosts).length === 0}
+                >
+                  <div className={classes.divCheaper}>
+                    <h3 className={classes.titleSimulate}>CHEAPER</h3>
+                    <h4>{planCosts.cheaper && planCosts.cheaper.plan.toUpperCase()}</h4>
+                    <h4>
+                      $
+                      {planCosts.cheaper && planCosts.cheaper.cost}
+                      /mo.
+                    </h4>
+                  </div>
+                  <div className={classes.divExpensive}>
+                    <br />
+                    <h5>{planCosts.expensive && planCosts.expensive.plan.toUpperCase()}</h5>
+                    <h5>
+                      $
+                      {planCosts.expensive && planCosts.expensive.cost}
+                      /mo.
+                    </h5>
+                  </div>
+                </div>
+              </form>
+            </TabPanel>
+          </>
+        )}
     </div>
   );
 };
